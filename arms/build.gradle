@@ -1,0 +1,136 @@
+apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    useLibrary 'org.apache.http.legacy'
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+
+        //Room
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //DataBinding
+    dataBinding {
+        enabled true
+    }
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    //support
+    compile(rootProject.ext.dependencies["support-v4"]) {
+        exclude module: 'support-annotations'
+    }
+    compile(rootProject.ext.dependencies["appcompat-v7"]) {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+    }
+    compile(rootProject.ext.dependencies["design"]) {
+        exclude module: 'support-annotations'
+        exclude module: 'appcompat-v7'
+        exclude module: 'support-v4'
+    }
+    compile rootProject.ext.dependencies["annotations"]
+
+    //view
+    compile(rootProject.ext.dependencies["brvah"]) {
+        exclude module: 'recyclerview-v7'
+    }
+
+    //mvvm(Lifecycles, LiveData, and ViewModel, Room)
+    compile rootProject.ext.dependencies["lifecycle-runtime"]
+    compile rootProject.ext.dependencies["lifecycle-extensions"]
+    annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
+    compile rootProject.ext.dependencies["room-runtime"]
+    annotationProcessor rootProject.ext.dependencies["room-compiler"]
+    testCompile rootProject.ext.dependencies["room-testing"]
+    compile rootProject.ext.dependencies["room-rxjava2"]
+
+    //tools
+    provided rootProject.ext.dependencies["javax.annotation"]
+    compile rootProject.ext.dependencies["dagger2"]
+    annotationProcessor(rootProject.ext.dependencies["dagger2-compiler"]) {
+        exclude module: 'dagger'
+    }
+    compile(rootProject.ext.dependencies["dagger2-android"]) {
+        exclude module: 'dagger'
+        exclude module: 'jsr305'
+    }
+    compile(rootProject.ext.dependencies["dagger2-android-support"]) {
+        exclude module: 'dagger'
+        exclude module: 'jsr305'
+        exclude module: 'appcompat-v7'
+    }
+    annotationProcessor(rootProject.ext.dependencies["dagger2-android-processor"]) {
+        exclude module: 'dagger'
+        exclude module: 'jsr305'
+    }
+    compile rootProject.ext.dependencies["androideventbus"]
+    compile rootProject.ext.dependencies["gson"]
+
+    //network
+    compile(rootProject.ext.dependencies["retrofit"]) {
+        exclude module: 'okhttp'
+        exclude module: 'okio'
+    }
+    compile(rootProject.ext.dependencies["retrofit-converter-gson"]) {
+        exclude module: 'gson'
+        exclude module: 'okhttp'
+        exclude module: 'okio'
+        exclude module: 'retrofit'
+    }
+    compile(rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
+        exclude module: 'rxjava'
+        exclude module: 'okhttp'
+        exclude module: 'retrofit'
+        exclude module: 'okio'
+    }
+    compile rootProject.ext.dependencies["okhttp3"]
+
+    //rx
+    compile rootProject.ext.dependencies["rxjava2"]
+    compile(rootProject.ext.dependencies["rxandroid2"]) {
+        exclude module: 'rxjava'
+    }
+    compile(rootProject.ext.dependencies['rxerrorhandler2']) {
+        exclude module: 'rxjava'
+        exclude module: 'appcompat-v7'
+    }
+
+    //test
+    compile rootProject.ext.dependencies["timber"]
+    testCompile rootProject.ext.dependencies["junit"]
+    androidTestCompile(rootProject.ext.dependencies["espresso-core"]) {
+        exclude module: 'support-annotations'
+    }
+
+}

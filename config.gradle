@@ -1,0 +1,82 @@
+ext {
+
+    android = [
+            compileSdkVersion: 26,
+            buildToolsVersion: "26.0.1",
+            minSdkVersion    : 15,
+            targetSdkVersion : 26,
+            versionCode      : 1,
+            versionName      : "1.0.0-beta"
+    ]
+
+    version = [
+            androidSupportSdkVersion: "26.0.0-alpha1",
+            androidArchSdkVersion   : "1.0.0-alpha5",
+            retrofitSdkVersion      : "2.3.0",
+            dagger2SdkVersion       : "2.11",
+            espressoSdkVersion      : "2.2.2",
+            canarySdkVersion        : "1.5.1"
+    ]
+
+    dependencies = [
+            //support
+            "appcompat-v7"             : "com.android.support:appcompat-v7:${version["androidSupportSdkVersion"]}",
+            "design"                   : "com.android.support:design:${version["androidSupportSdkVersion"]}",
+            "support-v4"               : "com.android.support:support-v4:${version["androidSupportSdkVersion"]}",
+            "cardview-v7"              : "com.android.support:cardview-v7:${version["androidSupportSdkVersion"]}",
+            "annotations"              : "com.android.support:support-annotations:${version["androidSupportSdkVersion"]}",
+            "recyclerview-v7"          : "com.android.support:recyclerview-v7:${version["androidSupportSdkVersion"]}",
+            "constraint-layout"        : "com.android.support.constraint:constraint-layout:1.0.2",
+
+            //view
+            "brvah"                    : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.25",
+            "SuperTextView"            : "com.github.lygttpod:SuperTextView:2.0.9",
+            "MaterialSearchView"       : "com.miguelcatalan:materialsearchview:1.4.0",
+
+            //mvvm( Lifecycles, LiveData, and ViewModel, Room)
+            "lifecycle-runtime"        : "android.arch.lifecycle:runtime:${version["androidArchSdkVersion"]}",
+            "lifecycle-extensions"     : "android.arch.lifecycle:extensions:${version["androidArchSdkVersion"]}",
+            "lifecycle-compiler"       : "android.arch.lifecycle:compiler:${version["androidArchSdkVersion"]}",
+            "room-runtime"             : "android.arch.persistence.room:runtime:${version["androidArchSdkVersion"]}",
+            "room-compiler"            : "android.arch.persistence.room:compiler:${version["androidArchSdkVersion"]}",
+            "room-testing"             : "android.arch.persistence.room:testing:${version["androidArchSdkVersion"]}",
+            "room-rxjava2"             : "android.arch.persistence.room:rxjava2:${version["androidArchSdkVersion"]}",
+
+            //network
+            "retrofit"                 : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
+            "retrofit-converter-gson"  : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
+            "retrofit-adapter-rxjava"  : "com.squareup.retrofit2:adapter-rxjava:${version["retrofitSdkVersion"]}",
+            "retrofit-adapter-rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitSdkVersion"]}",
+            "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.8.1",
+            "okhttp-urlconnection"     : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",
+
+            //rx2
+            "rxjava2"                  : "io.reactivex.rxjava2:rxjava:2.1.2",
+            "rxandroid2"               : "io.reactivex.rxjava2:rxandroid:2.0.1",
+            "rxerrorhandler2"          : "me.jessyan:rxerrorhandler:2.0.2",
+
+            //tools
+            "dagger2"                  : "com.google.dagger:dagger:${version["dagger2SdkVersion"]}",
+            "dagger2-compiler"         : "com.google.dagger:dagger-compiler:${version["dagger2SdkVersion"]}",
+            "dagger2-android"          : "com.google.dagger:dagger-android:${version["dagger2SdkVersion"]}",
+            "dagger2-android-support"  : "com.google.dagger:dagger-android-support:${version["dagger2SdkVersion"]}",
+            "dagger2-android-processor": "com.google.dagger:dagger-android-processor:${version["dagger2SdkVersion"]}",
+            "androideventbus"          : "org.simple:androideventbus:1.0.5.1",
+            "gson"                     : "com.google.code.gson:gson:2.8.1",
+            "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
+
+            //test
+            "junit"                    : "junit:junit:4.12",
+            "androidJUnitRunner"       : "android.support.test.runner.AndroidJUnitRunner",
+            "runner"                   : "com.android.support.test:runner:0.5",
+            "espresso-core"            : "com.android.support.test.espresso:espresso-core:${version["espressoSdkVersion"]}",
+            "espresso-contrib"         : "com.android.support.test.espresso:espresso-contrib:${version["espressoSdkVersion"]}",
+            "espresso-intents"         : "com.android.support.test.espresso:espresso-intents:${version["espressoSdkVersion"]}",
+            "mockito-core"             : "org.mockito:mockito-core:1.+",
+            "timber"                   : "com.jakewharton.timber:timber:4.5.1",
+            "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
+            "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:${version["canarySdkVersion"]}",
+    ]
+
+
+}
