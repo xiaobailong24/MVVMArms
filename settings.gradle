@@ -1,1 +1,1 @@
-include ':arms'
+include ':arms', ':weather'

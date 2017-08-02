@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="content"
+            type="me.xiaobailong24.mvvmarms.weather.mvvm.model.pojo.TextContent"/>
+
+    </data>
+
+    <com.allen.library.SuperTextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:stv="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/super_item"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        stv:sDividerLineColor="@color/colorDivider"
+        stv:sDividerLineHeight="1dp"
+        stv:sDividerLineType="bottom"
+        stv:sLeftMaxEms="15"
+        stv:sLeftTextSize="18sp"
+        stv:sLeftTextString="@{content.title}"
+        stv:sRightMaxEms="40"
+        stv:sRightTextColor="@color/colorAccent"
+        stv:sRightTextSize="18sp"
+        stv:sRightTextString="@{content.content}"
+        />
+
+</layout>

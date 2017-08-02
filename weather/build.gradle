@@ -1,0 +1,91 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //Room
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
+
+    }
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "true"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //DataBinding
+    dataBinding {
+        enabled true
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    //arms
+    compile project(':arms')
+
+    //view
+    compile rootProject.ext.dependencies["constraint-layout"]
+    compile rootProject.ext.dependencies["SuperTextView"]
+    compile rootProject.ext.dependencies["MaterialSearchView"]
+
+    //mvvm(Lifecycles, LiveData, and ViewModel, Room)
+    annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
+    annotationProcessor rootProject.ext.dependencies["room-compiler"]
+    testCompile(rootProject.ext.dependencies["room-testing"]) {
+        exclude module: 'support-compat'
+        exclude module: 'support-annotations'
+        exclude module: 'support-core-utils'
+    }
+
+    //tools
+    provided rootProject.ext.dependencies["javax.annotation"]
+    annotationProcessor(rootProject.ext.dependencies["dagger2-compiler"]) {
+        exclude module: 'dagger'
+        exclude module: 'js305'
+    }
+    annotationProcessor(rootProject.ext.dependencies["dagger2-android-processor"]) {
+        exclude module: 'dagger'
+        exclude module: 'jsr305'
+    }
+
+    //test
+    testCompile rootProject.ext.dependencies["junit"]
+    androidTestCompile(rootProject.ext.dependencies["espresso-core"]) {
+        exclude module: 'support-annotations'
+    }
+    debugCompile rootProject.ext.dependencies["canary-debug"]
+    releaseCompile rootProject.ext.dependencies["canary-release"]
+    testCompile rootProject.ext.dependencies["canary-release"]
+}

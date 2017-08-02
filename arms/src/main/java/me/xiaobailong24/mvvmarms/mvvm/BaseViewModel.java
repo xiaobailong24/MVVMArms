@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
 
 import org.simple.eventbus.EventBus;
@@ -71,14 +70,6 @@ public class BaseViewModel<M extends IModel> extends AndroidViewModel
         super.onCleared();
         if (useEventBus())
             EventBus.getDefault().unregister(this);//解除注册eventbus
-        //        if (mModel != null)
-        //            mModel.onDestroy();
-        //        this.mModel = null;
     }
 
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
-    void onAny(LifecycleOwner owner, Lifecycle.Event event) {
-        System.out.println(owner + ":" + event.name());
-    }
 }

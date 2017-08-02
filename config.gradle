@@ -62,7 +62,7 @@ ext {
             "dagger2-android-support"  : "com.google.dagger:dagger-android-support:${version["dagger2SdkVersion"]}",
             "dagger2-android-processor": "com.google.dagger:dagger-android-processor:${version["dagger2SdkVersion"]}",
             "androideventbus"          : "org.simple:androideventbus:1.0.5.1",
-            "gson"                     : "com.google.code.gson:gson:2.8.1",
+            "gson"                     : "com.google.code.gson:gson:2.8.0",
             "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
 
             //test

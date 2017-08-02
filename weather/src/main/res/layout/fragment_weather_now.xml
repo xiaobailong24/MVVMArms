@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <import type="me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api.Status"/>
+
+        <variable
+            name="viewModel"
+            type="me.xiaobailong24.mvvmarms.weather.mvvm.viewModel.WeatherNowViewModel"/>
+
+    </data>
+
+    <me.xiaobailong24.mvvmarms.weather.mvvm.view.weight.ScrollChildSwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:onRefreshListener="@{() -> viewModel.retry()}"
+        app:refreshing="@{viewModel.mStatus == Status.LOADING}"
+        >
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_weather_now"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:visibleGone="@{viewModel.mStatus == Status.SUCCESS}"
+                tools:listitem="@layout/super_text_item"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableTop="@mipmap/ic_refresh"
+                android:gravity="center"
+                android:onClick="@{() -> viewModel.retry()}"
+                android:text="@string/error_tap_to_retry"
+                android:textColor="@color/colorSecondary"
+                app:visibleGone="@{viewModel.mStatus == Status.ERROR}"
+                />
+
+        </android.support.constraint.ConstraintLayout>
+    </me.xiaobailong24.mvvmarms.weather.mvvm.view.weight.ScrollChildSwipeRefreshLayout>
+
+</layout>
