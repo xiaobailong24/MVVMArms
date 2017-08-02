@@ -56,7 +56,6 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
         if (mLocationName.getValue() == null)
             mLocationName.setValue("");
 
-        // TODO: 2017/7/27
         if (!mLocationName.getValue().toLowerCase().equals(locationName)) {
             mLocationName.setValue(locationName);
             loadWeather(locationName);

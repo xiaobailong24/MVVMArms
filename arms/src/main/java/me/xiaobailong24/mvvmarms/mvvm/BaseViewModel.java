@@ -70,6 +70,7 @@ public class BaseViewModel<M extends IModel> extends AndroidViewModel
         super.onCleared();
         if (useEventBus())
             EventBus.getDefault().unregister(this);//解除注册eventbus
+        // TODO: 2017/8/2
     }
 
 }

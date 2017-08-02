@@ -6,4 +6,5 @@
     <string name="search_hint">Search places</string>
     <string name="snack_input">Please input place</string>
     <string name="error_tap_to_retry">Error. Tap to retry</string>
+    <string name="weather_source">From https://www.seniverse.com</string>
 </resources>
