@@ -1,6 +1,7 @@
 # MVVMArms
 Android MVVM Architecture Components based on [MVPArms](https://github.com/JessYanCoding/MVPArms) and [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html).
-This is **BETA** Version. Welcome to communicate and discuss.
+> This is **BETA** Version.
+Welcome to communicate and discuss.
 
 ## Architectural
 <img src="https://github.com/xiaobailong24/MVVMArms/raw/master/image/MVVMArms.png" width="80%" height="80%">
