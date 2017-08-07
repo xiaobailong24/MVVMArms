@@ -62,7 +62,8 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
                     String query = (String) adapterView.getItemAtPosition(i);
                     doSearch(query);
                 });
-                mLocation = strings.get(0);
+                if (mLocation == null)
+                    mLocation = strings.get(0);
                 naviFragment();
             }
         });

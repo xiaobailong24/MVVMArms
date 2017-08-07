@@ -75,5 +75,6 @@ public abstract class ArmsFragment<DB extends ViewDataBinding, VM extends IViewM
         if (mLifecycleRegistry != null && mViewModel != null)//移除LifecycleObserver
             getLifecycle().removeObserver((LifecycleObserver) mViewModel);
         this.mLifecycleRegistry = null;
+        this.mViewModel = null;
     }
 }

@@ -84,5 +84,6 @@ public abstract class ArmsActivity<DB extends ViewDataBinding, VM extends IViewM
         if (mLifecycleRegistry != null && mViewModel != null)//移除LifecycleObserver
             mLifecycleRegistry.removeObserver((LifecycleObserver) mViewModel);
         this.mLifecycleRegistry = null;
+        this.mViewModel = null;
     }
 }
