@@ -52,14 +52,16 @@ public abstract class ArmsFragment<DB extends ViewDataBinding, VM extends IViewM
     }
 
 
-    public boolean useEventBus() {
-        return true;
-    }
-
     @Override
     public boolean injectable() {
         return true;//默认进行依赖注入
     }
+
+
+    public boolean useEventBus() {
+        return true;
+    }
+
 
     @Override
     public LifecycleRegistry getLifecycle() {

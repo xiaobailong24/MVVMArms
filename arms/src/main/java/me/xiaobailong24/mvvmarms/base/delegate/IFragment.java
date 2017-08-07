@@ -14,14 +14,6 @@ import android.view.ViewGroup;
 public interface IFragment {
 
     /**
-     * Description: 是否使用EventBus.
-     * 默认使用(true){@link me.xiaobailong24.mvvmarms.base.ArmsFragment}
-     *
-     * @return boolean
-     */
-    boolean useEventBus();
-
-    /**
      * Description: UI 初始化
      *
      * @param inflater           LayoutInflater
@@ -49,7 +41,17 @@ public interface IFragment {
 
     /**
      * Description: Fragment 是否依赖注入
+     *
      * @return true: 进行依赖注入；false:不进行依赖注入
      */
     boolean injectable();
+
+
+    /**
+     * Description: 是否使用EventBus.
+     * 默认使用(true){@link me.xiaobailong24.mvvmarms.base.ArmsFragment}
+     *
+     * @return boolean
+     */
+    boolean useEventBus();
 }
