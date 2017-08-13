@@ -11,32 +11,38 @@
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "country",
             "columnName": "country",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "path",
             "columnName": "path",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "timezone",
             "columnName": "timezone",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "timezoneOffset",
             "columnName": "timezone_offset",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {

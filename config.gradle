@@ -10,12 +10,12 @@ ext {
     ]
 
     version = [
-            androidSupportSdkVersion: "26.0.0-alpha1",
-            androidArchSdkVersion   : "1.0.0-alpha5",
+            androidSupportSdkVersion: "26.0.1",
+            androidArchSdkVersion   : "1.0.0-alpha8",
             retrofitSdkVersion      : "2.3.0",
             dagger2SdkVersion       : "2.11",
             espressoSdkVersion      : "2.2.2",
-            canarySdkVersion        : "1.5.1"
+            canarySdkVersion        : "1.5.2"
     ]
 
     dependencies = [
@@ -29,8 +29,8 @@ ext {
             "constraint-layout"        : "com.android.support.constraint:constraint-layout:1.0.2",
 
             //view
-            "brvah"                    : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.25",
-            "SuperTextView"            : "com.github.lygttpod:SuperTextView:2.0.9",
+            "brvah"                    : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.27",
+            "SuperTextView"            : "com.github.lygttpod:SuperTextView:2.1.1",
             "MaterialSearchView"       : "com.miguelcatalan:materialsearchview:1.4.0",
 
             //mvvm( Lifecycles, LiveData, and ViewModel, Room)
