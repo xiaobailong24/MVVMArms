@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import me.xiaobailong24.mvvmarms.mvvm.BaseModel;
 import me.xiaobailong24.mvvmarms.repository.IRepositoryManager;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.db.WeatherNowDb;
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherNowResponse;
+import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
 
 /**
  * Created by xiaobailong24 on 2017/7/31.
@@ -22,7 +22,7 @@ public class WeatherModel extends BaseModel {
     }
 
     //从Room数据库查询所有位置信息
-    public List<WeatherNowResponse.NowResult.Location> getAllLocations() {
+    public List<Location> getAllLocations() {
         return mRepositoryManager
                 .obtainRoomDatabase(WeatherNowDb.class, "WeatherNowDb")
                 .weatherNowDao()

@@ -5,7 +5,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableField;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,36 +19,35 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.xiaobailong24.mvvmarms.di.scope.AppScope;
 import me.xiaobailong24.mvvmarms.mvvm.BaseViewModel;
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.WeatherNowModel;
+import me.xiaobailong24.mvvmarms.weather.mvvm.model.WeatherDailyModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherNowResponse;
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.pojo.TextContent;
+import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
 
 /**
- * Created by xiaobailong24 on 2017/7/21.
- * MVVM WeatherNowViewModel
+ * Created by xiaobailong24 on 2017/8/14.
+ * MVVM WeatherDailyViewModel
  */
 @AppScope
-public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
+public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel>
         implements IRetry {
     private RxErrorHandler mRxErrorHandler;
-    private MutableLiveData<List<TextContent>> mContents;
+    private MutableLiveData<List<WeatherDailyResponse.DailyResult.Daily>> mDailyData;
     private MutableLiveData<String> mLocationName;
 
     //数据请求状态
     public final ObservableField<Api.Status> mStatus = new ObservableField<>();
 
     @Inject
-    public WeatherNowViewModel(Application application, WeatherNowModel model,
-                               RxErrorHandler rxErrorHandler) {
-        super(application, model);
+    public WeatherDailyViewModel(Application application, WeatherDailyModel weatherDailyModel,
+                                 RxErrorHandler rxErrorHandler) {
+        super(application, weatherDailyModel);
         this.mRxErrorHandler = rxErrorHandler;
     }
 
-    public LiveData<List<TextContent>> getWeatherNow(String locationName) {
-        if (mContents == null)
-            mContents = new MutableLiveData<>();
+
+    public LiveData<List<WeatherDailyResponse.DailyResult.Daily>> getWeatherDaily(String locationName) {
+        if (mDailyData == null)
+            mDailyData = new MutableLiveData<>();
 
         if (mLocationName == null) {
             mLocationName = new MutableLiveData<>();
@@ -59,19 +57,19 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
 
         if (!mLocationName.getValue().toLowerCase().equals(locationName)) {
             mLocationName.setValue(locationName);
-            loadWeather(locationName);
+            loadWeatherDaily(locationName);
         }
-        return mContents;
+        return mDailyData;
     }
 
-    private void loadWeather(String locationName) {
+    private void loadWeatherDaily(String locationName) {
         Map<String, String> request = new HashMap<>();
         request.put(Api.API_KEY_KEY, Api.API_KEY);
         request.put(Api.API_KEY_TEMP_UNIT, "c");
         request.put(Api.API_KEY_LANGUAGE, "zh-Hans");
         request.put(Api.API_KEY_LOCATION, locationName);
 
-        mModel.getWeatherNow(request)
+        mModel.getWeatherDaily(request)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable -> {
                     addDispose(disposable);
@@ -79,26 +77,15 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(weatherNowResponse -> {
-                    if (weatherNowResponse.getResults().size() > 1)
-                        throw new RuntimeException("WeatherNowResponse get MORE than one NowResult");
-                    //查询数据库
-                    Location location =
-                            mModel.getLocationByName(weatherNowResponse.getResults().get(0).getLocation().getName());
-                    //存储位置信息
-                    if (location == null)
-                        mModel.saveLocation(weatherNowResponse.getResults().get(0).getLocation());
+                .doOnNext(weatherDailyResponse -> {
+                    if (weatherDailyResponse.getResults().size() > 1)
+                        throw new RuntimeException("WeatherDailyResponse get MORE than one DailyResult");
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(weatherNowResponse -> {
-                    List<TextContent> contents = new ArrayList<>();
-                    WeatherNowResponse.NowResult result = weatherNowResponse.getResults().get(0);
-                    contents.add(new TextContent("地点", result.getLocation().getPath()));
-                    contents.add(new TextContent("天气", result.getNow().getText()));
-                    contents.add(new TextContent("温度", result.getNow().getTemperature() + "º"));
-                    return contents;
+                .map(weatherDailyResponse -> {
+                    return weatherDailyResponse.getResults().get(0).getDaily();
                 })
-                .subscribe(new ErrorHandleSubscriber<List<TextContent>>(mRxErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<List<WeatherDailyResponse.DailyResult.Daily>>(mRxErrorHandler) {
 
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -108,9 +95,9 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
                     }
 
                     @Override
-                    public void onNext(@NonNull List<TextContent> textContents) {
+                    public void onNext(@NonNull List<WeatherDailyResponse.DailyResult.Daily> dailies) {
                         mStatus.set(Api.Status.SUCCESS);
-                        mContents.setValue(textContents);
+                        mDailyData.setValue(dailies);
                     }
 
                     @Override
@@ -123,13 +110,13 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
 
     @Override
     public void retry() {
-        loadWeather(mLocationName.getValue());
+        loadWeatherDaily(mLocationName.getValue());
     }
 
     @Override
-    public void onCleared() {
+    protected void onCleared() {
         super.onCleared();
-        this.mContents = null;
+        this.mDailyData = null;
         this.mLocationName = null;
     }
 }

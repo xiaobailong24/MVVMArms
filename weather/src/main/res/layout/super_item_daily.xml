@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="daily"
+            type="me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse.DailyResult.Daily"/>
+
+    </data>
+
+    <com.allen.library.SuperTextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:stv="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/super_item_daily"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        stv:sDividerLineColor="@color/colorDivider"
+        stv:sDividerLineHeight="1dp"
+        stv:sDividerLineType="bottom"
+        stv:sLeftBottomMaxEms="20"
+        stv:sLeftBottomTextString='@{daily.textDay+"~"+daily.textNight}'
+        stv:sLeftTopTextString="@{daily.date}"
+        stv:sLeftViewGravity="left_center"
+        stv:sRightBottomTextString='@{daily.low + "º"}'
+        stv:sRightTopTextString='@{daily.high + "º"}'
+        stv:sRightViewGravity="right_center"
+        />
+
+</layout>

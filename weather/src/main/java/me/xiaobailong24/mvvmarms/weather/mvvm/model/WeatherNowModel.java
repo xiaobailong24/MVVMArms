@@ -10,6 +10,7 @@ import me.xiaobailong24.mvvmarms.mvvm.BaseModel;
 import me.xiaobailong24.mvvmarms.repository.IRepositoryManager;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.service.WeatherService;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.db.WeatherNowDb;
+import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherNowResponse;
 
 /**
@@ -31,7 +32,7 @@ public class WeatherNowModel extends BaseModel {
     }
 
     //存储位置信息到Room数据库
-    public void saveLocation(WeatherNowResponse.NowResult.Location location) {
+    public void saveLocation(Location location) {
         mRepositoryManager
                 .obtainRoomDatabase(WeatherNowDb.class, "WeatherNowDb")
                 .weatherNowDao()
@@ -39,7 +40,7 @@ public class WeatherNowModel extends BaseModel {
     }
 
     //从Room数据库查询所有位置信息
-    public List<WeatherNowResponse.NowResult.Location> getAllLocations() {
+    public List<Location> getAllLocations() {
         return mRepositoryManager
                 .obtainRoomDatabase(WeatherNowDb.class, "WeatherNowDb")
                 .weatherNowDao()
@@ -47,7 +48,7 @@ public class WeatherNowModel extends BaseModel {
     }
 
     //从Room数据库查询指定位置信息
-    public WeatherNowResponse.NowResult.Location getLocationByName(String name) {
+    public Location getLocationByName(String name) {
         return mRepositoryManager
                 .obtainRoomDatabase(WeatherNowDb.class, "WeatherNowDb")
                 .weatherNowDao()
@@ -55,7 +56,7 @@ public class WeatherNowModel extends BaseModel {
     }
 
     //更新Room数据库位置信息
-    public void updateLocation(WeatherNowResponse.NowResult.Location location) {
+    public void updateLocation(Location location) {
         mRepositoryManager
                 .obtainRoomDatabase(WeatherNowDb.class, "WeatherNowDb")
                 .weatherNowDao()
@@ -63,7 +64,7 @@ public class WeatherNowModel extends BaseModel {
     }
 
     //删除Room数据库位置信息
-    public void deleteLocation(WeatherNowResponse.NowResult.Location location) {
+    public void deleteLocation(Location location) {
         mRepositoryManager
                 .obtainRoomDatabase(WeatherNowDb.class, "WeatherNowDb")
                 .weatherNowDao()

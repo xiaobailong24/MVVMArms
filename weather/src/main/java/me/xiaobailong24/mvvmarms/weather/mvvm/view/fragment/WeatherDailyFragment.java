@@ -15,41 +15,39 @@ import java.util.List;
 import me.xiaobailong24.mvvmarms.base.ArmsFragment;
 import me.xiaobailong24.mvvmarms.weather.R;
 import me.xiaobailong24.mvvmarms.weather.app.EventBusTags;
-import me.xiaobailong24.mvvmarms.weather.databinding.FragmentWeatherNowBinding;
+import me.xiaobailong24.mvvmarms.weather.databinding.FragmentWeatherDailyBinding;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.pojo.TextContent;
-import me.xiaobailong24.mvvmarms.weather.mvvm.view.adapter.TextContentAdapter;
-import me.xiaobailong24.mvvmarms.weather.mvvm.viewModel.WeatherNowViewModel;
+import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
+import me.xiaobailong24.mvvmarms.weather.mvvm.view.adapter.WeatherDailyAdapter;
+import me.xiaobailong24.mvvmarms.weather.mvvm.viewModel.WeatherDailyViewModel;
 import timber.log.Timber;
 
-
 /**
- * Created by xiaobailong24 on 2017/7/15.
- * MVVM WeatherNowFragment
+ * Created by xiaobailong24 on 2017/8/14.
+ * MVVM WeatherDailyFragment
  */
 
-public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, WeatherNowViewModel> {
+public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBinding, WeatherDailyViewModel> {
 
-    private TextContentAdapter mAdapter;
-    private LiveData<List<TextContent>> mWeatherData;
+    private WeatherDailyAdapter mAdapter;
+    private LiveData<List<WeatherDailyResponse.DailyResult.Daily>> mWeatherDailyData;
 
-    public static WeatherNowFragment newInstance(String location) {
-        WeatherNowFragment weatherNowFragment = new WeatherNowFragment();
+    public static WeatherDailyFragment newInstance(String location) {
+        WeatherDailyFragment weatherDailyFragment = new WeatherDailyFragment();
         Bundle args = new Bundle();
         args.putString(Api.API_KEY_LOCATION, location);
-        weatherNowFragment.setArguments(args);
-        return weatherNowFragment;
+        weatherDailyFragment.setArguments(args);
+        return weatherDailyFragment;
     }
-
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(WeatherNowViewModel.class);
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_now, container, false);
+        mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(WeatherDailyViewModel.class);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_daily, container, false);
         mBinding.setViewModel(mViewModel);//设置ViewModel
         //RecyclerView设置Adapter
-        mAdapter = new TextContentAdapter(R.layout.super_text_item, null);
-        mBinding.recyclerWeatherNow.setAdapter(mAdapter);
+        mAdapter = new WeatherDailyAdapter(R.layout.super_item_daily, null);
+        mBinding.recyclerWeatherDaily.setAdapter(mAdapter);
         //设置Refresh
         mBinding.refresh.setColorSchemeColors(
                 ContextCompat.getColor(getContext(), R.color.colorPrimary),
@@ -62,7 +60,7 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
     @Override
     public void initData(Bundle savedInstanceState) {
         if (savedInstanceState == null)
-            observerWeather(getArguments().getString(Api.API_KEY_LOCATION));
+            observerWeatherDaily(getArguments().getString(Api.API_KEY_LOCATION));
     }
 
     @Override
@@ -71,8 +69,8 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
         Timber.i("setData: message.what--->" + message.what +
                 ", message.obj--->" + message.obj);
         switch (message.what) {
-            case EventBusTags.FRAGMENT_MESSAGE_WEATHER_NOW:
-                observerWeather(String.valueOf(message.obj));
+            case EventBusTags.FRAGMENT_MESSAGE_WEATHER_DAILY:
+                observerWeatherDaily(String.valueOf(message.obj));
                 break;
             default:
                 break;
@@ -80,22 +78,22 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
     }
 
     //调用ViewModel的方法获取天气
-    private void observerWeather(String location) {
-        if (mWeatherData != null)//防止重复订阅
-            mWeatherData.removeObservers(this);
+    private void observerWeatherDaily(String location) {
+        if (mWeatherDailyData != null)//防止重复订阅
+            mWeatherDailyData.removeObservers(this);
         //如果位置是全路径，则截取城市名
         if (location.contains(","))
             location = location.substring(0, location.indexOf(","));
-        mWeatherData = mViewModel.getWeatherNow(location);
-        mWeatherData.observe(this, textContents -> {
-            mAdapter.replaceData(textContents);
+        mWeatherDailyData = mViewModel.getWeatherDaily(location);
+        mWeatherDailyData.observe(this, dailies -> {
+            mAdapter.replaceData(dailies);
         });
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        this.mWeatherData = null;
         this.mAdapter = null;
+        this.mWeatherDailyData = null;
     }
 }

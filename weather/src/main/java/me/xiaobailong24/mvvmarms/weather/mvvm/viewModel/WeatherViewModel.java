@@ -20,7 +20,7 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.xiaobailong24.mvvmarms.di.scope.AppScope;
 import me.xiaobailong24.mvvmarms.mvvm.BaseViewModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.WeatherModel;
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherNowResponse;
+import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
 import timber.log.Timber;
 
 /**
@@ -48,12 +48,12 @@ public class WeatherViewModel extends BaseViewModel<WeatherModel> {
     }
 
     private void loadLocationPaths() {
-        Observable.create((ObservableOnSubscribe<List<WeatherNowResponse.NowResult.Location>>) e -> e.onNext(mModel.getAllLocations()))
+        Observable.create((ObservableOnSubscribe<List<Location>>) e -> e.onNext(mModel.getAllLocations()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(locations -> {
                     List<String> locationPaths = new ArrayList<>();
-                    for (WeatherNowResponse.NowResult.Location location : locations) {
+                    for (Location location : locations) {
                         Timber.d("loadLocationPaths: " + location.getPath());
                         locationPaths.add(location.getPath());
                     }

@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.text.TextUtils;
 import android.view.Menu;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -13,19 +12,18 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.List;
 
 import me.xiaobailong24.mvvmarms.base.ArmsActivity;
-import me.xiaobailong24.mvvmarms.utils.UiUtils;
 import me.xiaobailong24.mvvmarms.weather.R;
 import me.xiaobailong24.mvvmarms.weather.app.EventBusTags;
 import me.xiaobailong24.mvvmarms.weather.app.utils.FragmentUtils;
 import me.xiaobailong24.mvvmarms.weather.app.utils.KeyboardUtils;
 import me.xiaobailong24.mvvmarms.weather.databinding.ActivityWeatherBinding;
-import me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment.WeatherNowFragment;
+import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
+import me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment.WeatherDailyFragment;
 import me.xiaobailong24.mvvmarms.weather.mvvm.viewModel.WeatherViewModel;
 
 import static me.xiaobailong24.mvvmarms.weather.app.EventBusTags.ACTIVITY_FRAGMENT_REPLACE;
 
 public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, WeatherViewModel> {
-    private static final String LOCATION_KEY = "location";
 
     private int mReplace = 0;
     private String mLocation;
@@ -42,7 +40,7 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
     public void initData(Bundle savedInstanceState) {
         mBinding.setViewModel(mViewModel);
         if (savedInstanceState != null)
-            mLocation = savedInstanceState.getString(LOCATION_KEY);
+            mLocation = savedInstanceState.getString(Api.API_KEY_LOCATION);
         setSupportActionBar(mBinding.searchToolbar);
         initToolbar();
     }
@@ -84,14 +82,14 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
     //切换Fragment
     private void naviFragment() {
         getSupportActionBar().setTitle(mLocation);
-        WeatherNowFragment weatherNowFragment =
-                (WeatherNowFragment) FragmentUtils.findFragment(getSupportFragmentManager(), WeatherNowFragment.class);
+        WeatherDailyFragment weatherNowFragment =
+                (WeatherDailyFragment) FragmentUtils.findFragment(getSupportFragmentManager(), WeatherDailyFragment.class);
         if (weatherNowFragment == null) {
-            weatherNowFragment = WeatherNowFragment.newInstance(mLocation);
+            weatherNowFragment = WeatherDailyFragment.newInstance(mLocation);
             FragmentUtils.addFragment(getSupportFragmentManager(), weatherNowFragment, R.id.main_frame);
         } else {
             Message message = new Message();
-            message.what = EventBusTags.FRAGMENT_MESSAGE_WEATHER_NOW;
+            message.what = EventBusTags.FRAGMENT_MESSAGE_WEATHER_DAILY;
             message.obj = mLocation;
             weatherNowFragment.setData(message);
         }
@@ -99,10 +97,6 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
 
     //处理搜索时事件
     private void doSearch(String location) {
-        if (TextUtils.isEmpty(location)) {
-            UiUtils.makeText(this, getString(R.string.snack_input));
-            return;
-        }
         mLocation = location;
         mBinding.searchView.closeSearch();
         KeyboardUtils.hideSoftInput(WeatherActivity.this, mBinding.searchView);
@@ -140,7 +134,7 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
         super.onSaveInstanceState(outState);
         //保存当前Activity显示的Fragment索引
         outState.putInt(ACTIVITY_FRAGMENT_REPLACE, mReplace);
-        outState.putString(LOCATION_KEY, mLocation);
+        outState.putString(Api.API_KEY_LOCATION, mLocation);
     }
 
     @Override

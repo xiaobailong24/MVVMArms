@@ -1,6 +1,6 @@
 package me.xiaobailong24.mvvmarms.weather.util;
 
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherNowResponse;
+import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
 
 /**
  * Created by xiaobailong24 on 2017/7/30.
@@ -9,7 +9,7 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherNowResponse;
 
 public class TestUtil {
 
-    public static WeatherNowResponse.NowResult.Location createLocation(String id) {
+    public static Location createLocation(String id) {
         /**
          * id : WX4FBXXFKE4F
          * name : 北京
@@ -18,7 +18,7 @@ public class TestUtil {
          * timezone : Asia/Shanghai
          * timezone_offset : +08:00
          */
-        return new WeatherNowResponse.NowResult.Location(id, "北京", "CN",
+        return new Location(id, "北京", "CN",
                 "北京,北京,中国", "Asia/Shanghai", "+08:00");
     }
 

@@ -9,7 +9,7 @@ import dagger.Module;
  * Dagger AppModule
  */
 @Module(includes = {WeatherViewModelModule.class,
-        WeatherNowViewModelModule.class})
+        WeatherNowViewModelModule.class, WeatherDailyViewModelModule.class})
 public class AppModule {
 
     private Application mApplication;

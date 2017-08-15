@@ -8,7 +8,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherNowResponse;
+import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
 
 /**
  * Created by xiaobailong24 on 2017/7/29.
@@ -18,17 +18,17 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherNowResponse;
 public interface WeatherNowDao {
 
     @Insert
-    void insertAll(WeatherNowResponse.NowResult.Location... locations);
+    void insertAll(Location... locations);
 
     @Query("SELECT * FROM location")
-    List<WeatherNowResponse.NowResult.Location> getAll();
+    List<Location> getAll();
 
     @Query("SELECT * FROM location WHERE name = :name")
-    WeatherNowResponse.NowResult.Location getLocationByName(String name);
+    Location getLocationByName(String name);
 
     @Update
-    void updateAll(WeatherNowResponse.NowResult.Location... locations);
+    void updateAll(Location... locations);
 
     @Delete
-    void deleteLocation(WeatherNowResponse.NowResult.Location... locations);
+    void deleteLocation(Location... locations);
 }

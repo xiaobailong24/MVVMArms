@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherNowResponse;
+import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
 import me.xiaobailong24.mvvmarms.weather.util.TestUtil;
 
 /**
@@ -23,17 +23,17 @@ public class WeatherNowDaoTest extends DbTest {
     @Test
     public void insertAndLoad() throws InterruptedException {
         //Insert
-        final WeatherNowResponse.NowResult.Location beijing = TestUtil.createLocation("WX4FBXXFKE4F");
+        final Location beijing = TestUtil.createLocation("WX4FBXXFKE4F");
         db.weatherNowDao().insertAll(beijing);
 
         //Query All
-        List<WeatherNowResponse.NowResult.Location> locations = db.weatherNowDao().getAll();
-        for (WeatherNowResponse.NowResult.Location location : locations) {
+        List<Location> locations = db.weatherNowDao().getAll();
+        for (Location location : locations) {
             Log.d(TAG, location.toString());
         }
 
         //Query by Name
-        WeatherNowResponse.NowResult.Location location = db.weatherNowDao().getLocationByName("北京");
+        Location location = db.weatherNowDao().getLocationByName("北京");
         if (location == null) {
             Log.e(TAG, "Query: No Location named 北京");
         } else {
@@ -45,7 +45,7 @@ public class WeatherNowDaoTest extends DbTest {
 
         //Query All
         locations = db.weatherNowDao().getAll();
-        for (WeatherNowResponse.NowResult.Location l : locations) {
+        for (Location l : locations) {
             Log.d(TAG, l.toString());
         }
 
@@ -54,7 +54,7 @@ public class WeatherNowDaoTest extends DbTest {
 
         //Query All
         locations = db.weatherNowDao().getAll();
-        for (WeatherNowResponse.NowResult.Location l : locations) {
+        for (Location l : locations) {
             Log.d(TAG, l.toString());
         }
 

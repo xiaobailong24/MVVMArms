@@ -11,4 +11,5 @@ public interface EventBusTags {
     String ACTIVITY_FRAGMENT_REPLACE = "ActivityFragmentReplace";
 
     int FRAGMENT_MESSAGE_WEATHER_NOW = 101;
+    int FRAGMENT_MESSAGE_WEATHER_DAILY = 102;
 }

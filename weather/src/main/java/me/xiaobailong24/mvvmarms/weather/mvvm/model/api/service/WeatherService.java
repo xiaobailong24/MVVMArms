@@ -3,6 +3,7 @@ package me.xiaobailong24.mvvmarms.weather.mvvm.model.api.service;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherNowResponse;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
@@ -19,5 +20,13 @@ public interface WeatherService {
      */
     @GET("weather/now.json")
     Observable<WeatherNowResponse> getWeatherNow(@QueryMap Map<String, String> request);
+
+
+    /**
+     * Description: 获取指定城市未来3天每天的白天和夜间预报，免费用户只返回3天天气预报。
+     * https://api.seniverse.com/v3/weather/daily.json?key=sokppqeydnrkohxe&location=beijing&language=zh-Hans&unit=c
+     */
+    @GET("weather/daily.json")
+    Observable<WeatherDailyResponse> getWeatherDaily(@QueryMap Map<String, String> request);
 
 }

@@ -21,14 +21,33 @@ public class BindingAdapters {
 
     //SuperTextView
     @BindingAdapter("sLeftTextString")
-    public static void setTitle(SuperTextView view, String title) {
-        view.setLeftString(title);
+    public static void setLeftTextString(SuperTextView view, String left) {
+        view.setLeftString(left);
     }
 
-    //SuperTextView
     @BindingAdapter("sRightTextString")
-    public static void setContent(SuperTextView view, String content) {
-        view.setRightString(content);
+    public static void setRightTextString(SuperTextView view, String right) {
+        view.setRightString(right);
+    }
+
+    @BindingAdapter("sLeftTopTextString")
+    public static void setLeftTopTextString(SuperTextView view, String leftTop) {
+        view.setLeftTopString(leftTop);
+    }
+
+    @BindingAdapter("sLeftBottomTextString")
+    public static void setLeftBottomTextString(SuperTextView view, String leftBottom) {
+        view.setLeftBottomString(leftBottom);
+    }
+
+    @BindingAdapter("sRightTopTextString")
+    public static void setRightTopTextString(SuperTextView view, String rightTop) {
+        view.setRightTopString(rightTop);
+    }
+
+    @BindingAdapter("sRightBottomTextString")
+    public static void setRightBottomTextString(SuperTextView view, String rightBottom) {
+        view.setRightBottomString(rightBottom);
     }
 
 }
