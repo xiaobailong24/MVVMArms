@@ -110,7 +110,8 @@ public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel>
 
     @Override
     public void retry() {
-        loadWeatherDaily(mLocationName.getValue());
+        if (mLocationName != null && mLocationName.getValue() != null)
+            loadWeatherDaily(mLocationName.getValue());
     }
 
     @Override

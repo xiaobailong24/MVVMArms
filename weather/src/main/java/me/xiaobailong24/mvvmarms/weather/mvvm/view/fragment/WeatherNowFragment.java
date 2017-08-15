@@ -32,6 +32,7 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
 
     private TextContentAdapter mAdapter;
     private LiveData<List<TextContent>> mWeatherData;
+    private boolean mHidden = false;//根据是否显示Fragment加载数据
 
     public static WeatherNowFragment newInstance(String location) {
         WeatherNowFragment weatherNowFragment = new WeatherNowFragment();
@@ -81,6 +82,8 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
 
     //调用ViewModel的方法获取天气
     private void observerWeather(String location) {
+        if (mHidden)//如果Fragment隐藏，则不加载
+            return;
         if (mWeatherData != null)//防止重复订阅
             mWeatherData.removeObservers(this);
         //如果位置是全路径，则截取城市名
@@ -90,6 +93,13 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
         mWeatherData.observe(this, textContents -> {
             mAdapter.replaceData(textContents);
         });
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        //当Fragment显示/隐藏变化时执行该方法
+        super.onHiddenChanged(hidden);
+        mHidden = hidden;
     }
 
     @Override

@@ -31,6 +31,7 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
 
     private WeatherDailyAdapter mAdapter;
     private LiveData<List<WeatherDailyResponse.DailyResult.Daily>> mWeatherDailyData;
+    private String mLocation;
 
     public static WeatherDailyFragment newInstance(String location) {
         WeatherDailyFragment weatherDailyFragment = new WeatherDailyFragment();
@@ -60,7 +61,7 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
     @Override
     public void initData(Bundle savedInstanceState) {
         if (savedInstanceState == null)
-            observerWeatherDaily(getArguments().getString(Api.API_KEY_LOCATION));
+            mLocation = getArguments().getString(Api.API_KEY_LOCATION);
     }
 
     @Override
@@ -70,7 +71,7 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
                 ", message.obj--->" + message.obj);
         switch (message.what) {
             case EventBusTags.FRAGMENT_MESSAGE_WEATHER_DAILY:
-                observerWeatherDaily(String.valueOf(message.obj));
+                mLocation = String.valueOf(message.obj);
                 break;
             default:
                 break;
@@ -91,9 +92,22 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        //当Fragment显示/隐藏变化时执行该方法《根据是否显示Fragment加载数据
+        super.onHiddenChanged(hidden);
+        if (!hidden)
+            observerWeatherDaily(mLocation);
+        else {
+            if (mWeatherDailyData != null)//防止重复订阅
+                mWeatherDailyData.removeObservers(this);
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         this.mAdapter = null;
         this.mWeatherDailyData = null;
+        this.mLocation = null;
     }
 }

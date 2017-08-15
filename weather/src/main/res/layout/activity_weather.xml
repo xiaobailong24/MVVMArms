@@ -17,6 +17,7 @@
         tools:context="me.xiaobailong24.mvvmarms.weather.mvvm.view.activity.WeatherActivity">
 
         <include
+            android:id="@+id/content_weather"
             layout="@layout/content_weather"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

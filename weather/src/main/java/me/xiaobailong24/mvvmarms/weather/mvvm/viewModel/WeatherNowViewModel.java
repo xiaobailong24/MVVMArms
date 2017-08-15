@@ -123,7 +123,8 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
 
     @Override
     public void retry() {
-        loadWeather(mLocationName.getValue());
+        if (mLocationName != null && mLocationName.getValue() != null)
+            loadWeather(mLocationName.getValue());
     }
 
     @Override
