@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.Menu;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -18,7 +19,6 @@ import me.xiaobailong24.mvvmarms.base.ArmsActivity;
 import me.xiaobailong24.mvvmarms.base.delegate.IFragment;
 import me.xiaobailong24.mvvmarms.weather.R;
 import me.xiaobailong24.mvvmarms.weather.app.EventBusTags;
-import me.xiaobailong24.mvvmarms.weather.app.utils.FragmentUtils;
 import me.xiaobailong24.mvvmarms.weather.app.utils.KeyboardUtils;
 import me.xiaobailong24.mvvmarms.weather.databinding.ActivityWeatherBinding;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
@@ -27,8 +27,6 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment.WeatherDailyFragment
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment.WeatherNowFragment;
 import me.xiaobailong24.mvvmarms.weather.mvvm.viewModel.WeatherViewModel;
 import timber.log.Timber;
-
-import static me.xiaobailong24.mvvmarms.weather.app.EventBusTags.ACTIVITY_FRAGMENT_REPLACE;
 
 public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, WeatherViewModel> {
 
@@ -48,8 +46,11 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
     @Override
     public void initData(Bundle savedInstanceState) {
         mBinding.setViewModel(mViewModel);
-        if (savedInstanceState != null)
+        if (savedInstanceState != null) {
+            //Restore data
+            mReplace = savedInstanceState.getInt(EventBusTags.ACTIVITY_FRAGMENT_REPLACE);
             mLocation = savedInstanceState.getString(Api.API_KEY_LOCATION);
+        }
         setSupportActionBar(mBinding.searchToolbar);
         initViewPager();
         initToolbar();
@@ -60,30 +61,24 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
             mFragments = new ArrayList<>();
         if (mFragmentTitles == null)
             mFragmentTitles = new ArrayList<>();
+
+        //ViewPager findFragmentByTag，tag= "android:switcher:" + R.id.viewpager + position
         WeatherNowFragment weatherNowFragment =
-                (WeatherNowFragment) FragmentUtils.findFragment(getSupportFragmentManager(), WeatherNowFragment.class);
+                (WeatherNowFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.weather_pager + ":" + 0);
         WeatherDailyFragment weatherDailyFragment =
-                (WeatherDailyFragment) FragmentUtils.findFragment(getSupportFragmentManager(), WeatherDailyFragment.class);
-        Message message = new Message();
+                (WeatherDailyFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.weather_pager + ":" + 1);
         if (weatherNowFragment == null) {
             weatherNowFragment = WeatherNowFragment.newInstance(mLocation);
-            mFragments.add(weatherNowFragment);
-            mFragmentTitles.add("Today");
-        } else {
-            message.what = EventBusTags.FRAGMENT_MESSAGE_WEATHER_NOW;
-            message.obj = mLocation;
-            weatherNowFragment.setData(message);
         }
         if (weatherDailyFragment == null) {
             weatherDailyFragment = WeatherDailyFragment.newInstance(mLocation);
-            mFragments.add(weatherDailyFragment);
-            mFragmentTitles.add("Next Three");
-        } else {
-            message.what = EventBusTags.FRAGMENT_MESSAGE_WEATHER_DAILY;
-            message.obj = mLocation;
-            weatherDailyFragment.setData(message);
         }
+        mFragments.add(weatherNowFragment);
+        mFragments.add(weatherDailyFragment);
+        mFragmentTitles.add("Today");
+        mFragmentTitles.add("Next Three");
 
+        //Setup ViewPager
         WeatherPagerAdapter adapter =
                 new WeatherPagerAdapter(getSupportFragmentManager(), mFragments, mFragmentTitles);
         mBinding.contentWeather.weatherPager.setAdapter(adapter);
@@ -121,7 +116,8 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
                     String query = (String) adapterView.getItemAtPosition(i);
                     doSearch(query);
                 });
-                mLocation = locations.get(0);
+                if (TextUtils.equals(mLocation, "北京"))
+                    mLocation = locations.get(0);
                 naviFragment();
             }
         });
@@ -195,13 +191,16 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //保存当前Activity显示的Fragment索引
-        outState.putInt(ACTIVITY_FRAGMENT_REPLACE, mReplace);
+        outState.putInt(EventBusTags.ACTIVITY_FRAGMENT_REPLACE, mReplace);
         outState.putString(Api.API_KEY_LOCATION, mLocation);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //Remove Observer
+        if (mHistoryLocations != null)
+            mHistoryLocations.removeObservers(this);
         this.mHistoryLocations = null;
         this.mLocation = null;
         this.mFragments = null;
