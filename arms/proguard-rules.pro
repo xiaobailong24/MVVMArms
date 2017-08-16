@@ -24,22 +24,21 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--optimizationpasses 5
+# http://www.jianshu.com/p/0aa044263d4d
+# 在prguard-rules.pro文件中写的，其实就是混淆规则，规定哪些东西不需要混淆。
+# 自己编写的代码中大致就是一些重要的类需要混淆，而混淆的本质就是精简类名，用简单的a,b,c等单词来代替之前写的如DataUtil等易懂的类名。
+# 所以，理解了这点，也就好理解这个混淆文件该怎么写了，大致思路就是：
+# 不混淆第三方库，不混淆系统组件，一般也可以不混淆Bean等模型类，因为这些对别人都是没用的，毕竟都是开源的。。。
 
-
--dontusemixedcaseclassnames
-
--dontskipnonpubliclibraryclasses
-
--dontskipnonpubliclibraryclassmembers
-
--dontpreverify
-
--verbose
+-optimizationpasses 5 #指定代码压缩级别
+-dontusemixedcaseclassnames #混淆时不会产生形形色色的类名
+-dontskipnonpubliclibraryclasses #指定不忽略非公共类库
+-dontskipnonpubliclibraryclassmembers #指定不忽略非公共类库成员
+-dontpreverify  #不预校验，如果需要预校验，是-dontoptimize
+-ignorewarnings #屏蔽警告
+-verbose #混淆时记录日志
 -printmapping priguardMapping.txt
-
--optimizations !code/simplification/artithmetic,!field/*,!class/merging/*
-
+-optimizations !code/simplification/artithmetic,!field/*,!class/merging/* #优化
 # Marshmallow removed Notification.setLatestEventInfo()
 -dontwarn android.app.Notification
 
@@ -54,7 +53,7 @@
 }
 -keepnames class * implements java.io.Serializable
 -keepattributes Signature
--keep class **.R$* {*;}
+-keep class **.R$* {*;} #过滤R文件的混淆
 -ignorewarnings
 -keepclassmembers class **.R$* {
     public static <fields>;

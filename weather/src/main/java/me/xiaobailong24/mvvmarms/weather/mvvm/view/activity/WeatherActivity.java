@@ -97,8 +97,7 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
             public void onPageSelected(int position) {
                 Timber.i("onPageSelected: " + position);
                 mReplace = position;
-                if (mReplace != 0)
-                    mFragments.get(mReplace).onHiddenChanged(false);
+                naviFragment();
             }
 
             @Override
@@ -114,14 +113,16 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
         });
         //Init SearchView
         mHistoryLocations = mViewModel.getHistoryLocations();
-        mHistoryLocations.observe(this, strings -> {
-            if (strings.size() > 0) {
-                mBinding.searchView.setSuggestions(strings.toArray(new String[0]));
+        mHistoryLocations.observe(this, locations -> {
+            if (locations.size() > 0) {
+                mBinding.searchView.setSuggestions(locations.toArray(new String[0]));
                 //Set Suggestions Listener
                 mBinding.searchView.setOnItemClickListener((adapterView, view, i, l) -> {
                     String query = (String) adapterView.getItemAtPosition(i);
                     doSearch(query);
                 });
+                mLocation = locations.get(0);
+                naviFragment();
             }
         });
         mBinding.searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
@@ -153,6 +154,7 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
         }
         message.obj = mLocation;
         fragment.setData(message);
+        mFragments.get(mReplace).onHiddenChanged(false);
     }
 
     //处理搜索时事件

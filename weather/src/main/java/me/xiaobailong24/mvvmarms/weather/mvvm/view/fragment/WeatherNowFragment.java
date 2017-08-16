@@ -31,8 +31,8 @@ import timber.log.Timber;
 public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, WeatherNowViewModel> {
 
     private TextContentAdapter mAdapter;
-    private LiveData<List<TextContent>> mWeatherData;
-    private boolean mHidden = false;//根据是否显示Fragment加载数据
+    private LiveData<List<TextContent>> mWeatherNowData;
+    private String mLocation;
 
     public static WeatherNowFragment newInstance(String location) {
         WeatherNowFragment weatherNowFragment = new WeatherNowFragment();
@@ -63,7 +63,7 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
     @Override
     public void initData(Bundle savedInstanceState) {
         if (savedInstanceState == null)
-            observerWeather(getArguments().getString(Api.API_KEY_LOCATION));
+            mLocation = getArguments().getString(Api.API_KEY_LOCATION);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
                 ", message.obj--->" + message.obj);
         switch (message.what) {
             case EventBusTags.FRAGMENT_MESSAGE_WEATHER_NOW:
-                observerWeather(String.valueOf(message.obj));
+                mLocation = String.valueOf(message.obj);
                 break;
             default:
                 break;
@@ -81,31 +81,35 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
     }
 
     //调用ViewModel的方法获取天气
-    private void observerWeather(String location) {
-        if (mHidden)//如果Fragment隐藏，则不加载
-            return;
-        if (mWeatherData != null)//防止重复订阅
-            mWeatherData.removeObservers(this);
+    private void observerWeatherNow(String location) {
+        if (mWeatherNowData != null)//防止重复订阅
+            mWeatherNowData.removeObservers(this);
         //如果位置是全路径，则截取城市名
         if (location.contains(","))
             location = location.substring(0, location.indexOf(","));
-        mWeatherData = mViewModel.getWeatherNow(location);
-        mWeatherData.observe(this, textContents -> {
+        mWeatherNowData = mViewModel.getWeatherNow(location);
+        mWeatherNowData.observe(this, textContents -> {
             mAdapter.replaceData(textContents);
         });
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        //当Fragment显示/隐藏变化时执行该方法
+        //当Fragment显示/隐藏变化时执行该方法《根据是否显示Fragment加载数据
         super.onHiddenChanged(hidden);
-        mHidden = hidden;
+        if (!hidden)
+            observerWeatherNow(mLocation);
+        else {
+            if (mWeatherNowData != null)//防止重复订阅
+                mWeatherNowData.removeObservers(this);
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        this.mWeatherData = null;
+        this.mWeatherNowData = null;
         this.mAdapter = null;
+        this.mLocation = null;
     }
 }
