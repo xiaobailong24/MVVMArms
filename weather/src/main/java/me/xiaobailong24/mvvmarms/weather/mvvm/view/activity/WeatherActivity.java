@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.Menu;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -116,10 +115,9 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
                     String query = (String) adapterView.getItemAtPosition(i);
                     doSearch(query);
                 });
-                if (TextUtils.equals(mLocation, "北京"))
-                    mLocation = locations.get(0);
-                naviFragment();
+                mLocation = locations.get(0);
             }
+            naviFragment();
         });
         mBinding.searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override

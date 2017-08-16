@@ -25,6 +25,7 @@
 #-renamesourcefileattribute SourceFile
 
 # http://www.jianshu.com/p/0aa044263d4d
+# https://www.diycode.cc/topics/380
 # 在prguard-rules.pro文件中写的，其实就是混淆规则，规定哪些东西不需要混淆。
 # 自己编写的代码中大致就是一些重要的类需要混淆，而混淆的本质就是精简类名，用简单的a,b,c等单词来代替之前写的如DataUtil等易懂的类名。
 # 所以，理解了这点，也就好理解这个混淆文件该怎么写了，大致思路就是：

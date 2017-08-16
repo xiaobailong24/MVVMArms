@@ -40,24 +40,11 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:visibleGone="@{viewModel.mStatus == Status.SUCCESS}"/>
 
-            <!--            <TextView
-                            android:id="@+id/weather_source"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="end"
-                            android:text="@string/weather_source"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:visibleGone="@{viewModel.mStatus == Status.SUCCESS}"
-                            />-->
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_weather_now"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="20dp"

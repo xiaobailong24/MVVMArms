@@ -82,9 +82,7 @@ public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel>
                         throw new RuntimeException("WeatherDailyResponse get MORE than one DailyResult");
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(weatherDailyResponse -> {
-                    return weatherDailyResponse.getResults().get(0).getDaily();
-                })
+                .map(weatherDailyResponse -> weatherDailyResponse.getResults().get(0).getDaily())
                 .subscribe(new ErrorHandleSubscriber<List<WeatherDailyResponse.DailyResult.Daily>>(mRxErrorHandler) {
 
                     @Override
