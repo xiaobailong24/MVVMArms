@@ -11,7 +11,7 @@ Welcome to communicate and discuss.
 <img src="https://github.com/xiaobailong24/MVVMArms/raw/master/image/MVVMArms_Architecture.png" width="80%" height="80%">
 
 ## Demo Video
-<iframe width="560" height="315" src="https://www.youtube.com/embed/6DrerONOs3I" frameborder="0" allowfullscreen></iframe>
+[![MVVMArms demo video](https://img.youtube.com/vi/6DrerONOs3I/0.jpg)](https://www.youtube.com/watch?v=6DrerONOs3I)
 
 ## Libraries & References
 - [MVPArms](https://github.com/JessYanCoding/MVPArms)
