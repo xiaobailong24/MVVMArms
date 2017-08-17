@@ -24,6 +24,7 @@ Welcome to communicate and discuss.
 - [Dagger](https://github.com/google/dagger)
 - [Retrofit](https://github.com/square/retrofit)
 - [Okhttp](https://github.com/square/okhttp)
+- [Glide](https://github.com/bumptech/glide)
 - [Gson](https://github.com/google/gson)
 - [RxJava](https://github.com/ReactiveX/RxJava)
 - [RxAndroid](https://github.com/ReactiveX/RxAndroid)
@@ -37,6 +38,10 @@ Welcome to communicate and discuss.
 - [Weather API](https://www.seniverse.com)
 - etc...
 
+## Update Log
+- ImageLoader default Glide. - 2017/08/17
+- Survives configuration changes for ViewPager using Fragment. - 2017/08/16
+- MVVMArms was BORN!!! - 2017/08/02
 
 ## Thanks
 Thanks to all the authors and organizations that contributed to the open source library!
