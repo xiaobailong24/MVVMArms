@@ -78,28 +78,6 @@ dependencies {
     testCompile rootProject.ext.dependencies["room-testing"]
     compile rootProject.ext.dependencies["room-rxjava2"]
 
-    //tools
-    provided rootProject.ext.dependencies["javax.annotation"]
-    compile rootProject.ext.dependencies["dagger2"]
-    annotationProcessor(rootProject.ext.dependencies["dagger2-compiler"]) {
-        exclude module: 'dagger'
-    }
-    compile(rootProject.ext.dependencies["dagger2-android"]) {
-        exclude module: 'dagger'
-        exclude module: 'jsr305'
-    }
-    compile(rootProject.ext.dependencies["dagger2-android-support"]) {
-        exclude module: 'dagger'
-        exclude module: 'jsr305'
-        exclude module: 'appcompat-v7'
-    }
-    annotationProcessor(rootProject.ext.dependencies["dagger2-android-processor"]) {
-        exclude module: 'dagger'
-        exclude module: 'jsr305'
-    }
-    compile rootProject.ext.dependencies["androideventbus"]
-    compile rootProject.ext.dependencies["gson"]
-
     //network
     compile(rootProject.ext.dependencies["retrofit"]) {
         exclude module: 'okhttp'
@@ -128,6 +106,35 @@ dependencies {
         exclude module: 'rxjava'
         exclude module: 'appcompat-v7'
     }
+
+    //tools
+    provided rootProject.ext.dependencies["javax.annotation"]
+    compile rootProject.ext.dependencies["dagger2"]
+    annotationProcessor(rootProject.ext.dependencies["dagger2-compiler"]) {
+        exclude module: 'dagger'
+    }
+    compile(rootProject.ext.dependencies["dagger2-android"]) {
+        exclude module: 'dagger'
+        exclude module: 'jsr305'
+    }
+    compile(rootProject.ext.dependencies["dagger2-android-support"]) {
+        exclude module: 'dagger'
+        exclude module: 'jsr305'
+        exclude module: 'appcompat-v7'
+    }
+    annotationProcessor(rootProject.ext.dependencies["dagger2-android-processor"]) {
+        exclude module: 'dagger'
+        exclude module: 'jsr305'
+    }
+    compile rootProject.ext.dependencies["androideventbus"]
+    compile rootProject.ext.dependencies["gson"]
+    compile(rootProject.ext.dependencies["glide"]) {
+        exclude module: 'support-v4'
+    }
+    annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
+        exclude module: 'jsr305'
+    }
+
 
     //test
     compile rootProject.ext.dependencies["timber"]

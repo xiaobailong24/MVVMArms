@@ -1,8 +1,10 @@
 package me.xiaobailong24.mvvmarms.di.module;
 
+import android.app.Application;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,9 @@ import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
 import me.xiaobailong24.mvvmarms.http.BaseUrl;
 import me.xiaobailong24.mvvmarms.http.GlobalHttpHandler;
 import me.xiaobailong24.mvvmarms.http.RequestInterceptor;
+import me.xiaobailong24.mvvmarms.http.imageloader.BaseImageLoaderStrategy;
+import me.xiaobailong24.mvvmarms.http.imageloader.glide.GlideImageLoaderStrategy;
+import me.xiaobailong24.mvvmarms.utils.DataHelper;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 
@@ -25,6 +30,8 @@ import okhttp3.Interceptor;
 public class GlobalConfigModule {
     private HttpUrl mApiUrl;
     private BaseUrl mBaseUrl;
+    private File mCacheFile;
+    private BaseImageLoaderStrategy mImageLoaderStrategy;
     private GlobalHttpHandler mHandler;
     private List<Interceptor> mInterceptors;
     private ResponseErrorListener mErrorListener;
@@ -38,6 +45,8 @@ public class GlobalConfigModule {
         this.mApiUrl = builder.apiUrl;
         this.mBaseUrl = builder.baseUrl;
         this.mHandler = builder.handler;
+        this.mCacheFile = builder.cacheFile;
+        this.mImageLoaderStrategy = builder.imageLoaderStrategy;
         this.mInterceptors = builder.interceptors;
         this.mErrorListener = builder.responseErrorListener;
         this.mRetrofitConfiguration = builder.retrofitConfiguration;
@@ -69,6 +78,20 @@ public class GlobalConfigModule {
             }
         }
         return mApiUrl == null ? HttpUrl.parse("https://api.github.com/") : mApiUrl;
+    }
+
+    @Singleton
+    @Provides
+    File provideCacheFile(Application application) {
+        //提供缓存文件
+        return mCacheFile == null ? DataHelper.getCacheFile(application) : mCacheFile;
+    }
+
+    @Singleton
+    @Provides
+    BaseImageLoaderStrategy provideImageLoaderStrategy() {
+        //默认使用 Glide 加载图片
+        return mImageLoaderStrategy == null ? new GlideImageLoaderStrategy() : mImageLoaderStrategy;
     }
 
 
@@ -119,6 +142,8 @@ public class GlobalConfigModule {
     public static final class Builder {
         private HttpUrl apiUrl;
         private BaseUrl baseUrl;
+        private File cacheFile;
+        private BaseImageLoaderStrategy imageLoaderStrategy;
         private GlobalHttpHandler handler;
         private List<Interceptor> interceptors;
         private ResponseErrorListener responseErrorListener;
@@ -143,6 +168,16 @@ public class GlobalConfigModule {
                 throw new IllegalArgumentException("BaseUrl can not be null");
             }
             this.baseUrl = baseUrl;
+            return this;
+        }
+
+        public Builder cacheFile(File cacheFile) {
+            this.cacheFile = cacheFile;
+            return this;
+        }
+
+        public Builder imageLoaderStrategy(BaseImageLoaderStrategy imageLoaderStrategy) {
+            this.imageLoaderStrategy = imageLoaderStrategy;
             return this;
         }
 

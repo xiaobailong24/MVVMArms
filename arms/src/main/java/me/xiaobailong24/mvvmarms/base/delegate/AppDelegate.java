@@ -15,6 +15,7 @@ import me.xiaobailong24.mvvmarms.di.component.DaggerArmsComponent;
 import me.xiaobailong24.mvvmarms.di.module.ArmsModule;
 import me.xiaobailong24.mvvmarms.di.module.ClientModule;
 import me.xiaobailong24.mvvmarms.di.module.GlobalConfigModule;
+import me.xiaobailong24.mvvmarms.http.imageloader.glide.ImageConfigImpl;
 import me.xiaobailong24.mvvmarms.repository.ConfigModule;
 import me.xiaobailong24.mvvmarms.utils.ManifestParser;
 
@@ -27,7 +28,7 @@ public class AppDelegate implements App, AppLifecycles {
     private ArmsComponent mArmsComponent;
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
-    private final List<ConfigModule> mModules;
+    private List<ConfigModule> mModules;
     private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
     private ComponentCallbacks2 mComponentCallback;
@@ -60,20 +61,21 @@ public class AppDelegate implements App, AppLifecycles {
 
         mArmsComponent.extras().put(ConfigModule.class.getName(), mModules);
 
+        this.mModules = null;
+
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
 
         for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);
         }
 
-        for (AppLifecycles lifecycle : mAppLifecycles) {
-            lifecycle.onCreate(mApplication);
-        }
-
         mComponentCallback = new AppComponentCallbacks(mApplication, mArmsComponent);
 
         mApplication.registerComponentCallbacks(mComponentCallback);
 
+        for (AppLifecycles lifecycle : mAppLifecycles) {
+            lifecycle.onCreate(mApplication);
+        }
     }
 
     @Override
@@ -154,7 +156,9 @@ public class AppDelegate implements App, AppLifecycles {
 
         @Override
         public void onLowMemory() {
-
+            //内存不足时清理图片请求框架的内存缓存
+            mArmsComponent.imageLoader()
+                    .clear(mApplication, ImageConfigImpl.builder().isClearMemory(true).build());
         }
     }
 }
