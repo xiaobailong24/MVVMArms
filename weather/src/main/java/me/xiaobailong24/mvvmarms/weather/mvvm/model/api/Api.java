@@ -8,6 +8,7 @@ package me.xiaobailong24.mvvmarms.weather.mvvm.model.api;
 public interface Api {
     String APP_DOMAIN = "https://api.seniverse.com/v3/";
     String API_KEY = "sokppqeydnrkohxe";//心知天气API密钥
+    String API_WEATHER_ICON_URL = "https://s3.sencdn.com/web/icons/3d_50/%s.png";//心知天气API图标
 
     String API_KEY_KEY = "key";
     String API_KEY_LANGUAGE = "language";
