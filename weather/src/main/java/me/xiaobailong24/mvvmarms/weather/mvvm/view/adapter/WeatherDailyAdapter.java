@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
 import com.allen.library.SuperTextView;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
 
 import java.util.List;
 import java.util.Locale;
@@ -51,8 +52,8 @@ public class WeatherDailyAdapter extends BaseBindAdapter<WeatherDailyResponse.Da
                 .loadImage(mContext,
                         ImageConfigImpl.builder()
                                 .url(String.format(Locale.CHINESE, Api.API_WEATHER_ICON_URL, item.getCodeDay()))
-                                .placeholder(R.mipmap.weather_unknown)
-                                .errorPic(R.mipmap.ic_seniverse_weather)
+                                .errorPic(R.mipmap.weather_unknown)
+                                .transformation(new FitCenter())
                                 .imageView(superTextView.getRightIconIV())
                                 .build());
     }
