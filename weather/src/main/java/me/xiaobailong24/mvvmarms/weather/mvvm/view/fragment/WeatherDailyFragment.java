@@ -88,12 +88,16 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
         mWeatherDailyData = mViewModel.getWeatherDaily(location);
         mWeatherDailyData.observe(this, dailies -> {
             mAdapter.replaceData(dailies);
+            // TODO: 2017/8/19
+            //            DiffUtil.DiffResult diffResult = DiffUtil
+            //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), dailies));
+            //            diffResult.dispatchUpdatesTo(mAdapter);
         });
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        //当Fragment显示/隐藏变化时执行该方法《根据是否显示Fragment加载数据
+        //当Fragment显示/隐藏变化时执行该方法，根据是否显示Fragment加载数据
         super.onHiddenChanged(hidden);
         if (!hidden)
             observerWeatherDaily(mLocation);

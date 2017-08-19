@@ -52,6 +52,7 @@ public class WeatherDailyAdapter extends BaseBindAdapter<WeatherDailyResponse.Da
                 .loadImage(mContext,
                         ImageConfigImpl.builder()
                                 .url(String.format(Locale.CHINESE, Api.API_WEATHER_ICON_URL, item.getCodeDay()))
+                                .placeholder(R.mipmap.ic_placeholder)
                                 .errorPic(R.mipmap.weather_unknown)
                                 .transformation(new FitCenter())
                                 .imageView(superTextView.getRightIconIV())
