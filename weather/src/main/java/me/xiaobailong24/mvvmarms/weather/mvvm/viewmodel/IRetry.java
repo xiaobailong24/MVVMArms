@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.weather.mvvm.viewModel;
+package me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel;
 
 /**
  * Created by xiaobailong24 on 2017/6/28.

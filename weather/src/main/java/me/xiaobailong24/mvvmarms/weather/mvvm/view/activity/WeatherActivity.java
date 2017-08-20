@@ -25,7 +25,7 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.adapter.WeatherPagerAdapter;
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment.WeatherDailyFragment;
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment.WeatherNowFragment;
-import me.xiaobailong24.mvvmarms.weather.mvvm.viewModel.WeatherViewModel;
+import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherViewModel;
 import timber.log.Timber;
 
 public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, WeatherViewModel> {

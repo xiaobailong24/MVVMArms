@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="me.xiaobailong24.mvvmarms.weather.mvvm.viewModel.WeatherNowViewModel"/>
+            type="me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherNowViewModel"/>
 
     </data>
 

@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.weather.mvvm.viewModel;
+package me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;

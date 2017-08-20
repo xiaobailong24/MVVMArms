@@ -19,7 +19,7 @@ import me.xiaobailong24.mvvmarms.weather.databinding.FragmentWeatherNowBinding;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.pojo.TextContent;
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.adapter.TextContentAdapter;
-import me.xiaobailong24.mvvmarms.weather.mvvm.viewModel.WeatherNowViewModel;
+import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherNowViewModel;
 import timber.log.Timber;
 
 

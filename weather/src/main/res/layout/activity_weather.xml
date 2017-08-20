@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="me.xiaobailong24.mvvmarms.weather.mvvm.viewModel.WeatherViewModel"/>
+            type="me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherViewModel"/>
     </data>
 
     <FrameLayout

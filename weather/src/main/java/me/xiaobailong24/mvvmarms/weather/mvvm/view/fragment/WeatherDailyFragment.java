@@ -19,7 +19,7 @@ import me.xiaobailong24.mvvmarms.weather.databinding.FragmentWeatherDailyBinding
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.adapter.WeatherDailyAdapter;
-import me.xiaobailong24.mvvmarms.weather.mvvm.viewModel.WeatherDailyViewModel;
+import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherDailyViewModel;
 import timber.log.Timber;
 
 /**

@@ -7,7 +7,7 @@ import dagger.Module;
 import dagger.multibindings.IntoMap;
 import me.xiaobailong24.mvvmarms.di.module.ViewModelFactoryModule;
 import me.xiaobailong24.mvvmarms.di.scope.ViewModelScope;
-import me.xiaobailong24.mvvmarms.weather.mvvm.viewModel.WeatherDailyViewModel;
+import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherDailyViewModel;
 
 /**
  * Created by xiaobailong24 on 2017/8/14.
