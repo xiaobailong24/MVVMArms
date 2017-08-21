@@ -63,10 +63,10 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
             mFragmentTitles = new ArrayList<>();
 
         //ViewPager findFragmentByTag，tag= "android:switcher:" + R.id.viewpager + position
-        WeatherNowFragment weatherNowFragment =
-                (WeatherNowFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.weather_pager + ":" + 0);
-        WeatherDailyFragment weatherDailyFragment =
-                (WeatherDailyFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.weather_pager + ":" + 1);
+        WeatherNowFragment weatherNowFragment = (WeatherNowFragment) getSupportFragmentManager()
+                .findFragmentByTag("android:switcher:" + R.id.weather_pager + ":" + 0);
+        WeatherDailyFragment weatherDailyFragment = (WeatherDailyFragment) getSupportFragmentManager()
+                .findFragmentByTag("android:switcher:" + R.id.weather_pager + ":" + 1);
         if (weatherNowFragment == null) {
             weatherNowFragment = WeatherNowFragment.newInstance(mLocation);
         }
