@@ -86,6 +86,8 @@
 -keep class retrofit2.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
+-dontwarn okio.**
+-dontwarn javax.annotation.**
 
 
 ################okhttp###############
@@ -96,6 +98,9 @@
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
 -dontwarn com.squareup.okhttp.**
+-dontwarn okio.**
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
 
 
 ################glide###############
@@ -196,9 +201,18 @@
 
 
 ################Canary#################
+#https://github.com/square/leakcanary/issues/815
 -dontwarn com.squareup.haha.guava.**
 -dontwarn com.squareup.haha.perflib.**
 -dontwarn com.squareup.haha.trove.**
 -dontwarn com.squareup.leakcanary.**
 -keep class com.squareup.haha.** { *; }
 -keep class com.squareup.leakcanary.** { *; }
+
+
+################Dagger#################
+-dontwarn com.google.errorprone.annotations.*
+
+
+################自己编写的类的操作#################
+-keep class me.xiaobailong24.mvvmarms.**{*;}

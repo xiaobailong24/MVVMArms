@@ -16,7 +16,7 @@ ext {
             glideSdkVersion         : "4.0.0",
             dagger2SdkVersion       : "2.11",
             espressoSdkVersion      : "2.2.2",
-            canarySdkVersion        : "1.5.2"
+            canarySdkVersion        : "1.5.1"
     ]
 
     dependencies = [
@@ -69,6 +69,7 @@ ext {
             "androideventbus"          : "org.simple:androideventbus:1.0.5.1",
             "gson"                     : "com.google.code.gson:gson:2.8.0",
             "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
+            "multidex"                 : "com.android.support:multidex:1.0.1",
 
             //test
             "junit"                    : "junit:junit:4.12",

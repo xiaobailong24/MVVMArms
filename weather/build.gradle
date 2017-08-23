@@ -17,6 +17,9 @@ android {
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        //https://developer.android.com/studio/build/multidex.html?hl=zh-cn
+        multiDexEnabled true
+
         //Room
         javaCompileOptions {
             annotationProcessorOptions {
@@ -30,7 +33,7 @@ android {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "boolean", "USE_CANARY", "true"
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -79,6 +82,7 @@ dependencies {
         exclude module: 'dagger'
         exclude module: 'jsr305'
     }
+    compile rootProject.ext.dependencies["multidex"]
 
     //test
     testCompile rootProject.ext.dependencies["junit"]

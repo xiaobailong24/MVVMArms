@@ -22,6 +22,12 @@ allprojects {
         maven { url "https://dl.google.com/dl/android/maven2" }
 //        maven { url "https://maven.google.com" }
     }
+    //https://github.com/google/dagger/issues/306
+    afterEvaluate {
+        tasks.withType(JavaCompile.class) {
+            options.compilerArgs << "-Xmaxerrs" << "500"
+        }
+    }
 }
 
 task clean(type: Delete) {
