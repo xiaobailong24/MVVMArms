@@ -43,7 +43,8 @@ Welcome to communicate and discuss.
 - etc...
 
 ## Update Log
-- ImageLoader default Glide. - 2017/08/17
+- [ArmsUtils](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/utils/ArmsUtils.java) to obtain [**ArmsComponent**](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/di/component/ArmsComponent.java) easily. - 2017/08/23
+- [ImageLoader](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/http/imageloader/ImageLoader.java) default Glide. - 2017/08/17
 - Survives configuration changes for ViewPager using Fragment. - 2017/08/16
 - MVVMArms was BORN!!! - 2017/08/02
 
