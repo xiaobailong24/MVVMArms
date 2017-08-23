@@ -11,11 +11,11 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import java.util.List;
 import java.util.Locale;
 
-import me.xiaobailong24.mvvmarms.base.delegate.App;
 import me.xiaobailong24.mvvmarms.di.component.ArmsComponent;
 import me.xiaobailong24.mvvmarms.http.imageloader.glide.ImageConfigImpl;
 import me.xiaobailong24.mvvmarms.mvvm.binding.BaseBindAdapter;
 import me.xiaobailong24.mvvmarms.mvvm.binding.BaseBindHolder;
+import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.weather.BR;
 import me.xiaobailong24.mvvmarms.weather.R;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
@@ -37,7 +37,7 @@ public class WeatherDailyAdapter extends BaseBindAdapter<WeatherDailyResponse.Da
     @Override
     public BaseBindHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         BaseBindHolder holder = super.onCreateViewHolder(parent, viewType);
-        mArmsComponent = ((App) mContext.getApplicationContext()).getArmsComponent();
+        mArmsComponent = ArmsUtils.INSTANCE.obtainArmsComponent(mContext);
         return holder;
     }
 

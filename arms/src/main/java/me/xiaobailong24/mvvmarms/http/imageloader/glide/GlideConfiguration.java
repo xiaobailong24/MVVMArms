@@ -18,10 +18,10 @@ import com.bumptech.glide.module.AppGlideModule;
 import java.io.File;
 import java.io.InputStream;
 
-import me.xiaobailong24.mvvmarms.base.delegate.App;
 import me.xiaobailong24.mvvmarms.di.component.ArmsComponent;
 import me.xiaobailong24.mvvmarms.http.OkHttpUrlLoader;
 import me.xiaobailong24.mvvmarms.http.imageloader.BaseImageLoaderStrategy;
+import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.utils.DataHelper;
 
 /**
@@ -37,7 +37,7 @@ public class GlideConfiguration extends AppGlideModule {
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
         super.applyOptions(context, builder);
-        ArmsComponent armsComponent = ((App) context.getApplicationContext()).getArmsComponent();
+        ArmsComponent armsComponent = ArmsUtils.INSTANCE.obtainArmsComponent(context);
         builder.setDiskCache(new DiskCache.Factory() {
             @Nullable
             @Override
@@ -71,7 +71,7 @@ public class GlideConfiguration extends AppGlideModule {
     public void registerComponents(Context context, Glide glide, Registry registry) {
         super.registerComponents(context, glide, registry);
         //Glide默认使用HttpURLConnection做网络请求,在这切换成okhttp请求
-        ArmsComponent armsComponent = ((App) context.getApplicationContext()).getArmsComponent();
+        ArmsComponent armsComponent = ArmsUtils.INSTANCE.obtainArmsComponent(context);
         registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(armsComponent.okHttpClient()));
     }
 

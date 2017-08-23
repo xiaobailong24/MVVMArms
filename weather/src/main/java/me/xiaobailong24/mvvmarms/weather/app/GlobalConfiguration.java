@@ -20,12 +20,12 @@ import java.net.UnknownHostException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import me.xiaobailong24.mvvmarms.base.delegate.App;
 import me.xiaobailong24.mvvmarms.base.delegate.AppLifecycles;
 import me.xiaobailong24.mvvmarms.di.module.GlobalConfigModule;
 import me.xiaobailong24.mvvmarms.http.GlobalHttpHandler;
 import me.xiaobailong24.mvvmarms.http.RequestInterceptor;
 import me.xiaobailong24.mvvmarms.repository.ConfigModule;
+import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.utils.UiUtils;
 import me.xiaobailong24.mvvmarms.weather.BuildConfig;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
@@ -139,7 +139,7 @@ public class GlobalConfiguration implements ConfigModule {
                     //                    });
                 }
                 //leakCanary内存泄露检查
-                ((App) application).getArmsComponent()
+                ArmsUtils.INSTANCE.obtainArmsComponent(application)
                         .extras()
                         .put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
             }
@@ -201,9 +201,7 @@ public class GlobalConfiguration implements ConfigModule {
             @Override
             public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
                 //这里应该是检测 Fragment 而不是 FragmentLifecycleCallbacks 的泄露。
-                ((RefWatcher) ((App) f.getActivity()
-                        .getApplication())
-                        .getArmsComponent()
+                ((RefWatcher) (ArmsUtils.INSTANCE.obtainArmsComponent(f.getContext()))
                         .extras()
                         .get(RefWatcher.class.getName()))
                         .watch(f);
