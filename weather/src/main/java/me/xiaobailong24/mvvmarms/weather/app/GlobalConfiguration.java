@@ -28,6 +28,7 @@ import me.xiaobailong24.mvvmarms.repository.ConfigModule;
 import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.utils.UiUtils;
 import me.xiaobailong24.mvvmarms.weather.BuildConfig;
+import me.xiaobailong24.mvvmarms.weather.app.utils.CrashUtils;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -142,6 +143,9 @@ public class GlobalConfiguration implements ConfigModule {
                 ArmsUtils.INSTANCE.obtainArmsComponent(application)
                         .extras()
                         .put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+
+                //设置全局Crash监听
+                CrashUtils.init(application, ArmsUtils.INSTANCE.obtainArmsComponent(application).cacheFile());
             }
 
             @Override
