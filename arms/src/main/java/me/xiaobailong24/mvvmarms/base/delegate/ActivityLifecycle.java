@@ -175,7 +175,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
             super.onFragmentAttached(fm, f, context);
             if (f instanceof IFragment && f.getArguments() != null) {
-                Timber.w(f.toString() + " ---> onFragmentAttached");
+                Timber.i(f.toString() + " ---> onFragmentAttached");
                 FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
                 if (fragmentDelegate == null || !fragmentDelegate.isAdded()) {
                     fragmentDelegate = new FragmentDelegateImpl(fm, f);
@@ -190,7 +190,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentCreated(fm, f, savedInstanceState);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentCreated");
+                Timber.i(f.toString() + " ---> onFragmentCreated");
                 fragmentDelegate.onCreate(savedInstanceState);
             }
         }
@@ -200,7 +200,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentViewCreated(fm, f, v, savedInstanceState);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentViewCreated");
+                Timber.i(f.toString() + " ---> onFragmentViewCreated");
                 fragmentDelegate.onCreateView(v, savedInstanceState);
             }
         }
@@ -210,7 +210,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentActivityCreated(fm, f, savedInstanceState);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentActivityCreated");
+                Timber.i(f.toString() + " ---> onFragmentActivityCreated");
                 fragmentDelegate.onActivityCreate(savedInstanceState);
             }
         }
@@ -220,7 +220,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentStarted(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentStarted");
+                Timber.i(f.toString() + " ---> onFragmentStarted");
                 fragmentDelegate.onStart();
             }
         }
@@ -230,7 +230,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentResumed(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentResumed");
+                Timber.i(f.toString() + " ---> onFragmentResumed");
                 fragmentDelegate.onResume();
             }
         }
@@ -240,7 +240,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentPaused(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentPaused");
+                Timber.i(f.toString() + " ---> onFragmentPaused");
                 fragmentDelegate.onPause();
             }
         }
@@ -250,7 +250,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentStopped(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentStopped");
+                Timber.i(f.toString() + " ---> onFragmentStopped");
                 fragmentDelegate.onStop();
             }
         }
@@ -260,7 +260,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentSaveInstanceState(fm, f, outState);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentSaveInstanceState");
+                Timber.i(f.toString() + " ---> onFragmentSaveInstanceState");
                 fragmentDelegate.onSaveInstanceState(outState);
             }
         }
@@ -270,7 +270,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentViewDestroyed(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentViewDestroyed");
+                Timber.i(f.toString() + " ---> onFragmentViewDestroyed");
                 fragmentDelegate.onDestroyView();
             }
         }
@@ -280,7 +280,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentDestroyed(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentDestroyed");
+                Timber.i(f.toString() + " ---> onFragmentDestroyed");
                 fragmentDelegate.onDestroy();
             }
         }
@@ -290,7 +290,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentDetached(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentDetached");
+                Timber.i(f.toString() + " ---> onFragmentDetached");
                 fragmentDelegate.onDetach();
                 f.getArguments().clear();
             }
