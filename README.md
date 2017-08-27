@@ -1,4 +1,6 @@
 # MVVMArms
+[![](https://badge.juejin.im/entry/599d1f6e518825244d204014/likes.svg?style=flat-square)](https://juejin.im/entry/599d1f6e518825244d204014/detail)
+
 Android MVVM Architecture Components based on [MVPArms](https://github.com/JessYanCoding/MVPArms) and [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html).
 
 [中文](https://github.com/xiaobailong24/MVVMArms/blob/master/README_CN.md)
