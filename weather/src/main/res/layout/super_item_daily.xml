@@ -24,6 +24,8 @@
         stv:sLeftTopTextString="@{daily.date}"
         stv:sLeftViewGravity="left_center"
         stv:sRightBottomTextString='@{daily.low + "º"}'
+        stv:sRightIconHeight="40dp"
+        stv:sRightIconWidth="40dp"
         stv:sRightTopTextString='@{daily.high + "º"}'
         stv:sRightViewGravity="right_center"
         />

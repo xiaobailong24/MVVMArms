@@ -62,6 +62,7 @@ dependencies {
     compile rootProject.ext.dependencies["constraint-layout"]
     compile rootProject.ext.dependencies["SuperTextView"]
     compile rootProject.ext.dependencies["MaterialSearchView"]
+    compile rootProject.ext.dependencies["emptyview"]
 
     //mvvm(Lifecycles, LiveData, and ViewModel, Room)
     annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
