@@ -62,7 +62,6 @@ dependencies {
     compile rootProject.ext.dependencies["constraint-layout"]
     compile rootProject.ext.dependencies["SuperTextView"]
     compile rootProject.ext.dependencies["MaterialSearchView"]
-    compile rootProject.ext.dependencies["emptyview"]
 
     //mvvm(Lifecycles, LiveData, and ViewModel, Room)
     annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
@@ -76,11 +75,9 @@ dependencies {
     //tools
     provided rootProject.ext.dependencies["javax.annotation"]
     annotationProcessor(rootProject.ext.dependencies["dagger2-compiler"]) {
-        exclude module: 'dagger'
         exclude module: 'js305'
     }
     annotationProcessor(rootProject.ext.dependencies["dagger2-android-processor"]) {
-        exclude module: 'dagger'
         exclude module: 'jsr305'
     }
     compile rootProject.ext.dependencies["multidex"]

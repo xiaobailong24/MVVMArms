@@ -33,7 +33,6 @@ ext {
             "brvah"                    : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28",
             "SuperTextView"            : "com.github.lygttpod:SuperTextView:2.1.3",
             "MaterialSearchView"       : "com.miguelcatalan:materialsearchview:1.4.0",
-            "emptyview"                : "com.github.santalu:emptyview:1.0.2",
 
             //mvvm( Lifecycles, LiveData, and ViewModel, Room)
             "lifecycle-runtime"        : "android.arch.lifecycle:runtime:${version["androidArchSdkVersion"]}",
