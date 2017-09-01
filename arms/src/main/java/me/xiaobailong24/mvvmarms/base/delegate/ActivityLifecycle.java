@@ -63,7 +63,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             activityDelegate.onCreate(savedInstanceState);
         }
 
-        /**
+        /*
          * 给每个Activity配置Fragment的监听,Activity可以通过 {@link IActivity#useFragment()} 设置是否使用监听
          * 如果这个Activity返回false的话,这个Activity将不能使用{@link FragmentDelegate},意味着 {@link com.jess.arms.base.BaseFragment}也不能使用
          */
@@ -78,6 +78,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
             if (mFragmentLifecycles == null && mExtras.containsKey(ConfigModule.class.getName())) {
                 mFragmentLifecycles = new ArrayList<>();
+                @SuppressWarnings("unchecked")
                 List<ConfigModule> modules = (List<ConfigModule>) mExtras.get(ConfigModule.class.getName());
                 for (ConfigModule module : modules) {
                     module.injectFragmentLifecycle(mApplication, mFragmentLifecycles);
