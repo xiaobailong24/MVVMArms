@@ -14,11 +14,10 @@ import android.view.ViewParent;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import org.simple.eventbus.EventBus;
-
 import java.security.MessageDigest;
 
-import static me.xiaobailong24.mvvmarms.base.delegate.AppManager.APPMANAGER_MESSAGE;
+import me.xiaobailong24.mvvmarms.base.delegate.AppManager;
+
 import static me.xiaobailong24.mvvmarms.base.delegate.AppManager.APP_EXIT;
 import static me.xiaobailong24.mvvmarms.base.delegate.AppManager.KILL_ALL;
 import static me.xiaobailong24.mvvmarms.base.delegate.AppManager.SHOW_SNACKBAR;
@@ -187,7 +186,7 @@ public class UiUtils {
         message.what = SHOW_SNACKBAR;
         message.obj = text;
         message.arg1 = 0;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     /**
@@ -200,7 +199,7 @@ public class UiUtils {
         message.what = SHOW_SNACKBAR;
         message.obj = text;
         message.arg1 = 1;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
 
@@ -235,7 +234,7 @@ public class UiUtils {
         Message message = new Message();
         message.what = START_ACTIVITY;
         message.obj = homeActivityClass;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     /**
@@ -247,7 +246,7 @@ public class UiUtils {
         Message message = new Message();
         message.what = START_ACTIVITY;
         message.obj = content;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     /**
@@ -375,13 +374,13 @@ public class UiUtils {
     public static void killAll() {
         Message message = new Message();
         message.what = KILL_ALL;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     public static void exitApp() {
         Message message = new Message();
         message.what = APP_EXIT;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
 }

@@ -146,6 +146,14 @@ public class GlobalConfiguration implements ConfigModule {
 
                 //设置全局Crash监听
                 CrashUtils.init(application, ArmsUtils.INSTANCE.obtainArmsComponent(application).cacheFile());
+
+                //扩展 AppManager 的远程遥控功能
+                ArmsUtils.INSTANCE.obtainArmsComponent(application).appManager()
+                        .setHandleListener((appManager, message) -> {
+                            Timber.d("handleMessage: " + message.what);
+                            //AppManager.post(message);
+                            //handle message
+                        });
             }
 
             @Override

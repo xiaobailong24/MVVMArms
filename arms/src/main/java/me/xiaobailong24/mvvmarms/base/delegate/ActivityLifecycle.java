@@ -44,8 +44,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         Timber.w(activity + " ---> onActivityCreated");
 
-        //如果intent包含了此字段,并且为true说明不加入到list
-        // 默认为false,如果不需要管理(比如不需要在退出所有activity(killAll)时，退出此activity就在intent加此字段为true)
+        //如果 intent 包含了此字段,并且为 true 说明不加入到 list 进行统一管理
         boolean isNotAdd = false;
         if (activity.getIntent() != null)
             isNotAdd = activity.getIntent().getBooleanExtra(AppManager.IS_NOT_ADD_ACTIVITY_LIST, false);
@@ -63,10 +62,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             activityDelegate.onCreate(savedInstanceState);
         }
 
-        /*
-         * 给每个Activity配置Fragment的监听,Activity可以通过 {@link IActivity#useFragment()} 设置是否使用监听
-         * 如果这个Activity返回false的话,这个Activity将不能使用{@link FragmentDelegate},意味着 {@link com.jess.arms.base.BaseFragment}也不能使用
-         */
+        // 给每个Activity配置Fragment的监听,Activity可以通过 {@link IActivity#useFragment()} 设置是否使用监听
         boolean useFragment = !(activity instanceof IActivity) || ((IActivity) activity).useFragment();
         if (activity instanceof FragmentActivity && useFragment) {
 
