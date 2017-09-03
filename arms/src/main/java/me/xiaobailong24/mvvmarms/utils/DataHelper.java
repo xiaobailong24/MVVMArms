@@ -16,12 +16,14 @@ import java.io.ObjectOutputStream;
 /**
  * SharedPreferences 数据管理工具类
  */
+@SuppressWarnings("all")
 public class DataHelper {
     private static SharedPreferences mSharedPreferences;
     public static final String SP_NAME = "config";
 
 
     private DataHelper() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     /**

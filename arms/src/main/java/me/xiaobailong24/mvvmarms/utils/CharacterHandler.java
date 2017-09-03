@@ -24,9 +24,11 @@ import javax.xml.transform.stream.StreamSource;
 /**
  * Created by zhiyicx on 2016/3/16.
  */
+@SuppressWarnings("all")
 public class CharacterHandler {
 
     private CharacterHandler() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     public static final InputFilter emojiFilter = new InputFilter() {//emoji过滤器

@@ -17,10 +17,11 @@ import java.util.zip.Inflater;
  * Created by xiaobailong24 on 2017/6/16.
  * ZipHelper
  */
+@SuppressWarnings("all")
 public class ZipHelper {
 
-
     private ZipHelper() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     /**

@@ -28,12 +28,13 @@ import static me.xiaobailong24.mvvmarms.base.delegate.AppManager.START_ACTIVITY;
  * Created by xiaobailong24 on 2017/6/27.
  * UiUtils
  */
-
+@SuppressWarnings("all")
 public class UiUtils {
     static public Toast mToast;
 
 
     private UiUtils() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
 
