@@ -6,7 +6,7 @@ ext {
             minSdkVersion    : 15,
             targetSdkVersion : 26,
             versionCode      : 1,
-            versionName      : "1.0.0-beta"
+            versionName      : "1.0.0-beta2"
     ]
 
     version = [
