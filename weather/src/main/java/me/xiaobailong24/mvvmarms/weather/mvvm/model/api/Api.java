@@ -14,11 +14,4 @@ public interface Api {
     String API_KEY_LANGUAGE = "language";
     String API_KEY_TEMP_UNIT = "unit";
     String API_KEY_LOCATION = "location";
-
-    //数据请求状态
-    enum Status {
-        LOADING,
-        SUCCESS,
-        ERROR
-    }
 }

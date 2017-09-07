@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/weather_source"
-    android:layout_width="0dp"
-    android:layout_height="20dp"
-    android:contentDescription="@string/weather_source"
-    android:scaleType="fitCenter"
-    android:src="@mipmap/ic_seniverse_logo"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
+<layout>
+
+    <data>
+
+        <import type="me.xiaobailong24.mvvmarms.http.Status"/>
+
+        <variable
+            name="viewModel"
+            type="me.xiaobailong24.mvvmarms.mvvm.BaseViewModel"/>
+    </data>
+
+    <ImageView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/weather_source"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:contentDescription="@string/weather_source"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_seniverse_logo"
+        app:visibleGone="@{viewModel.mStatus != Status.ERROR}"/>
+</layout>

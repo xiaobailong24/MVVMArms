@@ -3,7 +3,6 @@ package me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.databinding.ObservableField;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +17,7 @@ import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.xiaobailong24.mvvmarms.di.scope.AppScope;
+import me.xiaobailong24.mvvmarms.http.Status;
 import me.xiaobailong24.mvvmarms.mvvm.BaseViewModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.WeatherDailyModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
@@ -28,14 +28,10 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
  * MVVM WeatherDailyViewModel
  */
 @AppScope
-public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel>
-        implements IRetry {
+public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel> {
     private RxErrorHandler mRxErrorHandler;
     private MutableLiveData<List<WeatherDailyResponse.DailyResult.Daily>> mDailyData;
     private MutableLiveData<String> mLocationName;
-
-    //数据请求状态
-    public final ObservableField<Api.Status> mStatus = new ObservableField<>();
 
     @Inject
     public WeatherDailyViewModel(Application application, WeatherDailyModel weatherDailyModel,
@@ -73,7 +69,7 @@ public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel>
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable -> {
                     addDispose(disposable);
-                    mStatus.set(Api.Status.LOADING);
+                    mStatus.set(Status.LOADING);
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
@@ -94,14 +90,14 @@ public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel>
 
                     @Override
                     public void onNext(@NonNull List<WeatherDailyResponse.DailyResult.Daily> dailies) {
-                        mStatus.set(Api.Status.SUCCESS);
+                        mStatus.set(Status.SUCCESS);
                         mDailyData.setValue(dailies);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         super.onError(e);
-                        mStatus.set(Api.Status.ERROR);
+                        mStatus.set(Status.ERROR);
                     }
                 });
     }
