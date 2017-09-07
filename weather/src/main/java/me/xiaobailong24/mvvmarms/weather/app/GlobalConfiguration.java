@@ -28,6 +28,7 @@ import me.xiaobailong24.mvvmarms.repository.ConfigModule;
 import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.utils.UiUtils;
 import me.xiaobailong24.mvvmarms.weather.BuildConfig;
+import me.xiaobailong24.mvvmarms.weather.app.utils.CrashUtils;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -142,6 +143,17 @@ public class GlobalConfiguration implements ConfigModule {
                 ArmsUtils.INSTANCE.obtainArmsComponent(application)
                         .extras()
                         .put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+
+                //设置全局Crash监听
+                CrashUtils.init(application, ArmsUtils.INSTANCE.obtainArmsComponent(application).cacheFile());
+
+                //扩展 AppManager 的远程遥控功能
+                ArmsUtils.INSTANCE.obtainArmsComponent(application).appManager()
+                        .setHandleListener((appManager, message) -> {
+                            Timber.d("handleMessage: " + message.what);
+                            //AppManager.post(message);
+                            //handle message
+                        });
             }
 
             @Override
@@ -153,33 +165,10 @@ public class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void injectActivityLifecycle(Context context, List<Application.ActivityLifecycleCallbacks> lifecycles) {
-        lifecycles.add(new Application.ActivityLifecycleCallbacks() {
+        lifecycles.add(new EmptyActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) {
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-            }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
+                //do something
             }
         });
     }

@@ -13,6 +13,7 @@ import me.xiaobailong24.mvvmarms.repository.ConfigModule;
  * Created by xiaobailong24 on 2017/6/16.
  * AndroidManifest.xml ManifestParser
  */
+@SuppressWarnings("all")
 public final class ManifestParser {
     private static final String MODULE_VALUE = "ConfigModule";
 

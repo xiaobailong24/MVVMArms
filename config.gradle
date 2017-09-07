@@ -10,7 +10,7 @@ ext {
     ]
 
     version = [
-            androidSupportSdkVersion: "26.0.0-alpha1",
+            androidSupportSdkVersion: "26.0.2",
             androidArchSdkVersion   : "1.0.0-alpha9",
             retrofitSdkVersion      : "2.3.0",
             glideSdkVersion         : "4.0.0",
@@ -30,10 +30,9 @@ ext {
             "constraint-layout"        : "com.android.support.constraint:constraint-layout:1.0.2",
 
             //view
-            "brvah"                    : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.27",
-            "SuperTextView"            : "com.github.lygttpod:SuperTextView:2.1.2",
+            "brvah"                    : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28",
+            "SuperTextView"            : "com.github.lygttpod:SuperTextView:2.1.4",
             "MaterialSearchView"       : "com.miguelcatalan:materialsearchview:1.4.0",
-            "UltraViewPager"           : "com.alibaba.android:ultraviewpager:1.0.6@aar",
 
             //mvvm( Lifecycles, LiveData, and ViewModel, Room)
             "lifecycle-runtime"        : "android.arch.lifecycle:runtime:${version["androidArchSdkVersion"]}",
@@ -56,7 +55,7 @@ ext {
             "glide-loader-okhttp3"     : "com.github.bumptech.glide:okhttp3-integration:${version["glideSdkVersion"]}",
 
             //rx2
-            "rxjava2"                  : "io.reactivex.rxjava2:rxjava:2.1.2",
+            "rxjava2"                  : "io.reactivex.rxjava2:rxjava:2.1.3",
             "rxandroid2"               : "io.reactivex.rxjava2:rxandroid:2.0.1",
             "rxerrorhandler2"          : "me.jessyan:rxerrorhandler:2.0.2",
 

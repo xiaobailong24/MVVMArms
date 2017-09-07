@@ -44,8 +44,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         Timber.w(activity + " ---> onActivityCreated");
 
-        //如果intent包含了此字段,并且为true说明不加入到list
-        // 默认为false,如果不需要管理(比如不需要在退出所有activity(killAll)时，退出此activity就在intent加此字段为true)
+        //如果 intent 包含了此字段,并且为 true 说明不加入到 list 进行统一管理
         boolean isNotAdd = false;
         if (activity.getIntent() != null)
             isNotAdd = activity.getIntent().getBooleanExtra(AppManager.IS_NOT_ADD_ACTIVITY_LIST, false);
@@ -63,10 +62,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             activityDelegate.onCreate(savedInstanceState);
         }
 
-        /**
-         * 给每个Activity配置Fragment的监听,Activity可以通过 {@link IActivity#useFragment()} 设置是否使用监听
-         * 如果这个Activity返回false的话,这个Activity将不能使用{@link FragmentDelegate},意味着 {@link com.jess.arms.base.BaseFragment}也不能使用
-         */
+        // 给每个Activity配置Fragment的监听,Activity可以通过 {@link IActivity#useFragment()} 设置是否使用监听
         boolean useFragment = !(activity instanceof IActivity) || ((IActivity) activity).useFragment();
         if (activity instanceof FragmentActivity && useFragment) {
 
@@ -78,6 +74,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
             if (mFragmentLifecycles == null && mExtras.containsKey(ConfigModule.class.getName())) {
                 mFragmentLifecycles = new ArrayList<>();
+                @SuppressWarnings("unchecked")
                 List<ConfigModule> modules = (List<ConfigModule>) mExtras.get(ConfigModule.class.getName());
                 for (ConfigModule module : modules) {
                     module.injectFragmentLifecycle(mApplication, mFragmentLifecycles);
@@ -175,7 +172,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
             super.onFragmentAttached(fm, f, context);
             if (f instanceof IFragment && f.getArguments() != null) {
-                Timber.w(f.toString() + " ---> onFragmentAttached");
+                Timber.i(f.toString() + " ---> onFragmentAttached");
                 FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
                 if (fragmentDelegate == null || !fragmentDelegate.isAdded()) {
                     fragmentDelegate = new FragmentDelegateImpl(fm, f);
@@ -190,7 +187,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentCreated(fm, f, savedInstanceState);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentCreated");
+                Timber.i(f.toString() + " ---> onFragmentCreated");
                 fragmentDelegate.onCreate(savedInstanceState);
             }
         }
@@ -200,7 +197,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentViewCreated(fm, f, v, savedInstanceState);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentViewCreated");
+                Timber.i(f.toString() + " ---> onFragmentViewCreated");
                 fragmentDelegate.onCreateView(v, savedInstanceState);
             }
         }
@@ -210,7 +207,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentActivityCreated(fm, f, savedInstanceState);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentActivityCreated");
+                Timber.i(f.toString() + " ---> onFragmentActivityCreated");
                 fragmentDelegate.onActivityCreate(savedInstanceState);
             }
         }
@@ -220,7 +217,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentStarted(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentStarted");
+                Timber.i(f.toString() + " ---> onFragmentStarted");
                 fragmentDelegate.onStart();
             }
         }
@@ -230,7 +227,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentResumed(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentResumed");
+                Timber.i(f.toString() + " ---> onFragmentResumed");
                 fragmentDelegate.onResume();
             }
         }
@@ -240,7 +237,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentPaused(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentPaused");
+                Timber.i(f.toString() + " ---> onFragmentPaused");
                 fragmentDelegate.onPause();
             }
         }
@@ -250,7 +247,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentStopped(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentStopped");
+                Timber.i(f.toString() + " ---> onFragmentStopped");
                 fragmentDelegate.onStop();
             }
         }
@@ -260,7 +257,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentSaveInstanceState(fm, f, outState);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentSaveInstanceState");
+                Timber.i(f.toString() + " ---> onFragmentSaveInstanceState");
                 fragmentDelegate.onSaveInstanceState(outState);
             }
         }
@@ -270,7 +267,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentViewDestroyed(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentViewDestroyed");
+                Timber.i(f.toString() + " ---> onFragmentViewDestroyed");
                 fragmentDelegate.onDestroyView();
             }
         }
@@ -280,7 +277,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentDestroyed(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentDestroyed");
+                Timber.i(f.toString() + " ---> onFragmentDestroyed");
                 fragmentDelegate.onDestroy();
             }
         }
@@ -290,7 +287,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             super.onFragmentDetached(fm, f);
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
-                Timber.w(f.toString() + " ---> onFragmentDetached");
+                Timber.i(f.toString() + " ---> onFragmentDetached");
                 fragmentDelegate.onDetach();
                 f.getArguments().clear();
             }

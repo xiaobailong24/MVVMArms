@@ -6,8 +6,10 @@ import android.support.annotation.Nullable;
  * Created by xiaobailong24 on 2017/6/16.
  * Preconditions
  */
+@SuppressWarnings("all")
 public final class Preconditions {
     private Preconditions() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     public static void checkState(boolean expression) {

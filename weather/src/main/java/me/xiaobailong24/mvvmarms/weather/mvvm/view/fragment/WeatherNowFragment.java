@@ -81,6 +81,7 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
     }
 
     //调用ViewModel的方法获取天气
+    @SuppressWarnings("all")
     private void observerWeatherNow(String location) {
         if (mWeatherNowData != null)//防止重复订阅
             mWeatherNowData.removeObservers(this);

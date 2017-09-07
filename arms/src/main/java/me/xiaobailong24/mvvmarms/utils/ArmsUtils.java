@@ -1,5 +1,6 @@
 package me.xiaobailong24.mvvmarms.utils;
 
+import android.app.Application;
 import android.content.Context;
 
 import me.xiaobailong24.mvvmarms.base.delegate.App;
@@ -19,5 +20,10 @@ public enum ArmsUtils {
     public ArmsComponent obtainArmsComponent(Context context) {
         Preconditions.checkState(context.getApplicationContext() instanceof App, "Application does not implements App");
         return ((App) context.getApplicationContext()).getArmsComponent();
+    }
+
+    public ArmsComponent obtainArmsComponent(Application application) {
+        Preconditions.checkState(application instanceof App, "Application does not implements App");
+        return ((App) application).getArmsComponent();
     }
 }

@@ -75,11 +75,9 @@ dependencies {
     //tools
     provided rootProject.ext.dependencies["javax.annotation"]
     annotationProcessor(rootProject.ext.dependencies["dagger2-compiler"]) {
-        exclude module: 'dagger'
         exclude module: 'js305'
     }
     annotationProcessor(rootProject.ext.dependencies["dagger2-android-processor"]) {
-        exclude module: 'dagger'
         exclude module: 'jsr305'
     }
     compile rootProject.ext.dependencies["multidex"]
