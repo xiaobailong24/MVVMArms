@@ -3,7 +3,6 @@ package me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.databinding.ObservableField;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +18,7 @@ import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.xiaobailong24.mvvmarms.di.scope.AppScope;
+import me.xiaobailong24.mvvmarms.http.Status;
 import me.xiaobailong24.mvvmarms.mvvm.BaseViewModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.WeatherNowModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
@@ -31,14 +31,10 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.pojo.TextContent;
  * MVVM WeatherNowViewModel
  */
 @AppScope
-public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
-        implements IRetry {
+public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel> {
     private RxErrorHandler mRxErrorHandler;
     private MutableLiveData<List<TextContent>> mContents;
     private MutableLiveData<String> mLocationName;
-
-    //数据请求状态
-    public final ObservableField<Api.Status> mStatus = new ObservableField<>();
 
     @Inject
     public WeatherNowViewModel(Application application, WeatherNowModel model,
@@ -75,7 +71,7 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable -> {
                     addDispose(disposable);
-                    mStatus.set(Api.Status.LOADING);
+                    mStatus.set(Status.LOADING);
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
@@ -109,14 +105,14 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
 
                     @Override
                     public void onNext(@NonNull List<TextContent> textContents) {
-                        mStatus.set(Api.Status.SUCCESS);
+                        mStatus.set(Status.SUCCESS);
                         mContents.setValue(textContents);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         super.onError(e);
-                        mStatus.set(Api.Status.ERROR);
+                        mStatus.set(Status.ERROR);
                     }
                 });
     }

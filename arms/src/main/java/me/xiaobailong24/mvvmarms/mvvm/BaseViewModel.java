@@ -5,11 +5,13 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.databinding.ObservableField;
 
 import org.simple.eventbus.EventBus;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import me.xiaobailong24.mvvmarms.http.Status;
 
 
 /**
@@ -26,6 +28,9 @@ public class BaseViewModel<M extends IModel> extends AndroidViewModel
     protected CompositeDisposable mCompositeDisposable;
 
     protected M mModel;
+
+    //数据请求状态
+    public final ObservableField<Status> mStatus = new ObservableField<>();
 
     public BaseViewModel(Application application) {
         super(application);
@@ -71,6 +76,11 @@ public class BaseViewModel<M extends IModel> extends AndroidViewModel
         if (useEventBus())
             EventBus.getDefault().unregister(this);//解除注册eventbus
         // TODO: 2017/8/2
+    }
+
+    //用于封装刷新操作
+    public void retry() {
+        //如果子类的业务有刷新逻辑，可以重写此方法
     }
 
 }

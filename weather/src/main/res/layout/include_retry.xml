@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="me.xiaobailong24.mvvmarms.http.Status"/>
+
+        <variable
+            name="viewModel"
+            type="me.xiaobailong24.mvvmarms.mvvm.BaseViewModel"/>
+    </data>
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sub_retry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:drawableTop="@mipmap/ic_refresh"
+        android:gravity="center"
+        android:onClick="@{() -> viewModel.retry()}"
+        android:text="@string/error_tap_to_retry"
+        android:textColor="@color/colorSecondary"
+        app:visibleGone="@{viewModel.mStatus == Status.ERROR}"/>
+
+</layout>
