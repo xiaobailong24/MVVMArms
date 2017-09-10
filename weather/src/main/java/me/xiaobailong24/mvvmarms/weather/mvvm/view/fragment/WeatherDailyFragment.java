@@ -85,14 +85,16 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
         //如果位置是全路径，则截取城市名
         if (location.contains(","))
             location = location.substring(0, location.indexOf(","));
-        mWeatherDailyData = mViewModel.getWeatherDaily(location);
-        mWeatherDailyData.observe(this, dailies -> {
-            mAdapter.replaceData(dailies);
-            // TODO: 2017/8/19
-            //            DiffUtil.DiffResult diffResult = DiffUtil
-            //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), dailies));
-            //            diffResult.dispatchUpdatesTo(mAdapter);
-        });
+        if (mViewModel != null) {
+            mWeatherDailyData = mViewModel.getWeatherDaily(location);
+            mWeatherDailyData.observe(this, dailies -> {
+                mAdapter.replaceData(dailies);
+                // TODO: 2017/8/19
+                //            DiffUtil.DiffResult diffResult = DiffUtil
+                //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), dailies));
+                //            diffResult.dispatchUpdatesTo(mAdapter);
+            });
+        }
     }
 
     @Override
@@ -104,6 +106,14 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
         else {
             if (mWeatherDailyData != null)//防止重复订阅
                 mWeatherDailyData.removeObservers(this);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mViewModel != null && mWeatherDailyData == null) {
+            observerWeatherDaily(mLocation);
         }
     }
 

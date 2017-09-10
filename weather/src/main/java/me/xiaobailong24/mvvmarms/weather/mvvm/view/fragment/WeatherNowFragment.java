@@ -88,14 +88,24 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
         //如果位置是全路径，则截取城市名
         if (location.contains(","))
             location = location.substring(0, location.indexOf(","));
-        mWeatherNowData = mViewModel.getWeatherNow(location);
-        mWeatherNowData.observe(this, textContents -> {
-            mAdapter.replaceData(textContents);
-            // TODO: 2017/8/19
-            //            DiffUtil.DiffResult diffResult =
-            //                    DiffUtil.calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), textContents), true);
-            //            diffResult.dispatchUpdatesTo(mAdapter);
-        });
+        if (mViewModel != null) {
+            mWeatherNowData = mViewModel.getWeatherNow(location);
+            mWeatherNowData.observe(this, textContents -> {
+                mAdapter.replaceData(textContents);
+                // TODO: 2017/8/19
+                //            DiffUtil.DiffResult diffResult =
+                //                    DiffUtil.calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), textContents), true);
+                //            diffResult.dispatchUpdatesTo(mAdapter);
+            });
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mViewModel != null && mWeatherNowData == null) {
+            observerWeatherNow(mLocation);
+        }
     }
 
     @Override
