@@ -64,7 +64,8 @@ public class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void injectActivityLifecycle(Context context, List<Application.ActivityLifecycleCallbacks> lifecycles) {
-        lifecycles.add(new ActivityLifecycleCallbacksImpl());
+        //用于监听Activity的回调，可以添加一些自定义逻辑
+        //        lifecycles.add(new ActivityLifecycleCallbacksImpl());
     }
 
     @Override
