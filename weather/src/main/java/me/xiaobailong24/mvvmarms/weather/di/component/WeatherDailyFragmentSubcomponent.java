@@ -3,7 +3,7 @@ package me.xiaobailong24.mvvmarms.weather.di.component;
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 import me.xiaobailong24.mvvmarms.di.scope.FragmentScope;
-import me.xiaobailong24.mvvmarms.weather.di.module.WeatherNowFragmentModule;
+import me.xiaobailong24.mvvmarms.weather.di.module.WeatherDailyFragmentModule;
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment.WeatherDailyFragment;
 
 /**
@@ -11,7 +11,8 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment.WeatherDailyFragment
  * Dagger WeatherDailyFragmentSubcomponent
  */
 @FragmentScope
-@Subcomponent(modules = WeatherNowFragmentModule.class)
+//@Subcomponent
+@Subcomponent(modules = WeatherDailyFragmentModule.class)
 public interface WeatherDailyFragmentSubcomponent extends AndroidInjector<WeatherDailyFragment> {
 
     @Subcomponent.Builder

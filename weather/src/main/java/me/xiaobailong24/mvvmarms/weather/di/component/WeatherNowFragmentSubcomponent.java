@@ -11,6 +11,7 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment.WeatherNowFragment;
  * Dagger WeatherNowFragmentSubcomponent
  */
 @FragmentScope
+//@Subcomponent
 @Subcomponent(modules = WeatherNowFragmentModule.class)
 public interface WeatherNowFragmentSubcomponent extends AndroidInjector<WeatherNowFragment> {
 
