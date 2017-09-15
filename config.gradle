@@ -10,10 +10,10 @@ ext {
     ]
 
     version = [
-            androidSupportSdkVersion: "26.0.2",
-            androidArchSdkVersion   : "1.0.0-alpha9",
+            androidSupportSdkVersion: "26.1.0",
+            androidArchSdkVersion   : "1.0.0-alpha9-1",
             retrofitSdkVersion      : "2.3.0",
-            glideSdkVersion         : "4.0.0",
+            glideSdkVersion         : "4.1.1",
             dagger2SdkVersion       : "2.11",
             espressoSdkVersion      : "2.2.2",
             canarySdkVersion        : "1.5.1"
@@ -48,7 +48,7 @@ ext {
             "retrofit-converter-gson"  : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
             "retrofit-adapter-rxjava"  : "com.squareup.retrofit2:adapter-rxjava:${version["retrofitSdkVersion"]}",
             "retrofit-adapter-rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitSdkVersion"]}",
-            "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.8.1",
+            "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.9.0",
             "okhttp-urlconnection"     : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",
             "glide"                    : "com.github.bumptech.glide:glide:${version["glideSdkVersion"]}",
             "glide-compiler"           : "com.github.bumptech.glide:compiler:${version["glideSdkVersion"]}",
@@ -66,7 +66,7 @@ ext {
             "dagger2-android-support"  : "com.google.dagger:dagger-android-support:${version["dagger2SdkVersion"]}",
             "dagger2-android-processor": "com.google.dagger:dagger-android-processor:${version["dagger2SdkVersion"]}",
             "androideventbus"          : "org.simple:androideventbus:1.0.5.1",
-            "gson"                     : "com.google.code.gson:gson:2.8.0",
+            "gson"                     : "com.google.code.gson:gson:2.8.1",
             "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
             "multidex"                 : "com.android.support:multidex:1.0.1",
 

@@ -70,6 +70,7 @@ dependencies {
         exclude module: 'support-compat'
         exclude module: 'support-annotations'
         exclude module: 'support-core-utils'
+        exclude module: 'gson'
     }
 
     //tools

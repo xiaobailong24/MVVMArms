@@ -75,7 +75,12 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
     compile rootProject.ext.dependencies["room-runtime"]
     annotationProcessor rootProject.ext.dependencies["room-compiler"]
-    testCompile rootProject.ext.dependencies["room-testing"]
+    testCompile(rootProject.ext.dependencies["room-testing"]) {
+        exclude module: 'support-compat'
+        exclude module: 'support-annotations'
+        exclude module: 'support-core-utils'
+        exclude module: 'gson'
+    }
     compile rootProject.ext.dependencies["room-rxjava2"]
 
     //network
@@ -129,7 +134,6 @@ dependencies {
     annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
         exclude module: 'jsr305'
     }
-
 
     //test
     compile rootProject.ext.dependencies["timber"]
