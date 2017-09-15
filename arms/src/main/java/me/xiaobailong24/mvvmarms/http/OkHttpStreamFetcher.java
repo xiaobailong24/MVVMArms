@@ -1,5 +1,6 @@
 package me.xiaobailong24.mvvmarms.http;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.bumptech.glide.Priority;
@@ -56,7 +57,7 @@ public class OkHttpStreamFetcher implements DataFetcher<InputStream> {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 responseBody = response.body();
                 if (response.isSuccessful()) {
                     long contentLength = responseBody.contentLength();
@@ -91,11 +92,13 @@ public class OkHttpStreamFetcher implements DataFetcher<InputStream> {
         }
     }
 
+    @NonNull
     @Override
     public Class<InputStream> getDataClass() {
         return InputStream.class;
     }
 
+    @NonNull
     @Override
     public DataSource getDataSource() {
         return DataSource.REMOTE;

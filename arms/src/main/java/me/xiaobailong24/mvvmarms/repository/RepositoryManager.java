@@ -32,6 +32,7 @@ public class RepositoryManager implements IRepositoryManager {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T obtainRetrofitService(Class<T> service) {
         T retrofitService;
         synchronized (mRetrofitServiceCache) {
@@ -45,6 +46,7 @@ public class RepositoryManager implements IRepositoryManager {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <DB extends RoomDatabase> DB obtainRoomDatabase(Class<DB> database, String dbName) {
         DB roomDatabase;
         synchronized (mRoomDatabaseServiceCache) {

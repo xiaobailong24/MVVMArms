@@ -43,6 +43,7 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel> {
         this.mRxErrorHandler = rxErrorHandler;
     }
 
+    @SuppressWarnings("all")
     public LiveData<List<TextContent>> getWeatherNow(String locationName) {
         if (mContents == null)
             mContents = new MutableLiveData<>();
@@ -53,7 +54,7 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel> {
         if (mLocationName.getValue() == null)
             mLocationName.setValue("");
 
-        if (!mLocationName.getValue().toLowerCase().equals(locationName)) {
+        if (!mLocationName.getValue().equalsIgnoreCase(locationName)) {
             mLocationName.setValue(locationName);
             loadWeather(locationName);
         }

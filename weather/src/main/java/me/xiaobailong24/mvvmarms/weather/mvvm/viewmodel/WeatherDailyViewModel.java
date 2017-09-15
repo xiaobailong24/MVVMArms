@@ -40,7 +40,7 @@ public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel> {
         this.mRxErrorHandler = rxErrorHandler;
     }
 
-
+    @SuppressWarnings("all")
     public LiveData<List<WeatherDailyResponse.DailyResult.Daily>> getWeatherDaily(String locationName) {
         if (mDailyData == null)
             mDailyData = new MutableLiveData<>();
@@ -51,7 +51,7 @@ public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel> {
         if (mLocationName.getValue() == null)
             mLocationName.setValue("");
 
-        if (!mLocationName.getValue().toLowerCase().equals(locationName)) {
+        if (!mLocationName.getValue().equalsIgnoreCase(locationName)) {
             mLocationName.setValue(locationName);
             loadWeatherDaily(locationName);
         }
