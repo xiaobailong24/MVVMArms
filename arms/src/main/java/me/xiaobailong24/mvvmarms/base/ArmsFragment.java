@@ -1,8 +1,6 @@
 package me.xiaobailong24.mvvmarms.base;
 
 import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.LifecycleRegistry;
-import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -22,11 +20,8 @@ import me.xiaobailong24.mvvmarms.mvvm.IViewModel;
  * MVVM ArmsFragment
  */
 public abstract class ArmsFragment<DB extends ViewDataBinding, VM extends IViewModel>
-        extends Fragment implements IFragment, LifecycleRegistryOwner {
+        extends Fragment implements IFragment {
     protected final String TAG = this.getClass().getName();
-
-    //LifecycleOwner
-    private LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
 
     //DataBinding
     protected DB mBinding;
@@ -64,19 +59,12 @@ public abstract class ArmsFragment<DB extends ViewDataBinding, VM extends IViewM
 
 
     @Override
-    public LifecycleRegistry getLifecycle() {
-        return this.mLifecycleRegistry;//LifecycleOwner
-    }
-
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         this.mBinding = null;
         this.mViewModelFactory = null;
-        if (mLifecycleRegistry != null && mViewModel != null)//移除LifecycleObserver
+        if (getLifecycle() != null && mViewModel != null)//移除LifecycleObserver
             getLifecycle().removeObserver((LifecycleObserver) mViewModel);
-        this.mLifecycleRegistry = null;
         this.mViewModel = null;
     }
 }

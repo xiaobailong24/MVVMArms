@@ -1,7 +1,5 @@
 package me.xiaobailong24.mvvmarms.base;
 
-import android.arch.lifecycle.LifecycleRegistry;
-import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,11 +17,8 @@ import me.xiaobailong24.mvvmarms.base.delegate.IActivity;
  * MVVM BaseActivity
  */
 public abstract class BaseActivity extends AppCompatActivity
-        implements IActivity, LifecycleRegistryOwner, HasSupportFragmentInjector {
+        implements IActivity, HasSupportFragmentInjector {
     protected final String TAG = this.getClass().getName();
-
-    //LifecycleRegistryOwner
-    private LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
 
     @Inject
     DispatchingAndroidInjector<Fragment> mFragmentInjector;
@@ -58,14 +53,8 @@ public abstract class BaseActivity extends AppCompatActivity
     }
 
     @Override
-    public LifecycleRegistry getLifecycle() {
-        return this.mLifecycleRegistry;
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         this.mFragmentInjector = null;
-        this.mLifecycleRegistry = null;
     }
 }

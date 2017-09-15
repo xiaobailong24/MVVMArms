@@ -1,8 +1,6 @@
 package me.xiaobailong24.mvvmarms.base;
 
 import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.LifecycleRegistry;
-import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -24,11 +22,8 @@ import me.xiaobailong24.mvvmarms.mvvm.IViewModel;
  * MVVM ArmsActivity
  */
 public abstract class ArmsActivity<DB extends ViewDataBinding, VM extends IViewModel>
-        extends AppCompatActivity implements IActivity, LifecycleRegistryOwner, HasSupportFragmentInjector {
+        extends AppCompatActivity implements IActivity, HasSupportFragmentInjector {
     protected final String TAG = this.getClass().getName();
-
-    //LifecycleOwner
-    private LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
 
     //Dagger.Android SupportFragment Inject
     @Inject
@@ -65,11 +60,6 @@ public abstract class ArmsActivity<DB extends ViewDataBinding, VM extends IViewM
     }
 
     @Override
-    public LifecycleRegistry getLifecycle() {
-        return this.mLifecycleRegistry;//LifecycleOwner
-    }
-
-    @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return this.mFragmentInjector;//Dagger.Android SupportFragment Inject
     }
@@ -81,9 +71,8 @@ public abstract class ArmsActivity<DB extends ViewDataBinding, VM extends IViewM
         this.mBinding = null;
         this.mViewModelFactory = null;
         this.mFragmentInjector = null;
-        if (mLifecycleRegistry != null && mViewModel != null)//移除LifecycleObserver
-            mLifecycleRegistry.removeObserver((LifecycleObserver) mViewModel);
-        this.mLifecycleRegistry = null;
+        if (getLifecycle() != null && mViewModel != null)//移除LifecycleObserver
+            getLifecycle().removeObserver((LifecycleObserver) mViewModel);
         this.mViewModel = null;
     }
 }

@@ -1,7 +1,5 @@
 package me.xiaobailong24.mvvmarms.base;
 
-import android.arch.lifecycle.LifecycleRegistry;
-import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,11 +14,8 @@ import me.xiaobailong24.mvvmarms.base.delegate.IFragment;
  * MVVM BaseFragment
  */
 public abstract class BaseFragment extends Fragment
-        implements IFragment, LifecycleRegistryOwner {
+        implements IFragment {
     protected final String TAG = this.getClass().getName();
-
-    //LifecycleRegistryOwner
-    private LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
 
     public BaseFragment() {
         setArguments(new Bundle());
@@ -43,13 +38,7 @@ public abstract class BaseFragment extends Fragment
     }
 
     @Override
-    public LifecycleRegistry getLifecycle() {
-        return this.mLifecycleRegistry;
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
-        this.mLifecycleRegistry = null;
     }
 }
