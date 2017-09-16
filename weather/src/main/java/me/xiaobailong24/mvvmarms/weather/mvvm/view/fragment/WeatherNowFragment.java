@@ -1,6 +1,7 @@
 package me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -22,7 +23,6 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.view.adapter.TextContentAdapter;
 import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherNowViewModel;
 import timber.log.Timber;
 
-
 /**
  * Created by xiaobailong24 on 2017/7/15.
  * MVVM WeatherNowFragment
@@ -32,7 +32,7 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
 
     private TextContentAdapter mAdapter;
     private LiveData<List<TextContent>> mWeatherNowData;
-    private String mLocation;
+    private MutableLiveData<String> mLocation = new MutableLiveData<>();//订阅搜索位置的变化
 
     public static WeatherNowFragment newInstance(String location) {
         WeatherNowFragment weatherNowFragment = new WeatherNowFragment();
@@ -41,7 +41,6 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
         weatherNowFragment.setArguments(args);
         return weatherNowFragment;
     }
-
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +62,7 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
     @Override
     public void initData(Bundle savedInstanceState) {
         if (savedInstanceState == null)
-            mLocation = getArguments().getString(Api.API_KEY_LOCATION);
+            mLocation.setValue(getArguments().getString(Api.API_KEY_LOCATION));
     }
 
     @Override
@@ -73,7 +72,7 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
                 ", message.obj--->" + message.obj);
         switch (message.what) {
             case EventBusTags.FRAGMENT_MESSAGE_WEATHER_NOW:
-                mLocation = String.valueOf(message.obj);
+                mLocation.setValue(String.valueOf(message.obj));
                 break;
             default:
                 break;
@@ -82,29 +81,31 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
 
     //调用ViewModel的方法获取天气
     @SuppressWarnings("all")
-    private void observerWeatherNow(String location) {
-        if (mWeatherNowData != null)//防止重复订阅
-            mWeatherNowData.removeObservers(this);
-        //如果位置是全路径，则截取城市名
-        if (location.contains(","))
-            location = location.substring(0, location.indexOf(","));
+    private void observerWeatherNow() {
+        mLocation.observe(this, location -> {
+            //如果位置变化，则重新订阅
+            if (mWeatherNowData != null) {
+                mWeatherNowData.removeObservers(this);
+                mWeatherNowData = null;
+            }
+        });
         if (mViewModel != null) {
-            mWeatherNowData = mViewModel.getWeatherNow(location);
-            mWeatherNowData.observe(this, textContents -> {
-                mAdapter.replaceData(textContents);
-                // TODO: 2017/8/19
-                //            DiffUtil.DiffResult diffResult =
-                //                    DiffUtil.calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), textContents), true);
-                //            diffResult.dispatchUpdatesTo(mAdapter);
-            });
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mViewModel != null && mWeatherNowData == null) {
-            observerWeatherNow(mLocation);
+            if (mWeatherNowData == null) {
+                String location = mLocation.getValue();
+                //如果位置是全路径，则截取城市名
+                if (location.contains(","))
+                    location = location.substring(0, location.indexOf(","));
+                mWeatherNowData = mViewModel.getWeatherNow(location);
+                mWeatherNowData.observe(this, dailies -> {
+                    mAdapter.replaceData(dailies);
+                    // TODO: 2017/8/19
+                    //            DiffUtil.DiffResult diffResult = DiffUtil
+                    //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), dailies));
+                    //            diffResult.dispatchUpdatesTo(mAdapter);
+                });
+            } else {
+                mAdapter.replaceData(mWeatherNowData.getValue());
+            }
         }
     }
 
@@ -113,16 +114,14 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
         //当Fragment显示/隐藏变化时执行该方法，根据是否显示Fragment加载数据
         super.onHiddenChanged(hidden);
         if (!hidden)
-            observerWeatherNow(mLocation);
-        else {
-            if (mWeatherNowData != null)//防止重复订阅
-                mWeatherNowData.removeObservers(this);
-        }
+            observerWeatherNow();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mWeatherNowData != null)//取消订阅
+            mWeatherNowData.removeObservers(this);
         this.mWeatherNowData = null;
         this.mAdapter = null;
         this.mLocation = null;

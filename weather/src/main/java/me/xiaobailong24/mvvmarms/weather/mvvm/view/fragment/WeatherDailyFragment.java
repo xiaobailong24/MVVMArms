@@ -1,6 +1,7 @@
 package me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
 
     private WeatherDailyAdapter mAdapter;
     private LiveData<List<WeatherDailyResponse.DailyResult.Daily>> mWeatherDailyData;
-    private String mLocation;
+    private MutableLiveData<String> mLocation = new MutableLiveData<>();//订阅搜索位置的变化
 
     public static WeatherDailyFragment newInstance(String location) {
         WeatherDailyFragment weatherDailyFragment = new WeatherDailyFragment();
@@ -61,7 +62,7 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
     @Override
     public void initData(Bundle savedInstanceState) {
         if (savedInstanceState == null)
-            mLocation = getArguments().getString(Api.API_KEY_LOCATION);
+            mLocation.setValue(getArguments().getString(Api.API_KEY_LOCATION));
     }
 
     @Override
@@ -71,7 +72,7 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
                 ", message.obj--->" + message.obj);
         switch (message.what) {
             case EventBusTags.FRAGMENT_MESSAGE_WEATHER_DAILY:
-                mLocation = String.valueOf(message.obj);
+                mLocation.setValue(String.valueOf(message.obj));
                 break;
             default:
                 break;
@@ -79,49 +80,50 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
     }
 
     //调用ViewModel的方法获取天气
-    private void observerWeatherDaily(String location) {
-        if (mWeatherDailyData != null)//防止重复订阅
-            mWeatherDailyData.removeObservers(this);
-        //如果位置是全路径，则截取城市名
-        if (location.contains(","))
-            location = location.substring(0, location.indexOf(","));
+    @SuppressWarnings("all")
+    private void observerWeatherDaily() {
+        mLocation.observe(this, location -> {
+            //如果位置变化，则重新订阅
+            if (mWeatherDailyData != null) {
+                mWeatherDailyData.removeObservers(this);
+                mWeatherDailyData = null;
+            }
+        });
         if (mViewModel != null) {
-            mWeatherDailyData = mViewModel.getWeatherDaily(location);
-            mWeatherDailyData.observe(this, dailies -> {
-                mAdapter.replaceData(dailies);
-                // TODO: 2017/8/19
-                //            DiffUtil.DiffResult diffResult = DiffUtil
-                //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), dailies));
-                //            diffResult.dispatchUpdatesTo(mAdapter);
-            });
+            if (mWeatherDailyData == null) {
+                String location = mLocation.getValue();
+                //如果位置是全路径，则截取城市名
+                if (location.contains(","))
+                    location = location.substring(0, location.indexOf(","));
+                mWeatherDailyData = mViewModel.getWeatherDaily(location);
+                mWeatherDailyData.observe(this, dailies -> {
+                    mAdapter.replaceData(dailies);
+                    // TODO: 2017/8/19
+                    //            DiffUtil.DiffResult diffResult = DiffUtil
+                    //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), dailies));
+                    //            diffResult.dispatchUpdatesTo(mAdapter);
+                });
+            }
+        } else {
+            mAdapter.replaceData(mWeatherDailyData.getValue());
         }
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        //当Fragment显示/隐藏变化时执行该方法，根据是否显示Fragment加载数据
+        //当Fragment显示/隐藏变化时执行该方法，根据是否显示Fragment加载数据，实现懒加载
         super.onHiddenChanged(hidden);
         if (!hidden)
-            observerWeatherDaily(mLocation);
-        else {
-            if (mWeatherDailyData != null)//防止重复订阅
-                mWeatherDailyData.removeObservers(this);
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mViewModel != null && mWeatherDailyData == null) {
-            observerWeatherDaily(mLocation);
-        }
+            observerWeatherDaily();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        this.mAdapter = null;
+        if (mWeatherDailyData != null)//取消订阅
+            mWeatherDailyData.removeObservers(this);
         this.mWeatherDailyData = null;
+        this.mAdapter = null;
         this.mLocation = null;
     }
 }
