@@ -1,8 +1,13 @@
 package me.xiaobailong24.mvvmarms.weather.di.module;
 
+import android.app.Activity;
+
+import dagger.Binds;
 import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
-import me.xiaobailong24.mvvmarms.di.scope.ActivityScope;
+import dagger.android.ActivityKey;
+import dagger.android.AndroidInjector;
+import dagger.multibindings.IntoMap;
+import me.xiaobailong24.mvvmarms.weather.di.component.WeatherActivitySubcomponent;
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.activity.WeatherActivity;
 
 /**
@@ -10,17 +15,25 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.view.activity.WeatherActivity;
  * Dagger WeatherActivityModule
  * 用于 Dagger.Android 依赖注入
  */
-@Module
+@Module(subcomponents = WeatherActivitySubcomponent.class)//第一种注入方式。需要 Subcomponent
+//@Module 第二种注入方式。可以不再需要 Subcomponent
 public abstract class WeatherActivityModule {
-
-/*    @Binds
+    /**
+     * 第一种注入方式。需要 Subcomponent
+     * <p>
+     * 第二种{@link WeatherNowFragmentModule}
+     *
+     * @see <a href="https://github.com/xiaobailong24/DaggerAndroid">DaggerAndroid</a>
+     */
+    @Binds
     @IntoMap
     @ActivityKey(WeatherActivity.class)
     public abstract AndroidInjector.Factory<? extends Activity>
-    bindMainActivityInjectorFactory(WeatherActivitySubcomponent.Builder builder);*/
+    bindWeatherActivityInjectorFactory(WeatherActivitySubcomponent.Builder builder);
 
-    @ActivityScope
-    @ContributesAndroidInjector(modules = WeatherModule.class)
-    abstract WeatherActivity contributeWeatherActivity();
+    /*   //第二种注入方式
+        @ActivityScope
+        @ContributesAndroidInjector(modules = WeatherModule.class)
+        abstract WeatherActivity contributeWeatherActivity();*/
 
 }

@@ -17,11 +17,12 @@ import me.xiaobailong24.mvvmarms.http.Status;
 /**
  * Created by xiaobailong24 on 2017/6/16.
  * MVVM BaseViewModel (ViewModel 不再持有 View，而是 store and manage UI-related data)
- * 生命周期：@{link https://developer.android.com/topic/libraries/architecture/viewmodel.html}
  * ViewModel objects are scoped to the Lifecycle passed to the ViewModelProvider when getting the ViewModel.
  * The ViewModel stays in memory until the Lifecycle it’s scoped to goes away permanently
  * —in the case of an activity, when it finishes;
  * in the case of a fragment, when it’s detached.
+ *
+ * @see <a href="https://developer.android.com/topic/libraries/architecture/viewmodel.html">ViewModel</a>
  */
 public class BaseViewModel<M extends IModel> extends AndroidViewModel
         implements IViewModel, LifecycleObserver {
