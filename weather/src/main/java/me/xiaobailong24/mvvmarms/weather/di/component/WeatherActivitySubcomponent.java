@@ -15,6 +15,6 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.view.activity.WeatherActivity;
 public interface WeatherActivitySubcomponent extends AndroidInjector<WeatherActivity> {
 
     @Subcomponent.Builder
-    public abstract class Builder extends AndroidInjector.Builder<WeatherActivity> {
+    abstract class Builder extends AndroidInjector.Builder<WeatherActivity> {
     }
 }

@@ -6,14 +6,10 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
 import me.xiaobailong24.mvvmarms.base.delegate.IActivity;
 import me.xiaobailong24.mvvmarms.mvvm.IViewModel;
 
@@ -22,12 +18,8 @@ import me.xiaobailong24.mvvmarms.mvvm.IViewModel;
  * MVVM ArmsActivity
  */
 public abstract class ArmsActivity<DB extends ViewDataBinding, VM extends IViewModel>
-        extends AppCompatActivity implements IActivity, HasSupportFragmentInjector {
+        extends AppCompatActivity implements IActivity {
     protected final String TAG = this.getClass().getName();
-
-    //Dagger.Android SupportFragment Inject
-    @Inject
-    DispatchingAndroidInjector<Fragment> mFragmentInjector;
 
     //DataBinding
     protected DB mBinding;
@@ -60,17 +52,10 @@ public abstract class ArmsActivity<DB extends ViewDataBinding, VM extends IViewM
     }
 
     @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
-        return this.mFragmentInjector;//Dagger.Android SupportFragment Inject
-    }
-
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         this.mBinding = null;
         this.mViewModelFactory = null;
-        this.mFragmentInjector = null;
         if (getLifecycle() != null && mViewModel != null)//移除LifecycleObserver
             getLifecycle().removeObserver((LifecycleObserver) mViewModel);
         this.mViewModel = null;
