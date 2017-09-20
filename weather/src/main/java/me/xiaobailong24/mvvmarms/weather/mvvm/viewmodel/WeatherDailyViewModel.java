@@ -14,11 +14,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.xiaobailong24.mvvmarms.di.scope.AppScope;
 import me.xiaobailong24.mvvmarms.http.Status;
 import me.xiaobailong24.mvvmarms.mvvm.BaseViewModel;
+import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.WeatherDailyModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
@@ -29,15 +29,12 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
  */
 @AppScope
 public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel> {
-    private RxErrorHandler mRxErrorHandler;
     private MutableLiveData<List<WeatherDailyResponse.DailyResult.Daily>> mDailyData;
     private MutableLiveData<String> mLocationName;
 
     @Inject
-    public WeatherDailyViewModel(Application application, WeatherDailyModel weatherDailyModel,
-                                 RxErrorHandler rxErrorHandler) {
+    public WeatherDailyViewModel(Application application, WeatherDailyModel weatherDailyModel) {
         super(application, weatherDailyModel);
-        this.mRxErrorHandler = rxErrorHandler;
     }
 
     @SuppressWarnings("all")
@@ -79,8 +76,8 @@ public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel> {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(weatherDailyResponse -> weatherDailyResponse.getResults().get(0).getDaily())
-                .subscribe(new ErrorHandleSubscriber<List<WeatherDailyResponse.DailyResult.Daily>>(mRxErrorHandler) {
-
+                .subscribe(new ErrorHandleSubscriber<List<WeatherDailyResponse.DailyResult.Daily>>
+                        (ArmsUtils.INSTANCE.obtainArmsComponent(getApplication()).rxErrorHandler()) {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         super.onSubscribe(d);

@@ -15,11 +15,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.xiaobailong24.mvvmarms.di.scope.AppScope;
 import me.xiaobailong24.mvvmarms.http.Status;
 import me.xiaobailong24.mvvmarms.mvvm.BaseViewModel;
+import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.WeatherNowModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
@@ -32,15 +32,12 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.pojo.TextContent;
  */
 @AppScope
 public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel> {
-    private RxErrorHandler mRxErrorHandler;
     private MutableLiveData<List<TextContent>> mContents;
     private MutableLiveData<String> mLocationName;
 
     @Inject
-    public WeatherNowViewModel(Application application, WeatherNowModel model,
-                               RxErrorHandler rxErrorHandler) {
+    public WeatherNowViewModel(Application application, WeatherNowModel model) {
         super(application, model);
-        this.mRxErrorHandler = rxErrorHandler;
     }
 
     @SuppressWarnings("all")
@@ -95,8 +92,8 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel> {
                     contents.add(new TextContent("温度", result.getNow().getTemperature() + "º"));
                     return contents;
                 })
-                .subscribe(new ErrorHandleSubscriber<List<TextContent>>(mRxErrorHandler) {
-
+                .subscribe(new ErrorHandleSubscriber<List<TextContent>>
+                        (ArmsUtils.INSTANCE.obtainArmsComponent(getApplication()).rxErrorHandler()) {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         super.onSubscribe(d);
