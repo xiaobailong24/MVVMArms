@@ -1,5 +1,4 @@
 # MVVMArms
-[![](https://badge.juejin.im/entry/599d1f6e518825244d204014/likes.svg?style=flat-square)](https://juejin.im/entry/599d1f6e518825244d204014/detail)
 
 Android MVVM Architecture Components based on [MVPArms](https://github.com/JessYanCoding/MVPArms) and [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html).
 
@@ -8,6 +7,7 @@ Android MVVM Architecture Components based on [MVPArms](https://github.com/JessY
 > This is **BETA** Version.
 Welcome to communicate and discuss.
 
+![MVVMArms](https://github.com/xiaobailong24/MVVMArms/blob/master/image/MVVMArms_Logo.png)
 
 ## Architecture
 <img src="https://github.com/xiaobailong24/MVVMArms/raw/master/image/MVVMArms_Architecture.png" width="80%" height="80%">
@@ -47,6 +47,7 @@ Welcome to communicate and discuss.
 - etc...
 
 ## Update Log
+- [IRepositoryManager](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/repository/IRepositoryManager.java) Support RoomDatabase for customization(GlobalConfigModule.Builder) BUT injectRoomDatabase(DBClass) first in ConfigModule#registerComponents(). 
 - [ArmsUtils](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/utils/ArmsUtils.java) to obtain [**ArmsComponent**](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/di/component/ArmsComponent.java) easily. - 2017/08/23
 - [ImageLoader](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/http/imageloader/ImageLoader.java) default Glide. - 2017/08/17
 - Survives configuration changes for ViewPager using Fragment. - 2017/08/16
