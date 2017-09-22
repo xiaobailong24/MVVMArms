@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Lazy;
+import me.xiaobailong24.mvvmarms.di.module.DBModule;
+import me.xiaobailong24.mvvmarms.utils.Preconditions;
 import retrofit2.Retrofit;
 
 /**
@@ -23,7 +25,9 @@ public class RepositoryManager implements IRepositoryManager {
     private Application mApplication;
     private Lazy<Retrofit> mRetrofit;
     private final Map<String, Object> mRetrofitServiceCache = new HashMap<>();
-    private final Map<String, Object> mRoomDatabaseServiceCache = new HashMap<>();
+    private final Map<String, Object> mRoomDatabaseCache = new HashMap<>();
+    @Inject
+    DBModule.RoomConfiguration mRoomConfiguration;
 
     @Inject
     public RepositoryManager(Application application, Lazy<Retrofit> retrofit) {
@@ -48,17 +52,22 @@ public class RepositoryManager implements IRepositoryManager {
     @Override
     @SuppressWarnings("unchecked")
     public <DB extends RoomDatabase> DB obtainRoomDatabase(Class<DB> database, String dbName) {
-        DB roomDatabase;
-        synchronized (mRoomDatabaseServiceCache) {
-            roomDatabase = (DB) mRoomDatabaseServiceCache.get(database.getName());
-            if (roomDatabase == null) {
-                roomDatabase = Room.databaseBuilder(mApplication,
-                        database, dbName).build();
-                mRoomDatabaseServiceCache.put(database.getName(), roomDatabase);
-            }
-        }
-        return roomDatabase;
+        Preconditions.checkState(mRoomDatabaseCache.containsKey(database.getName()),
+                "Unable to find %s,first call injectRoomDatabase(%s) in ConfigModule", database.getName(), database.getSimpleName());
+        return (DB) mRoomDatabaseCache.get(database.getName());
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public <DB extends RoomDatabase> void injectRoomDatabase(Class<DB> database, String dbName) {
+        if (!mRoomDatabaseCache.containsKey(database.getName())) {
+            DB roomDatabase;
+            RoomDatabase.Builder builder = Room.databaseBuilder(mApplication, database, dbName);
+            if (mRoomConfiguration != null)//自定义 Room 配置
+                mRoomConfiguration.configRoom(mApplication, builder);
+            roomDatabase = (DB) builder.build();
+            mRoomDatabaseCache.put(database.getName(), roomDatabase);
+        }
+    }
 
 }

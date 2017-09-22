@@ -3,6 +3,7 @@ package me.xiaobailong24.mvvmarms.weather.mvvm.model.entry;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -21,6 +22,7 @@ public class Location {
      * timezone : Asia/Shanghai
      * timezone_offset : +08:00
      */
+    @NonNull
     @PrimaryKey
     private String id;
     private String name;
@@ -31,7 +33,7 @@ public class Location {
     @ColumnInfo(name = "timezone_offset")
     private String timezoneOffset;
 
-    public Location(String id, String name, String country, String path, String timezone, String timezoneOffset) {
+    public Location(@NonNull String id, String name, String country, String path, String timezone, String timezoneOffset) {
         this.id = id;
         this.name = name;
         this.country = country;
@@ -40,11 +42,12 @@ public class Location {
         this.timezoneOffset = timezoneOffset;
     }
 
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 

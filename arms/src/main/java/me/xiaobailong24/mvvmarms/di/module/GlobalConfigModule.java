@@ -39,6 +39,7 @@ public class GlobalConfigModule {
     private ClientModule.OkhttpConfiguration mOkhttpConfiguration;
     private ArmsModule.GsonConfiguration mGsonConfiguration;
     private RequestInterceptor.Level mPrintHttpLogLevel;
+    private DBModule.RoomConfiguration mRoomConfiguration;
 
 
     private GlobalConfigModule(Builder builder) {
@@ -53,6 +54,7 @@ public class GlobalConfigModule {
         this.mOkhttpConfiguration = builder.okhttpConfiguration;
         this.mGsonConfiguration = builder.gsonConfiguration;
         this.mPrintHttpLogLevel = builder.printHttpLogLevel;
+        this.mRoomConfiguration = builder.roomConfiguration;
     }
 
     public static Builder builder() {
@@ -138,6 +140,11 @@ public class GlobalConfigModule {
         return mPrintHttpLogLevel;
     }
 
+    @Singleton
+    @Provides
+    DBModule.RoomConfiguration provideRoomConfiguration() {
+        return mRoomConfiguration == null ? DBModule.RoomConfiguration.EMPTY : mRoomConfiguration;
+    }
 
     public static final class Builder {
         private HttpUrl apiUrl;
@@ -151,6 +158,7 @@ public class GlobalConfigModule {
         private ClientModule.OkhttpConfiguration okhttpConfiguration;
         private ArmsModule.GsonConfiguration gsonConfiguration;
         private RequestInterceptor.Level printHttpLogLevel;
+        private DBModule.RoomConfiguration roomConfiguration;
 
         private Builder() {
         }
@@ -220,6 +228,10 @@ public class GlobalConfigModule {
             return this;
         }
 
+        public Builder roomConfiguration(DBModule.RoomConfiguration roomConfiguration) {
+            this.roomConfiguration = roomConfiguration;
+            return this;
+        }
 
         public GlobalConfigModule build() {
             return new GlobalConfigModule(this);

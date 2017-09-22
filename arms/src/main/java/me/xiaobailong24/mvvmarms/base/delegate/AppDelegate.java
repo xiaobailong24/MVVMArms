@@ -14,6 +14,7 @@ import me.xiaobailong24.mvvmarms.di.component.ArmsComponent;
 import me.xiaobailong24.mvvmarms.di.component.DaggerArmsComponent;
 import me.xiaobailong24.mvvmarms.di.module.ArmsModule;
 import me.xiaobailong24.mvvmarms.di.module.ClientModule;
+import me.xiaobailong24.mvvmarms.di.module.DBModule;
 import me.xiaobailong24.mvvmarms.di.module.GlobalConfigModule;
 import me.xiaobailong24.mvvmarms.http.imageloader.glide.ImageConfigImpl;
 import me.xiaobailong24.mvvmarms.repository.ConfigModule;
@@ -55,15 +56,20 @@ public class AppDelegate implements App, AppLifecycles {
                 .builder()
                 .armsModule(new ArmsModule(mApplication))//提供application
                 .clientModule(new ClientModule())//用于提供okhttp和retrofit的单例
+                .dBModule(new DBModule())//提供RoomDatabase
                 .globalConfigModule(getGlobalConfigModule(mApplication, mModules))//全局配置
                 .build();
         mArmsComponent.inject(this);
 
         mArmsComponent.extras().put(ConfigModule.class.getName(), mModules);
 
-        this.mModules = null;
-
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
+
+        for (ConfigModule module : mModules) {//注册数据管理层
+            module.registerComponents(mApplication, mArmsComponent.repositoryManager());
+        }
+
+        this.mModules = null;
 
         for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);

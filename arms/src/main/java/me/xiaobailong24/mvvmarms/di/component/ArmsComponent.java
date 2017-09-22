@@ -14,6 +14,7 @@ import me.xiaobailong24.mvvmarms.base.delegate.AppDelegate;
 import me.xiaobailong24.mvvmarms.base.delegate.AppManager;
 import me.xiaobailong24.mvvmarms.di.module.ArmsModule;
 import me.xiaobailong24.mvvmarms.di.module.ClientModule;
+import me.xiaobailong24.mvvmarms.di.module.DBModule;
 import me.xiaobailong24.mvvmarms.di.module.GlobalConfigModule;
 import me.xiaobailong24.mvvmarms.di.module.ViewModelFactoryModule;
 import me.xiaobailong24.mvvmarms.http.imageloader.ImageLoader;
@@ -26,7 +27,7 @@ import okhttp3.OkHttpClient;
  */
 @Singleton
 @Component(modules = {AndroidInjectionModule.class, ViewModelFactoryModule.class,
-        ArmsModule.class, ClientModule.class, GlobalConfigModule.class})
+        ArmsModule.class, ClientModule.class, DBModule.class, GlobalConfigModule.class})
 public interface ArmsComponent {
     Application application();
 

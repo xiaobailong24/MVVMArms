@@ -15,9 +15,11 @@ import me.xiaobailong24.mvvmarms.base.delegate.AppLifecycles;
 import me.xiaobailong24.mvvmarms.di.module.GlobalConfigModule;
 import me.xiaobailong24.mvvmarms.http.RequestInterceptor;
 import me.xiaobailong24.mvvmarms.repository.ConfigModule;
+import me.xiaobailong24.mvvmarms.repository.IRepositoryManager;
 import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.weather.BuildConfig;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
+import me.xiaobailong24.mvvmarms.weather.mvvm.model.db.WeatherNowDb;
 
 /**
  * Created by xiaobailong24 on 2017/7/24.
@@ -53,7 +55,22 @@ public class GlobalConfiguration implements ConfigModule {
                     //支持 Https
                     // okhttpBuilder.sslSocketFactory()
                     okhttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
+                })
+                .roomConfiguration((context1, roomBuilder) -> {
+                    //这里可以自定义配置RoomDatabase，比如数据库迁移升级
+/*                    roomBuilder.addMigrations(new Migration(1, 2) {
+                        @Override
+                        public void migrate(SupportSQLiteDatabase database) {
+                            // TODO: 2017/9/22
+                            // Since we didn't alter the table, there's nothing else to do here.
+                        }
+                    });*/
                 });
+    }
+
+    @Override
+    public void registerComponents(Context context, IRepositoryManager repositoryManager) {
+        repositoryManager.injectRoomDatabase(WeatherNowDb.class, WeatherNowDb.class.getSimpleName());
     }
 
     @Override

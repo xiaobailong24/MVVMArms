@@ -24,7 +24,7 @@ public class WeatherModel extends BaseModel {
     //从Room数据库查询所有位置信息
     public List<Location> getAllLocations() {
         return mRepositoryManager
-                .obtainRoomDatabase(WeatherNowDb.class, "WeatherNowDb")
+                .obtainRoomDatabase(WeatherNowDb.class, WeatherNowDb.class.getSimpleName())
                 .weatherNowDao()
                 .getAll();
     }
