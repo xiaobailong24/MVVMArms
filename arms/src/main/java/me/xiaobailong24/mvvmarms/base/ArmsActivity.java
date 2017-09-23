@@ -51,6 +51,16 @@ public abstract class ArmsActivity<DB extends ViewDataBinding, VM extends IViewM
         return true;
     }
 
+    @SuppressWarnings("all")
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        /**
+         * 新姿势：通过ViewModel保存数据。
+         *  @see <a href="https://developer.android.com/topic/libraries/architecture/viewmodel.html#viewmodel_vs_savedinstancestate">ViewModel vs SavedInstanceState</a>
+         */
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

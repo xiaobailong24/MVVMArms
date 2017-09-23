@@ -30,6 +30,7 @@ import timber.log.Timber;
 @AppScope
 public class WeatherViewModel extends BaseViewModel<WeatherModel> {
     private MutableLiveData<List<String>> mLocationPaths;
+    private MutableLiveData<String> mLocation;//可以与 Fragment 共享此数据
 
     @Inject
     public WeatherViewModel(Application application, WeatherModel model) {
@@ -71,10 +72,19 @@ public class WeatherViewModel extends BaseViewModel<WeatherModel> {
                 });
     }
 
+    public MutableLiveData<String> getLocation() {
+        if (mLocation == null) {
+            mLocation = new MutableLiveData<>();
+            mLocation.setValue("北京");
+        }
+        return mLocation;
+    }
+
     @Override
     public void onCleared() {
         super.onCleared();
         this.mLocationPaths = null;
+        this.mLocation = null;
     }
 
 }
