@@ -1,6 +1,5 @@
 package me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,15 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import me.xiaobailong24.mvvmarms.base.ArmsFragment;
 import me.xiaobailong24.mvvmarms.weather.R;
 import me.xiaobailong24.mvvmarms.weather.databinding.FragmentWeatherNowBinding;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.pojo.TextContent;
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.adapter.TextContentAdapter;
 import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherNowViewModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherViewModel;
@@ -30,7 +26,6 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherViewModel;
 public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, WeatherNowViewModel> {
 
     private TextContentAdapter mAdapter;
-    private MutableLiveData<List<TextContent>> mWeatherNowData = new MutableLiveData<>();
     @Inject
     WeatherViewModel mWeatherViewModel;//共享 Activity 数据
 
@@ -60,7 +55,12 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        //懒加载：onHiddenChanged().
+        //懒加载：onFragmentVisibleChange().
+        mWeatherViewModel.getLocation().observe(getActivity(), s -> {
+            mFirst = true;//位置变化时，需要重新加载
+            if (mVisible)
+                onFragmentVisibleChange(true);
+        });
     }
 
     @SuppressWarnings("all")
@@ -75,32 +75,31 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
          */
     }
 
+    @SuppressWarnings("all")
     @Override
-    public void onHiddenChanged(boolean hidden) {
+    protected void onFragmentVisibleChange(boolean isVisible) {
         //当 Fragment 显示/隐藏变化时执行该方法，根据是否显示 Fragment 加载数据
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            if (mViewModel != null) {
-                //调用ViewModel的方法获取天气
-                mViewModel.getWeatherNow(mWeatherViewModel.getLocation().getValue())
-                        .observe(WeatherNowFragment.this, dailies -> {
-                            mAdapter.replaceData(dailies);
-                            mWeatherNowData.setValue(dailies);
-                            // TODO: 2017/8/19
-                            //            DiffUtil.DiffResult diffResult = DiffUtil
-                            //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), dailies));
-                            //            diffResult.dispatchUpdatesTo(mAdapter);
-                        });
-            } else {
-                mAdapter.replaceData(mWeatherNowData.getValue());
-            }
+        super.onFragmentVisibleChange(isVisible);
+        if (mViewModel == null)
+            throw new NullPointerException("ViewModel is NULL!!!");
+
+        if (mViewModel != null && isVisible) {
+            //调用ViewModel的方法获取天气
+            mViewModel.getWeatherNow(mWeatherViewModel.getLocation().getValue())
+                    .observe(WeatherNowFragment.this, dailies -> {
+                        mAdapter.replaceData(dailies);
+                        mFirst = false;//加载完成
+                        // TODO: 2017/8/19
+                        //            DiffUtil.DiffResult diffResult = DiffUtil
+                        //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), dailies));
+                        //            diffResult.dispatchUpdatesTo(mAdapter);
+                    });
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        this.mWeatherNowData = null;
         this.mAdapter = null;
     }
 }

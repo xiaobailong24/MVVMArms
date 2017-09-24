@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.Menu;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -84,7 +85,6 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
             public void onPageSelected(int position) {
                 Timber.i("onPageSelected: " + position);
                 mReplace = position;
-                mFragments.get(mReplace).onHiddenChanged(false);//更新 Fragment 数据
             }
 
             @Override
@@ -113,9 +113,8 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
                 String location = locations.get(0);
                 if (location.contains(",")) //如果位置是全路径，则截取城市名
                     location = location.substring(0, location.indexOf(","));
-                //                if (TextUtils.equals(mViewModel.getLocation().getValue(), "北京"))
-                mViewModel.getLocation().setValue(location);
-                mFragments.get(mReplace).onHiddenChanged(false);//更新 Fragment 数据
+                if (TextUtils.equals(mViewModel.getLocation().getValue(), "北京"))
+                    mViewModel.getLocation().setValue(location);
             }
         });
         mBinding.searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
@@ -140,7 +139,6 @@ public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, Weathe
         mViewModel.getLocation().setValue(location);
         mBinding.searchView.closeSearch();
         KeyboardUtils.hideSoftInput(WeatherActivity.this, mBinding.searchView);
-        mFragments.get(mReplace).onHiddenChanged(false);//更新 Fragment 数据
     }
 
 

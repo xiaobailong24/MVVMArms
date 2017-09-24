@@ -55,7 +55,12 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        //        observerWeatherDaily();
+        //懒加载：onFragmentVisibleChange().
+        mWeatherViewModel.getLocation().observe(getActivity(), s -> {
+            mFirst = true;//位置变化时，需要重新加载
+            if (mVisible)
+                onFragmentVisibleChange(true);
+        });
     }
 
     @SuppressWarnings("all")
@@ -70,18 +75,18 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
          */
     }
 
+    @SuppressWarnings("all")
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        //当Fragment显示/隐藏变化时执行该方法，根据是否显示Fragment加载数据，实现懒加载
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            if (mViewModel != null) {
-                //调用ViewModel的方法获取天气
-                mViewModel.getWeatherDaily(mWeatherViewModel.getLocation().getValue())
-                        .observe(WeatherDailyFragment.this, dailies -> {
-                            mAdapter.replaceData(dailies);
-                        });
-            }
+    protected void onFragmentVisibleChange(boolean isVisible) {
+        //当 Fragment 显示/隐藏变化时执行该方法，根据是否显示 Fragment 加载数据
+        super.onFragmentVisibleChange(isVisible);
+        if (mViewModel != null && isVisible) {
+            //调用ViewModel的方法获取天气
+            mViewModel.getWeatherDaily(mWeatherViewModel.getLocation().getValue())
+                    .observe(WeatherDailyFragment.this, dailies -> {
+                        mAdapter.replaceData(dailies);
+                        mFirst = false;//加载完成
+                    });
         }
     }
 
