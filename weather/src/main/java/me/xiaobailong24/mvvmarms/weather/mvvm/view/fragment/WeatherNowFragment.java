@@ -80,9 +80,6 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
     protected void onFragmentVisibleChange(boolean isVisible) {
         //当 Fragment 显示/隐藏变化时执行该方法，根据是否显示 Fragment 加载数据
         super.onFragmentVisibleChange(isVisible);
-        if (mViewModel == null)
-            throw new NullPointerException("ViewModel is NULL!!!");
-
         if (mViewModel != null && isVisible) {
             //调用ViewModel的方法获取天气
             mViewModel.getWeatherNow(mWeatherViewModel.getLocation().getValue())

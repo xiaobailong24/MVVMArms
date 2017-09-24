@@ -47,9 +47,11 @@ Welcome to communicate and discuss.
 - etc...
 
 ## Update Log
-- [IRepositoryManager](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/repository/IRepositoryManager.java) Support RoomDatabase for customization(GlobalConfigModule.Builder) BUT injectRoomDatabase(DBClass) first in ConfigModule#registerComponents(). 
-- [ArmsUtils](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/utils/ArmsUtils.java) to obtain [**ArmsComponent**](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/di/component/ArmsComponent.java) easily. - 2017/08/23
-- [ImageLoader](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/http/imageloader/ImageLoader.java) default Glide. - 2017/08/17
+- [ArmsFragment](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/base/ArmsFragment.java) Support Lazy load. - 2017/09/24.
+- [ViewModel&LiveData](https://github.com/xiaobailong24/MVVMArms/blob/master/weather/src/main/java/me/xiaobailong24/mvvmarms/weather/mvvm/viewmodel/WeatherViewModel.java) Activity share data between fragments, and ViewModel retain data across configuration changes. - 2017/09/23.
+- [IRepositoryManager](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/repository/IRepositoryManager.java) Support RoomDatabase for customization(GlobalConfigModule.Builder) BUT injectRoomDatabase(DBClass) first in ConfigModule#registerComponents(). - 2017/09/22.
+- [ArmsUtils](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/utils/ArmsUtils.java) to obtain [**ArmsComponent**](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/di/component/ArmsComponent.java) easily. - 2017/08/23.
+- [ImageLoader](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/http/imageloader/ImageLoader.java) default Glide. - 2017/08/17.
 - Survives configuration changes for ViewPager using Fragment. - 2017/08/16
 - MVVMArms was BORN!!! - 2017/08/02
 
