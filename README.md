@@ -1,4 +1,5 @@
 # MVVMArms
+<div align="center"><img src="https://github.com/xiaobailong24/MVVMArms/blob/master/image/MVVMArms_Logo.png" width="40%" height="40%" align=center></div>
 
 Android MVVM Architecture Components based on [MVPArms](https://github.com/JessYanCoding/MVPArms) and [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html).
 
@@ -7,16 +8,17 @@ Android MVVM Architecture Components based on [MVPArms](https://github.com/JessY
 > This is **BETA** Version.
 Welcome to communicate and discuss.
 
-![MVVMArms](https://github.com/xiaobailong24/MVVMArms/blob/master/image/MVVMArms_Logo.png)
-
 ## Architecture
-<img src="https://github.com/xiaobailong24/MVVMArms/raw/master/image/MVVMArms_Architecture.png" width="80%" height="80%">
+<div align="center"><img src="https://github.com/xiaobailong24/MVVMArms/raw/master/image/MVVMArms_Architecture.png" width="80%" height="80%" align=center></div>
 
 ## Demo
 ### APK
 [MVVMArms APK](https://github.com/xiaobailong24/MVVMArms/blob/master/image/MVVMArms.apk)
 ### Google Play
-<a href='https://play.google.com/store/apps/details?id=me.xiaobailong24.mvvmarms.weather&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+<div align="center">
+<a href='https://play.google.com/store/apps/details?id=me.xiaobailong24.mvvmarms.weather&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+<img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+</div>
 
 ### Video
 [![MVVMArms demo video](https://img.youtube.com/vi/Ja8nHGoWGjo/0.jpg)](https://youtu.be/Ja8nHGoWGjo)
