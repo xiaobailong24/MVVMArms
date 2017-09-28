@@ -13,14 +13,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.xiaobailong24.mvvmarms.http.imageloader.BaseImageLoaderStrategy;
-import me.xiaobailong24.mvvmarms.utils.Preconditions;
+import me.xiaobailong24.mvvmarms.repository.utils.Preconditions;
 import timber.log.Timber;
 
 /**
  * Created by xiaobailong24 on 2017/8/17.
  * Glide 图片默认加载策略
  */
-
 public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageConfigImpl>, GlideAppliesOptions {
 
     @Override
@@ -72,7 +71,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
     public void clear(final Context context, ImageConfigImpl config) {
         Preconditions.checkNotNull(context, "Context is required");
         Preconditions.checkNotNull(config, "ImageConfigImpl is required");
-        //Although it’s good practice to clear loads you no longer need, you’re not required to do so.
+        // Although it’s good practice to clear loads you no longer need, you’re not required to do so.
         // In fact, Glide will automatically clear the load and recycle any resources used by the load
         // when the Activity or Fragment you pass in to Glide.with() is destroyed.
         if (config.getImageViews() != null && config.getImageViews().length > 0) {

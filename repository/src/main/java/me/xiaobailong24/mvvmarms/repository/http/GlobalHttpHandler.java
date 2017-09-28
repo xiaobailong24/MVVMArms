@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.http;
+package me.xiaobailong24.mvvmarms.repository.http;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;

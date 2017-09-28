@@ -46,7 +46,7 @@
 
 ################common###############
 
--keep public class * implements me.xiaobailong24.mvvmarms.repository.ConfigModule
+-keep public class * implements me.xiaobailong24.mvvmarms.repository.ConfigRepository
 
  #实体类不参与混淆
 -keep class * implements android.os.Parcelable {

@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.utils;
+package me.xiaobailong24.mvvmarms.repository.http;
 
 import android.text.InputFilter;
 import android.text.Spanned;

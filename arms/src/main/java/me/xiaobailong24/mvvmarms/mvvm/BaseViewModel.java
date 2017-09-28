@@ -11,7 +11,7 @@ import org.simple.eventbus.EventBus;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import me.xiaobailong24.mvvmarms.http.Status;
+import me.xiaobailong24.mvvmarms.repository.http.Status;
 
 
 /**

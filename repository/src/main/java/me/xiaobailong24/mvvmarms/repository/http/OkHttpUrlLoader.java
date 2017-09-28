@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.http;
+package me.xiaobailong24.mvvmarms.repository.http;
 
 import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.model.GlideUrl;

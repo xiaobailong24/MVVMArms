@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.http;
+package me.xiaobailong24.mvvmarms.repository.utils;
 
 import android.support.annotation.Nullable;
 
@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import me.xiaobailong24.mvvmarms.utils.CharacterHandler;
-import me.xiaobailong24.mvvmarms.utils.ZipHelper;
+import me.xiaobailong24.mvvmarms.repository.http.CharacterHandler;
+import me.xiaobailong24.mvvmarms.repository.http.GlobalHttpHandler;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;

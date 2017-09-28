@@ -15,13 +15,15 @@ import me.xiaobailong24.mvvmarms.base.delegate.App;
 import me.xiaobailong24.mvvmarms.base.delegate.AppDelegate;
 import me.xiaobailong24.mvvmarms.base.delegate.AppLifecycles;
 import me.xiaobailong24.mvvmarms.di.component.ArmsComponent;
+import me.xiaobailong24.mvvmarms.repository.IRepository;
+import me.xiaobailong24.mvvmarms.repository.di.component.RepositoryComponent;
 
 /**
  * Created by xiaobailong24 on 2017/7/13.
  * MVVMArms ArmsApplication
  */
 public class ArmsApplication extends Application
-        implements App, HasActivityInjector, HasSupportFragmentInjector {
+        implements App, HasActivityInjector, HasSupportFragmentInjector, IRepository {
     //Dagger.Android Activity 注入
     @Inject
     DispatchingAndroidInjector<Activity> mActivityInjector;
@@ -65,5 +67,10 @@ public class ArmsApplication extends Application
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return this.mFragmentInjector;
+    }
+
+    @Override
+    public RepositoryComponent getRepositoryComponent() {
+        return ((IRepository) mAppDelegate).getRepositoryComponent();
     }
 }

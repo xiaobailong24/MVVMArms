@@ -29,6 +29,10 @@
             android:name="me.xiaobailong24.mvvmarms.weather.app.GlobalConfiguration"
             android:value="ConfigModule"/>
 
+        <meta-data
+            android:name="me.xiaobailong24.mvvmarms.weather.app.RepositoryConfiguration"
+            android:value="ConfigRepository"/>
+
     </application>
 
 </manifest>

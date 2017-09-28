@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.http;
+package me.xiaobailong24.mvvmarms.repository.http;
 
 /**
  * Created by xiaobailong24 on 2017/9/7.

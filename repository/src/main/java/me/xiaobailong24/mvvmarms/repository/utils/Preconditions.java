@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.utils;
+package me.xiaobailong24.mvvmarms.repository.utils;
 
 import android.support.annotation.Nullable;
 
@@ -39,6 +39,13 @@ public final class Preconditions {
         }
     }
 
+    public static <T> T checkNotNull(T reference, @Nullable String errorMessageTemplate, @Nullable Object... errorMessageArgs) {
+        if (reference == null) {
+            throw new NullPointerException(format(errorMessageTemplate, errorMessageArgs));
+        } else {
+            return reference;
+        }
+    }
 
     static String format(String template, @Nullable Object... args) {
         template = String.valueOf(template);

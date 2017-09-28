@@ -17,9 +17,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.xiaobailong24.mvvmarms.di.scope.AppScope;
-import me.xiaobailong24.mvvmarms.http.Status;
 import me.xiaobailong24.mvvmarms.mvvm.BaseViewModel;
-import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
+import me.xiaobailong24.mvvmarms.repository.http.Status;
+import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.WeatherNowModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
@@ -93,7 +93,7 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel> {
                     return contents;
                 })
                 .subscribe(new ErrorHandleSubscriber<List<TextContent>>
-                        (ArmsUtils.INSTANCE.obtainArmsComponent(getApplication()).rxErrorHandler()) {
+                        (RepositoryUtils.INSTANCE.obtainRepositoryComponent(getApplication()).rxErrorHandler()) {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         super.onSubscribe(d);

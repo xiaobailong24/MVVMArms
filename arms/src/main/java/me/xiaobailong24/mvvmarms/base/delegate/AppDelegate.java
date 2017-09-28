@@ -13,18 +13,19 @@ import javax.inject.Inject;
 import me.xiaobailong24.mvvmarms.di.component.ArmsComponent;
 import me.xiaobailong24.mvvmarms.di.component.DaggerArmsComponent;
 import me.xiaobailong24.mvvmarms.di.module.ArmsModule;
-import me.xiaobailong24.mvvmarms.di.module.ClientModule;
-import me.xiaobailong24.mvvmarms.di.module.DBModule;
-import me.xiaobailong24.mvvmarms.di.module.GlobalConfigModule;
 import me.xiaobailong24.mvvmarms.http.imageloader.glide.ImageConfigImpl;
 import me.xiaobailong24.mvvmarms.repository.ConfigModule;
+import me.xiaobailong24.mvvmarms.repository.IRepository;
+import me.xiaobailong24.mvvmarms.repository.RepositoryInjector;
+import me.xiaobailong24.mvvmarms.repository.di.component.RepositoryComponent;
+import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.utils.ManifestParser;
 
 /**
  * Created by xiaobailong24 on 2017/6/16.
  * Activity 生命周期代理接口实现类
  */
-public class AppDelegate implements App, AppLifecycles {
+public class AppDelegate implements App, AppLifecycles, IRepository {
     private Application mApplication;
     private ArmsComponent mArmsComponent;
     @Inject
@@ -33,6 +34,8 @@ public class AppDelegate implements App, AppLifecycles {
     private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
     private ComponentCallbacks2 mComponentCallback;
+
+    private RepositoryInjector mRepositoryInjector;//Repository
 
     public AppDelegate(Context context) {
         this.mModules = new ManifestParser(context).parse();
@@ -52,22 +55,21 @@ public class AppDelegate implements App, AppLifecycles {
     @Override
     public void onCreate(Application application) {
         this.mApplication = application;
+
+        //Repository inject
+        this.mRepositoryInjector = new RepositoryInjector(application);//Repository
+        mRepositoryInjector.initialize(application);
+
         mArmsComponent = DaggerArmsComponent
                 .builder()
+                .repositoryModule(mRepositoryInjector.getRepositoryModule())
                 .armsModule(new ArmsModule(mApplication))//提供application
-                .clientModule(new ClientModule())//用于提供okhttp和retrofit的单例
-                .dBModule(new DBModule())//提供RoomDatabase
-                .globalConfigModule(getGlobalConfigModule(mApplication, mModules))//全局配置
                 .build();
         mArmsComponent.inject(this);
 
         mArmsComponent.extras().put(ConfigModule.class.getName(), mModules);
 
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
-
-        for (ConfigModule module : mModules) {//注册数据管理层
-            module.registerComponents(mApplication, mArmsComponent.repositoryManager());
-        }
 
         this.mModules = null;
 
@@ -102,31 +104,13 @@ public class AppDelegate implements App, AppLifecycles {
                 lifecycle.onTerminate(mApplication);
             }
         }
+        this.mRepositoryInjector = null;
         this.mArmsComponent = null;
         this.mActivityLifecycle = null;
         this.mActivityLifecycles = null;
         this.mComponentCallback = null;
         this.mAppLifecycles = null;
         this.mApplication = null;
-    }
-
-
-    /**
-     * 将app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
-     * 需要在AndroidManifest中声明{@link ConfigModule}的实现类,和Glide的配置方式相似
-     *
-     * @return
-     */
-    private GlobalConfigModule getGlobalConfigModule(Context context, List<ConfigModule> modules) {
-
-        GlobalConfigModule.Builder builder = GlobalConfigModule
-                .builder();
-
-        for (ConfigModule module : modules) {
-            module.applyOptions(context, builder);
-        }
-
-        return builder.build();
     }
 
 
@@ -140,14 +124,17 @@ public class AppDelegate implements App, AppLifecycles {
         return this.mArmsComponent;
     }
 
+    @Override
+    public RepositoryComponent getRepositoryComponent() {
+        return mRepositoryInjector.getRepositoryComponent();
+    }
+
 
     private static class AppComponentCallbacks implements ComponentCallbacks2 {
         private Application mApplication;
-        private ArmsComponent mArmsComponent;
 
         public AppComponentCallbacks(Application application, ArmsComponent armsComponent) {
             this.mApplication = application;
-            this.mArmsComponent = armsComponent;
         }
 
         @Override
@@ -163,7 +150,8 @@ public class AppDelegate implements App, AppLifecycles {
         @Override
         public void onLowMemory() {
             //内存不足时清理图片请求框架的内存缓存
-            mArmsComponent.imageLoader()
+            ArmsUtils.INSTANCE.obtainArmsComponent(mApplication)
+                    .imageLoader()
                     .clear(mApplication, ImageConfigImpl.builder().isClearMemory(true).build());
         }
     }

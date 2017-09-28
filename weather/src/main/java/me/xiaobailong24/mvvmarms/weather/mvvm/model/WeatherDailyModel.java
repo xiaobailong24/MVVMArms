@@ -1,12 +1,13 @@
 package me.xiaobailong24.mvvmarms.weather.mvvm.model;
 
+import android.app.Application;
+
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import me.xiaobailong24.mvvmarms.mvvm.BaseModel;
-import me.xiaobailong24.mvvmarms.repository.IRepositoryManager;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.service.WeatherService;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
 
@@ -17,8 +18,8 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
 public class WeatherDailyModel extends BaseModel {
 
     @Inject
-    public WeatherDailyModel(IRepositoryManager repositoryManager) {
-        super(repositoryManager);
+    public WeatherDailyModel(Application application) {
+        super(application);
     }
 
     //从网络获取未来三天天气

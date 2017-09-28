@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.di.module;
+package me.xiaobailong24.mvvmarms.repository.di.module;
 
 import android.app.Application;
 import android.support.annotation.Nullable;
@@ -13,41 +13,36 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
-import me.xiaobailong24.mvvmarms.http.BaseUrl;
-import me.xiaobailong24.mvvmarms.http.GlobalHttpHandler;
-import me.xiaobailong24.mvvmarms.http.RequestInterceptor;
-import me.xiaobailong24.mvvmarms.http.imageloader.BaseImageLoaderStrategy;
-import me.xiaobailong24.mvvmarms.http.imageloader.glide.GlideImageLoaderStrategy;
-import me.xiaobailong24.mvvmarms.utils.DataHelper;
+import me.xiaobailong24.mvvmarms.repository.http.BaseUrl;
+import me.xiaobailong24.mvvmarms.repository.http.GlobalHttpHandler;
+import me.xiaobailong24.mvvmarms.repository.utils.DataHelper;
+import me.xiaobailong24.mvvmarms.repository.utils.RequestInterceptor;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
- * Dagger GlobalConfigModule
+ * Created by xiaobailong24 on 2017/9/28.
  */
 @Module
-public class GlobalConfigModule {
+public class RepositoryConfigModule {
     private HttpUrl mApiUrl;
     private BaseUrl mBaseUrl;
     private File mCacheFile;
-    private BaseImageLoaderStrategy mImageLoaderStrategy;
     private GlobalHttpHandler mHandler;
     private List<Interceptor> mInterceptors;
     private ResponseErrorListener mErrorListener;
     private ClientModule.RetrofitConfiguration mRetrofitConfiguration;
     private ClientModule.OkhttpConfiguration mOkhttpConfiguration;
-    private ArmsModule.GsonConfiguration mGsonConfiguration;
+    private ClientModule.GsonConfiguration mGsonConfiguration;
     private RequestInterceptor.Level mPrintHttpLogLevel;
     private DBModule.RoomConfiguration mRoomConfiguration;
 
 
-    private GlobalConfigModule(Builder builder) {
+    private RepositoryConfigModule(Builder builder) {
         this.mApiUrl = builder.apiUrl;
         this.mBaseUrl = builder.baseUrl;
         this.mHandler = builder.handler;
         this.mCacheFile = builder.cacheFile;
-        this.mImageLoaderStrategy = builder.imageLoaderStrategy;
         this.mInterceptors = builder.interceptors;
         this.mErrorListener = builder.responseErrorListener;
         this.mRetrofitConfiguration = builder.retrofitConfiguration;
@@ -91,14 +86,6 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
-    BaseImageLoaderStrategy provideImageLoaderStrategy() {
-        //默认使用 Glide 加载图片
-        return mImageLoaderStrategy == null ? new GlideImageLoaderStrategy() : mImageLoaderStrategy;
-    }
-
-
-    @Singleton
-    @Provides
     @Nullable
     GlobalHttpHandler provideGlobalHttpHandler() {
         return mHandler;//处理Http请求和响应结果
@@ -128,7 +115,7 @@ public class GlobalConfigModule {
     @Singleton
     @Provides
     @Nullable
-    ArmsModule.GsonConfiguration provideGsonConfiguration() {
+    ClientModule.GsonConfiguration provideGsonConfiguration() {
         return mGsonConfiguration;
     }
 
@@ -150,15 +137,15 @@ public class GlobalConfigModule {
         private HttpUrl apiUrl;
         private BaseUrl baseUrl;
         private File cacheFile;
-        private BaseImageLoaderStrategy imageLoaderStrategy;
         private GlobalHttpHandler handler;
         private List<Interceptor> interceptors;
         private ResponseErrorListener responseErrorListener;
         private ClientModule.RetrofitConfiguration retrofitConfiguration;
         private ClientModule.OkhttpConfiguration okhttpConfiguration;
-        private ArmsModule.GsonConfiguration gsonConfiguration;
+        private ClientModule.GsonConfiguration gsonConfiguration;
         private RequestInterceptor.Level printHttpLogLevel;
         private DBModule.RoomConfiguration roomConfiguration;
+
 
         private Builder() {
         }
@@ -181,11 +168,6 @@ public class GlobalConfigModule {
 
         public Builder cacheFile(File cacheFile) {
             this.cacheFile = cacheFile;
-            return this;
-        }
-
-        public Builder imageLoaderStrategy(BaseImageLoaderStrategy imageLoaderStrategy) {
-            this.imageLoaderStrategy = imageLoaderStrategy;
             return this;
         }
 
@@ -216,7 +198,7 @@ public class GlobalConfigModule {
             return this;
         }
 
-        public Builder gsonConfiguration(ArmsModule.GsonConfiguration gsonConfiguration) {
+        public Builder gsonConfiguration(ClientModule.GsonConfiguration gsonConfiguration) {
             this.gsonConfiguration = gsonConfiguration;
             return this;
         }
@@ -233,12 +215,10 @@ public class GlobalConfigModule {
             return this;
         }
 
-        public GlobalConfigModule build() {
-            return new GlobalConfigModule(this);
+
+        public RepositoryConfigModule build() {
+            return new RepositoryConfigModule(this);
         }
 
-
     }
-
-
 }

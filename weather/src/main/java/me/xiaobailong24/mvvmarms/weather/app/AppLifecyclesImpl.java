@@ -7,6 +7,7 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import me.xiaobailong24.mvvmarms.base.delegate.AppLifecycles;
+import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
 import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.weather.BuildConfig;
 import me.xiaobailong24.mvvmarms.weather.app.utils.CrashUtils;
@@ -47,7 +48,7 @@ public class AppLifecyclesImpl implements AppLifecycles {
                 .put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
 
         //设置全局Crash监听
-        CrashUtils.init(application, ArmsUtils.INSTANCE.obtainArmsComponent(application).cacheFile());
+        CrashUtils.init(application, RepositoryUtils.INSTANCE.obtainRepositoryComponent(application).cacheFile());
 
         //扩展 AppManager 的远程遥控功能
         ArmsUtils.INSTANCE.obtainArmsComponent(application).appManager()

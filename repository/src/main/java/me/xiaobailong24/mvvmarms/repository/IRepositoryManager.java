@@ -1,14 +1,12 @@
 package me.xiaobailong24.mvvmarms.repository;
 
-
 import android.arch.persistence.room.RoomDatabase;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * Created by xiaobailong24 on 2017/9/28.
  * 数据管理层接口
  */
 public interface IRepositoryManager {
-
     //懒加载获取Retrofit Service
     <T> T obtainRetrofitService(Class<T> service);
 

@@ -8,7 +8,6 @@ import com.bumptech.glide.GlideBuilder;
  * Created by xiaobailong24 on 2017/8/17.
  * Glide 配置接口
  */
-
 public interface GlideAppliesOptions {
 
     /**

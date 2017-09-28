@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.utils;
+package me.xiaobailong24.mvvmarms.repository.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

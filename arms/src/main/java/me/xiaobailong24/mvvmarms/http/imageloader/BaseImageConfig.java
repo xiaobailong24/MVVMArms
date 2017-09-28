@@ -6,7 +6,6 @@ import android.widget.ImageView;
  * Created by xiaobailong24 on 2017/8/17.
  * 公共图片加载配置，可以自由扩展
  */
-
 public class BaseImageConfig {
     protected String url;
     protected ImageView imageView;

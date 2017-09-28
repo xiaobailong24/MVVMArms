@@ -1,6 +1,5 @@
 package me.xiaobailong24.mvvmarms.repository;
 
-
 import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
@@ -12,27 +11,27 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Lazy;
-import me.xiaobailong24.mvvmarms.di.module.DBModule;
-import me.xiaobailong24.mvvmarms.utils.Preconditions;
+import me.xiaobailong24.mvvmarms.repository.di.module.DBModule;
+import me.xiaobailong24.mvvmarms.repository.utils.Preconditions;
 import retrofit2.Retrofit;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * Created by xiaobailong24 on 2017/9/28.
  * 数据管理层实现类
  */
 @Singleton
 public class RepositoryManager implements IRepositoryManager {
-    private Application mApplication;
-    private Lazy<Retrofit> mRetrofit;
+    @Inject
+    Application mApplication;
+    @Inject
+    Lazy<Retrofit> mRetrofit;
     private final Map<String, Object> mRetrofitServiceCache = new HashMap<>();
     private final Map<String, Object> mRoomDatabaseCache = new HashMap<>();
     @Inject
     DBModule.RoomConfiguration mRoomConfiguration;
 
     @Inject
-    public RepositoryManager(Application application, Lazy<Retrofit> retrofit) {
-        this.mApplication = application;
-        this.mRetrofit = retrofit;
+    public RepositoryManager() {
     }
 
     @Override
@@ -48,6 +47,7 @@ public class RepositoryManager implements IRepositoryManager {
         }
         return retrofitService;
     }
+
 
     @Override
     @SuppressWarnings("unchecked")

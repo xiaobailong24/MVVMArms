@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.di.module;
+package me.xiaobailong24.mvvmarms.repository.di.module;
 
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;

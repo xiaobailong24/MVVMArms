@@ -1,8 +1,11 @@
-package me.xiaobailong24.mvvmarms.di.module;
+package me.xiaobailong24.mvvmarms.repository.di.module;
 
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.Nullable;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,8 +17,8 @@ import dagger.Module;
 import dagger.Provides;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
-import me.xiaobailong24.mvvmarms.http.GlobalHttpHandler;
-import me.xiaobailong24.mvvmarms.http.RequestInterceptor;
+import me.xiaobailong24.mvvmarms.repository.http.GlobalHttpHandler;
+import me.xiaobailong24.mvvmarms.repository.utils.RequestInterceptor;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -74,7 +77,6 @@ public class ClientModule {
         return builder.build();
     }
 
-
     @Singleton
     @Provides
     Retrofit.Builder provideRetrofitBuilder() {
@@ -107,6 +109,16 @@ public class ClientModule {
     }
 
 
+    @Singleton
+    @Provides
+    public Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
+        GsonBuilder builder = new GsonBuilder();
+        if (configuration != null)
+            configuration.configGson(application, builder);
+        return builder.create();
+    }
+
+
     public interface RetrofitConfiguration {
         void configRetrofit(Context context, Retrofit.Builder builder);
     }
@@ -115,5 +127,8 @@ public class ClientModule {
         void configOkhttp(Context context, OkHttpClient.Builder builder);
     }
 
+    public interface GsonConfiguration {
+        void configGson(Context context, GsonBuilder builder);
+    }
 
 }

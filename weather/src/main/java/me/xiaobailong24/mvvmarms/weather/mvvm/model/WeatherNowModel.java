@@ -1,5 +1,7 @@
 package me.xiaobailong24.mvvmarms.weather.mvvm.model;
 
+import android.app.Application;
+
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +9,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import me.xiaobailong24.mvvmarms.mvvm.BaseModel;
-import me.xiaobailong24.mvvmarms.repository.IRepositoryManager;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.service.WeatherService;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.db.WeatherNowDb;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
@@ -20,8 +21,8 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherNowResponse;
 public class WeatherNowModel extends BaseModel {
 
     @Inject
-    public WeatherNowModel(IRepositoryManager repositoryManager) {
-        super(repositoryManager);
+    public WeatherNowModel(Application application) {
+        super(application);
     }
 
     //从网络获取天气

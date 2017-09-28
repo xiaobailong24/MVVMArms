@@ -1,6 +1,6 @@
 package me.xiaobailong24.mvvmarms.weather.app;
 
-import me.xiaobailong24.mvvmarms.http.GlobalHttpHandler;
+import me.xiaobailong24.mvvmarms.repository.http.GlobalHttpHandler;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;

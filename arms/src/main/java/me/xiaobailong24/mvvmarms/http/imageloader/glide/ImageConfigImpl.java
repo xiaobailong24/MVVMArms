@@ -6,11 +6,11 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
 import me.xiaobailong24.mvvmarms.http.imageloader.BaseImageConfig;
 
+
 /**
  * Created by xiaobailong24 on 2017/8/17.
  * Glide 图片加载配置
  */
-
 public class ImageConfigImpl extends BaseImageConfig {
     /**
      * @see com.bumptech.glide.load.engine.DiskCacheStrategy#ALL : 0

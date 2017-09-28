@@ -5,7 +5,7 @@
 
         <import type="android.view.View"/>
 
-        <import type="me.xiaobailong24.mvvmarms.http.Status"/>
+        <import type="me.xiaobailong24.mvvmarms.repository.http.Status"/>
 
         <variable
             name="viewModel"

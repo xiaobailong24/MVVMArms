@@ -5,6 +5,7 @@ import android.content.Context;
 
 import me.xiaobailong24.mvvmarms.base.delegate.App;
 import me.xiaobailong24.mvvmarms.di.component.ArmsComponent;
+import me.xiaobailong24.mvvmarms.repository.utils.Preconditions;
 
 /**
  * Created by xiaobailong24 on 2017/8/23.

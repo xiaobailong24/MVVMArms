@@ -1,6 +1,9 @@
 package me.xiaobailong24.mvvmarms.mvvm;
 
+import android.app.Application;
+
 import me.xiaobailong24.mvvmarms.repository.IRepositoryManager;
+import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
 
 /**
  * Created by xiaobailong24 on 2017/6/16.
@@ -11,8 +14,10 @@ public class BaseModel implements IModel {
     protected IRepositoryManager mRepositoryManager;
 
 
-    public BaseModel(IRepositoryManager repositoryManager) {
-        this.mRepositoryManager = repositoryManager;
+    public BaseModel(Application application) {
+        this.mRepositoryManager = RepositoryUtils.INSTANCE
+                .obtainRepositoryComponent(application)
+                .repositoryManager();
     }
 
     @Override
