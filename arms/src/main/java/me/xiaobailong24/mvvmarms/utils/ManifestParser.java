@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.xiaobailong24.mvvmarms.repository.ConfigModule;
+import me.xiaobailong24.mvvmarms.base.ConfigLifecycle;
 
 /**
  * Created by xiaobailong24 on 2017/6/16.
@@ -15,7 +15,7 @@ import me.xiaobailong24.mvvmarms.repository.ConfigModule;
  */
 @SuppressWarnings("all")
 public final class ManifestParser {
-    private static final String MODULE_VALUE = "ConfigModule";
+    private static final String MODULE_VALUE = "ConfigLifecycle";
 
     private final Context context;
 
@@ -23,45 +23,45 @@ public final class ManifestParser {
         this.context = context;
     }
 
-    public List<ConfigModule> parse() {
-        List<ConfigModule> modules = new ArrayList<>();
+    public List<ConfigLifecycle> parse() {
+        List<ConfigLifecycle> lifecycles = new ArrayList<>();
         try {
             ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(
                     context.getPackageName(), PackageManager.GET_META_DATA);
             if (appInfo.metaData != null) {
                 for (String key : appInfo.metaData.keySet()) {
                     if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
-                        modules.add(parseModule(key));
+                        lifecycles.add(parseModule(key));
                     }
                 }
             }
         } catch (PackageManager.NameNotFoundException e) {
-            throw new RuntimeException("Unable to find metadata to parse ConfigModule", e);
+            throw new RuntimeException("Unable to find metadata to parse ConfigLifecycle", e);
         }
 
-        return modules;
+        return lifecycles;
     }
 
-    private static ConfigModule parseModule(String className) {
+    private static ConfigLifecycle parseModule(String className) {
         Class<?> clazz;
         try {
             clazz = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("Unable to find ConfigModule implementation", e);
+            throw new IllegalArgumentException("Unable to find ConfigLifecycle implementation", e);
         }
 
-        Object module;
+        Object lifecycle;
         try {
-            module = clazz.newInstance();
+            lifecycle = clazz.newInstance();
         } catch (InstantiationException e) {
-            throw new RuntimeException("Unable to instantiate ConfigModule implementation for " + clazz, e);
+            throw new RuntimeException("Unable to instantiate ConfigLifecycle implementation for " + clazz, e);
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Unable to instantiate ConfigModule implementation for " + clazz, e);
+            throw new RuntimeException("Unable to instantiate ConfigLifecycle implementation for " + clazz, e);
         }
 
-        if (!(module instanceof ConfigModule)) {
-            throw new RuntimeException("Expected instanceof ConfigModule, but found: " + module);
+        if (!(lifecycle instanceof ConfigLifecycle)) {
+            throw new RuntimeException("Expected instanceof ConfigLifecycle, but found: " + lifecycle);
         }
-        return (ConfigModule) module;
+        return (ConfigLifecycle) lifecycle;
     }
 }

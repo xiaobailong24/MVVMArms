@@ -35,7 +35,7 @@ public class WeatherNowModel extends BaseModel {
     //存储位置信息到Room数据库
     public void saveLocation(Location location) {
         mRepositoryManager
-                .obtainRoomDatabase(WeatherNowDb.class, "WeatherNowDb")
+                .obtainRoomDatabase(WeatherNowDb.class, WeatherNowDb.class.getSimpleName())
                 .weatherNowDao()
                 .insertAll(location);
     }
@@ -43,7 +43,7 @@ public class WeatherNowModel extends BaseModel {
     //从Room数据库查询所有位置信息
     public List<Location> getAllLocations() {
         return mRepositoryManager
-                .obtainRoomDatabase(WeatherNowDb.class, "WeatherNowDb")
+                .obtainRoomDatabase(WeatherNowDb.class, WeatherNowDb.class.getSimpleName())
                 .weatherNowDao()
                 .getAll();
     }
@@ -51,7 +51,7 @@ public class WeatherNowModel extends BaseModel {
     //从Room数据库查询指定位置信息
     public Location getLocationByName(String name) {
         return mRepositoryManager
-                .obtainRoomDatabase(WeatherNowDb.class, "WeatherNowDb")
+                .obtainRoomDatabase(WeatherNowDb.class, WeatherNowDb.class.getSimpleName())
                 .weatherNowDao()
                 .getLocationByName(name);
     }
@@ -59,7 +59,7 @@ public class WeatherNowModel extends BaseModel {
     //更新Room数据库位置信息
     public void updateLocation(Location location) {
         mRepositoryManager
-                .obtainRoomDatabase(WeatherNowDb.class, "WeatherNowDb")
+                .obtainRoomDatabase(WeatherNowDb.class, WeatherNowDb.class.getSimpleName())
                 .weatherNowDao()
                 .updateAll(location);
     }
@@ -67,7 +67,7 @@ public class WeatherNowModel extends BaseModel {
     //删除Room数据库位置信息
     public void deleteLocation(Location location) {
         mRepositoryManager
-                .obtainRoomDatabase(WeatherNowDb.class, "WeatherNowDb")
+                .obtainRoomDatabase(WeatherNowDb.class, WeatherNowDb.class.getSimpleName())
                 .weatherNowDao()
                 .deleteLocation(location);
     }

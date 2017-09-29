@@ -11,14 +11,14 @@ import com.squareup.leakcanary.RefWatcher;
 import java.util.List;
 
 import me.xiaobailong24.mvvmarms.base.delegate.AppLifecycles;
-import me.xiaobailong24.mvvmarms.repository.ConfigModule;
+import me.xiaobailong24.mvvmarms.base.ConfigLifecycle;
 import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 
 /**
  * Created by xiaobailong24 on 2017/7/24.
  * app的全局配置信息在此配置,需要将此实现类声明到AndroidManifest中
  */
-public class GlobalConfiguration implements ConfigModule {
+public class LifecycleConfiguration implements ConfigLifecycle {
 
     @Override
     public void injectAppLifecycle(Context context, List<AppLifecycles> lifecycles) {

@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.repository;
+package me.xiaobailong24.mvvmarms.base;
 
 import android.app.Application;
 import android.content.Context;
@@ -12,7 +12,7 @@ import me.xiaobailong24.mvvmarms.base.delegate.AppLifecycles;
  * Created by xiaobailong24 on 2017/6/16.
  * 框架配置接口
  */
-public interface ConfigModule {
+public interface ConfigLifecycle {
 
     /**
      * 使用{@link AppLifecycles}在Application的生命周期中注入一些操作

@@ -23,13 +23,13 @@ public class RepositoryModule {
 
     @Singleton
     @Provides
-    public Application provideApplication() {
+    Application provideApplication() {
         return this.mApplication;
     }
 
     @Singleton
     @Provides
-    public IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager) {
+    IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager) {
         return repositoryManager;
     }
 }

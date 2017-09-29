@@ -26,8 +26,8 @@
 
         <!--arms配置-->
         <meta-data
-            android:name="me.xiaobailong24.mvvmarms.weather.app.GlobalConfiguration"
-            android:value="ConfigModule"/>
+            android:name="me.xiaobailong24.mvvmarms.weather.app.LifecycleConfiguration"
+            android:value="ConfigLifecycle"/>
 
         <meta-data
             android:name="me.xiaobailong24.mvvmarms.weather.app.RepositoryConfiguration"

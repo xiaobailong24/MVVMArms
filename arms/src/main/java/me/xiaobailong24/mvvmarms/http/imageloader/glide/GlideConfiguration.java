@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import me.xiaobailong24.mvvmarms.http.imageloader.BaseImageLoaderStrategy;
-import me.xiaobailong24.mvvmarms.repository.http.OkHttpUrlLoader;
+import me.xiaobailong24.mvvmarms.http.OkHttpUrlLoader;
 import me.xiaobailong24.mvvmarms.repository.utils.DataHelper;
 import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
 import me.xiaobailong24.mvvmarms.utils.ArmsUtils;

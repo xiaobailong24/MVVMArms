@@ -13,7 +13,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import me.xiaobailong24.mvvmarms.repository.ConfigModule;
+import me.xiaobailong24.mvvmarms.base.ConfigLifecycle;
 import timber.log.Timber;
 
 /**
@@ -69,14 +69,14 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
             ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycle, true);
 
-            if (mFragmentLifecycles == null && mExtras.containsKey(ConfigModule.class.getName())) {
+            if (mFragmentLifecycles == null && mExtras.containsKey(ConfigLifecycle.class.getName())) {
                 mFragmentLifecycles = new ArrayList<>();
                 @SuppressWarnings("unchecked")
-                List<ConfigModule> modules = (List<ConfigModule>) mExtras.get(ConfigModule.class.getName());
-                for (ConfigModule module : modules) {
-                    module.injectFragmentLifecycle(mApplication, mFragmentLifecycles);
+                List<ConfigLifecycle> lifecycles = (List<ConfigLifecycle>) mExtras.get(ConfigLifecycle.class.getName());
+                for (ConfigLifecycle lifecycle : lifecycles) {
+                    lifecycle.injectFragmentLifecycle(mApplication, mFragmentLifecycles);
                 }
-                mExtras.put(ConfigModule.class.getName(), null);
+                mExtras.put(ConfigLifecycle.class.getName(), null);
             }
 
             for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles) {

@@ -11,8 +11,6 @@ import dagger.Module;
 import dagger.Provides;
 import me.xiaobailong24.mvvmarms.http.imageloader.BaseImageLoaderStrategy;
 import me.xiaobailong24.mvvmarms.http.imageloader.glide.GlideImageLoaderStrategy;
-import me.xiaobailong24.mvvmarms.repository.IRepositoryManager;
-import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
 
 /**
  * Created by xiaobailong24 on 2017/7/13.
@@ -40,15 +38,10 @@ public class ArmsModule {
         return new GlideImageLoaderStrategy();
     }
 
-    @Singleton
-    @Provides
-    public IRepositoryManager provideRepositoryManager() {
-        return RepositoryUtils.INSTANCE.obtainRepositoryComponent(mApplication).repositoryManager();
-    }
 
     @Singleton
     @Provides
-    public Map<String, Object> provideExtras() {
+    Map<String, Object> provideExtras() {
         return new ArrayMap<>();
     }
 

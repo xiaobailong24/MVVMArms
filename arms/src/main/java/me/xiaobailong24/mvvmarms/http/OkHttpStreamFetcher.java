@@ -1,4 +1,4 @@
-package me.xiaobailong24.mvvmarms.repository.http;
+package me.xiaobailong24.mvvmarms.http;
 
 import android.support.annotation.NonNull;
 import android.util.Log;

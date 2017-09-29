@@ -111,7 +111,7 @@ public class ClientModule {
 
     @Singleton
     @Provides
-    public Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
+    Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
         GsonBuilder builder = new GsonBuilder();
         if (configuration != null)
             configuration.configGson(application, builder);

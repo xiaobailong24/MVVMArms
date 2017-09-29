@@ -14,7 +14,7 @@ import me.xiaobailong24.mvvmarms.di.component.ArmsComponent;
 import me.xiaobailong24.mvvmarms.di.component.DaggerArmsComponent;
 import me.xiaobailong24.mvvmarms.di.module.ArmsModule;
 import me.xiaobailong24.mvvmarms.http.imageloader.glide.ImageConfigImpl;
-import me.xiaobailong24.mvvmarms.repository.ConfigModule;
+import me.xiaobailong24.mvvmarms.base.ConfigLifecycle;
 import me.xiaobailong24.mvvmarms.repository.IRepository;
 import me.xiaobailong24.mvvmarms.repository.RepositoryInjector;
 import me.xiaobailong24.mvvmarms.repository.di.component.RepositoryComponent;
@@ -30,7 +30,7 @@ public class AppDelegate implements App, AppLifecycles, IRepository {
     private ArmsComponent mArmsComponent;
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
-    private List<ConfigModule> mModules;
+    private List<ConfigLifecycle> mLifecycles;
     private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
     private ComponentCallbacks2 mComponentCallback;
@@ -38,10 +38,10 @@ public class AppDelegate implements App, AppLifecycles, IRepository {
     private RepositoryInjector mRepositoryInjector;//Repository
 
     public AppDelegate(Context context) {
-        this.mModules = new ManifestParser(context).parse();
-        for (ConfigModule module : mModules) {
-            module.injectAppLifecycle(context, mAppLifecycles);
-            module.injectActivityLifecycle(context, mActivityLifecycles);
+        this.mLifecycles = new ManifestParser(context).parse();
+        for (ConfigLifecycle lifecycle : mLifecycles) {
+            lifecycle.injectAppLifecycle(context, mAppLifecycles);
+            lifecycle.injectActivityLifecycle(context, mActivityLifecycles);
         }
     }
 
@@ -57,8 +57,8 @@ public class AppDelegate implements App, AppLifecycles, IRepository {
         this.mApplication = application;
 
         //Repository inject
-        this.mRepositoryInjector = new RepositoryInjector(application);//Repository
-        mRepositoryInjector.initialize(application);
+        this.mRepositoryInjector = new RepositoryInjector(mApplication);//Repository
+        mRepositoryInjector.initialize(mApplication);
 
         mArmsComponent = DaggerArmsComponent
                 .builder()
@@ -67,17 +67,17 @@ public class AppDelegate implements App, AppLifecycles, IRepository {
                 .build();
         mArmsComponent.inject(this);
 
-        mArmsComponent.extras().put(ConfigModule.class.getName(), mModules);
+        mArmsComponent.extras().put(ConfigLifecycle.class.getName(), mLifecycles);
 
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
 
-        this.mModules = null;
+        this.mLifecycles = null;
 
         for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);
         }
 
-        mComponentCallback = new AppComponentCallbacks(mApplication, mArmsComponent);
+        mComponentCallback = new AppComponentCallbacks(mApplication);
 
         mApplication.registerComponentCallbacks(mComponentCallback);
 
@@ -133,7 +133,7 @@ public class AppDelegate implements App, AppLifecycles, IRepository {
     private static class AppComponentCallbacks implements ComponentCallbacks2 {
         private Application mApplication;
 
-        public AppComponentCallbacks(Application application, ArmsComponent armsComponent) {
+        public AppComponentCallbacks(Application application) {
             this.mApplication = application;
         }
 

@@ -5,6 +5,8 @@ import android.content.Context;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import me.xiaobailong24.mvvmarms.repository.di.component.DaggerRepositoryComponent;
 import me.xiaobailong24.mvvmarms.repository.di.component.RepositoryComponent;
 import me.xiaobailong24.mvvmarms.repository.di.module.ClientModule;
@@ -23,8 +25,9 @@ public class RepositoryInjector implements IRepository {
     private RepositoryComponent mRepositoryComponent;
     private RepositoryModule mRepositoryModule;
 
-    public RepositoryInjector(Context context) {
-        this.mConfigRepositories = new ManifestParser(context).parse();
+    @Inject
+    public RepositoryInjector(Application application) {
+        this.mConfigRepositories = new ManifestParser(application).parse();
     }
 
     public void initialize(Application application) {

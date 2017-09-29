@@ -21,6 +21,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import me.xiaobailong24.mvvmarms.base.ConfigLifecycle;
 import timber.log.Timber;
 
 /**
@@ -98,7 +99,7 @@ public final class AppManager {
 
     /**
      * 提供给外部扩展 AppManager 的 @{@link #onReceive} 方法(远程遥控 AppManager 的功能)
-     * 建议在 {@link me.xiaobailong24.mvvmarms.repository.ConfigModule#injectAppLifecycle(Context, List)} 中
+     * 建议在 {@link ConfigLifecycle#injectAppLifecycle(Context, List)} 中
      * 通过 {@link AppLifecycles#onCreate(Application)} 在 App 初始化时,使用此方法传入自定义的 {@link HandleListener}
      *
      * @param handleListener
