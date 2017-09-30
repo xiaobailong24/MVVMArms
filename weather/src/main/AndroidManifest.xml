@@ -26,12 +26,14 @@
 
         <!--arms配置-->
         <meta-data
-            android:name="me.xiaobailong24.mvvmarms.weather.app.LifecycleConfiguration"
-            android:value="ConfigLifecycle"/>
-
-        <meta-data
             android:name="me.xiaobailong24.mvvmarms.weather.app.RepositoryConfiguration"
             android:value="ConfigRepository"/>
+        <meta-data
+            android:name="me.xiaobailong24.mvvmarms.weather.app.LifecycleConfiguration"
+            android:value="ConfigLifecycle"/>
+        <meta-data
+            android:name="me.xiaobailong24.mvvmarms.weather.app.ArmsConfiguration"
+            android:value="ConfigArms"/>
 
     </application>
 

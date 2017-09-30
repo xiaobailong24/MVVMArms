@@ -17,11 +17,4 @@ public interface ConfigRepository {
      */
     void applyOptions(Context context, RepositoryConfigModule.Builder builder);
 
-    /**
-     * 使用{@link IRepositoryManager}给框架注入一些数据管理服务
-     *
-     * @param context:           Context
-     * @param repositoryManager: IRepositoryManager
-     */
-    void registerComponents(Context context, IRepositoryManager repositoryManager);
 }

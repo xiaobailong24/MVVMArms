@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import me.xiaobailong24.mvvmarms.base.delegate.IActivity;
+import me.xiaobailong24.mvvmarms.lifecycle.delegate.IActivity;
+
 
 /**
  * Created by xiaobailong24 on 2017/6/16.

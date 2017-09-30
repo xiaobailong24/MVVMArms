@@ -2,8 +2,6 @@ package me.xiaobailong24.mvvmarms.repository.di.module;
 
 import android.app.Application;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 import me.xiaobailong24.mvvmarms.repository.IRepositoryManager;
@@ -21,13 +19,13 @@ public class RepositoryModule {
         this.mApplication = application;
     }
 
-    @Singleton
+//    @Singleton
     @Provides
     Application provideApplication() {
         return this.mApplication;
     }
 
-    @Singleton
+//    @Singleton
     @Provides
     IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager) {
         return repositoryManager;

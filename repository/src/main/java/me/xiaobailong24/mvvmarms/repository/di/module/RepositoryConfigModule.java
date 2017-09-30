@@ -8,8 +8,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
@@ -22,6 +20,7 @@ import okhttp3.Interceptor;
 
 /**
  * Created by xiaobailong24 on 2017/9/28.
+ * RepositoryConfigModule
  */
 @Module
 public class RepositoryConfigModule {
@@ -57,7 +56,7 @@ public class RepositoryConfigModule {
     }
 
 
-    @Singleton
+//    @Singleton
     @Provides
     @Nullable
     List<Interceptor> provideInterceptors() {
@@ -65,7 +64,7 @@ public class RepositoryConfigModule {
     }
 
 
-    @Singleton
+//    @Singleton
     @Provides
     HttpUrl provideBaseUrl() {
         if (mBaseUrl != null) {
@@ -77,14 +76,14 @@ public class RepositoryConfigModule {
         return mApiUrl == null ? HttpUrl.parse("https://api.github.com/") : mApiUrl;
     }
 
-    @Singleton
+//    @Singleton
     @Provides
     File provideCacheFile(Application application) {
         //提供缓存文件
         return mCacheFile == null ? DataHelper.getCacheFile(application) : mCacheFile;
     }
 
-    @Singleton
+//    @Singleton
     @Provides
     @Nullable
     GlobalHttpHandler provideGlobalHttpHandler() {
@@ -92,27 +91,27 @@ public class RepositoryConfigModule {
     }
 
 
-    @Singleton
+//    @Singleton
     @Provides
     ResponseErrorListener provideResponseErrorListener() {
         return mErrorListener == null ? ResponseErrorListener.EMPTY : mErrorListener;
     }
 
-    @Singleton
+//    @Singleton
     @Provides
     @Nullable
     ClientModule.RetrofitConfiguration provideRetrofitConfiguration() {
         return mRetrofitConfiguration;
     }
 
-    @Singleton
+//    @Singleton
     @Provides
     @Nullable
     ClientModule.OkhttpConfiguration provideOkhttpConfiguration() {
         return mOkhttpConfiguration;
     }
 
-    @Singleton
+//    @Singleton
     @Provides
     @Nullable
     ClientModule.GsonConfiguration provideGsonConfiguration() {
@@ -120,14 +119,14 @@ public class RepositoryConfigModule {
     }
 
 
-    @Singleton
+//    @Singleton
     @Provides
     @Nullable
     RequestInterceptor.Level providePrintHttpLogLevel() {
         return mPrintHttpLogLevel;
     }
 
-    @Singleton
+//    @Singleton
     @Provides
     DBModule.RoomConfiguration provideRoomConfiguration() {
         return mRoomConfiguration == null ? DBModule.RoomConfiguration.EMPTY : mRoomConfiguration;

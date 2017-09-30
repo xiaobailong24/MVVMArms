@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
-import me.xiaobailong24.mvvmarms.base.delegate.IActivity;
+import me.xiaobailong24.mvvmarms.lifecycle.delegate.IActivity;
 import me.xiaobailong24.mvvmarms.mvvm.IViewModel;
 
 /**

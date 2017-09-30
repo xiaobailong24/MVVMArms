@@ -7,7 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.xiaobailong24.mvvmarms.base.delegate.IFragment;
+import me.xiaobailong24.mvvmarms.lifecycle.delegate.IFragment;
+
 
 /**
  * Created by xiaobailong24 on 2017/6/16.

@@ -48,6 +48,7 @@ dependencies {
 
     //repository
     compile project(':repository')
+    compile project(':lifecycle')
 
     //support
     compile(rootProject.ext.dependencies["support-v4"]) {

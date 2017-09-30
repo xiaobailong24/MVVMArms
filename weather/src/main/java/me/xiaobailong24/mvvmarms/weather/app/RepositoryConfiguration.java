@@ -5,17 +5,15 @@ import android.content.Context;
 import java.util.concurrent.TimeUnit;
 
 import me.xiaobailong24.mvvmarms.repository.ConfigRepository;
-import me.xiaobailong24.mvvmarms.repository.IRepositoryManager;
 import me.xiaobailong24.mvvmarms.repository.di.module.RepositoryConfigModule;
 import me.xiaobailong24.mvvmarms.repository.utils.RequestInterceptor;
 import me.xiaobailong24.mvvmarms.weather.BuildConfig;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.db.WeatherNowDb;
 
 /**
  * Created by xiaobailong24 on 2017/9/28.
+ * Repository 的全局配置信息在此配置,需要将此实现类声明到 AndroidManifest 中
  */
-
 public class RepositoryConfiguration implements ConfigRepository {
     @Override
     public void applyOptions(Context context, RepositoryConfigModule.Builder builder) {
@@ -59,8 +57,4 @@ public class RepositoryConfiguration implements ConfigRepository {
                 });
     }
 
-    @Override
-    public void registerComponents(Context context, IRepositoryManager repositoryManager) {
-        repositoryManager.injectRoomDatabase(WeatherNowDb.class, WeatherNowDb.class.getSimpleName());
-    }
 }

@@ -8,18 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import dagger.Lazy;
 import me.xiaobailong24.mvvmarms.repository.di.module.DBModule;
-import me.xiaobailong24.mvvmarms.repository.utils.Preconditions;
 import retrofit2.Retrofit;
 
 /**
  * Created by xiaobailong24 on 2017/9/28.
  * 数据管理层实现类
  */
-@Singleton
+//@Singleton
 public class RepositoryManager implements IRepositoryManager {
     @Inject
     Application mApplication;
@@ -52,22 +50,17 @@ public class RepositoryManager implements IRepositoryManager {
     @Override
     @SuppressWarnings("unchecked")
     public <DB extends RoomDatabase> DB obtainRoomDatabase(Class<DB> database, String dbName) {
-        Preconditions.checkState(mRoomDatabaseCache.containsKey(database.getName()),
-                "Unable to find %s,first call injectRoomDatabase(%s) in ConfigModule", database.getName(), database.getSimpleName());
-        return (DB) mRoomDatabaseCache.get(database.getName());
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <DB extends RoomDatabase> void injectRoomDatabase(Class<DB> database, String dbName) {
-        if (!mRoomDatabaseCache.containsKey(database.getName())) {
-            DB roomDatabase;
-            RoomDatabase.Builder builder = Room.databaseBuilder(mApplication, database, dbName);
-            if (mRoomConfiguration != null)//自定义 Room 配置
-                mRoomConfiguration.configRoom(mApplication, builder);
-            roomDatabase = (DB) builder.build();
-            mRoomDatabaseCache.put(database.getName(), roomDatabase);
+        DB roomDatabase;
+        synchronized (mRoomDatabaseCache) {
+            roomDatabase = (DB) mRoomDatabaseCache.get(database.getName());
+            if (roomDatabase == null) {
+                RoomDatabase.Builder builder = Room.databaseBuilder(mApplication, database, dbName);
+                if (mRoomConfiguration != null)//自定义 Room 配置
+                    mRoomConfiguration.configRoom(mApplication, builder);
+                roomDatabase = (DB) builder.build();
+                mRoomDatabaseCache.put(database.getName(), roomDatabase);
+            }
         }
+        return roomDatabase;
     }
-
 }

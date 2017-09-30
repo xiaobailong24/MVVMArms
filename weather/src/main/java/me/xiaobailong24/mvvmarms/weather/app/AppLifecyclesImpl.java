@@ -6,9 +6,9 @@ import android.content.Context;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
-import me.xiaobailong24.mvvmarms.base.delegate.AppLifecycles;
+import me.xiaobailong24.mvvmarms.lifecycle.delegate.AppLifecycles;
+import me.xiaobailong24.mvvmarms.lifecycle.utils.LifecycleUtils;
 import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
-import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.weather.BuildConfig;
 import me.xiaobailong24.mvvmarms.weather.app.utils.CrashUtils;
 import timber.log.Timber;
@@ -21,7 +21,7 @@ import timber.log.Timber;
 public class AppLifecyclesImpl implements AppLifecycles {
 
     @Override
-    public void attachBaseContext(Context base) {
+    public void attachBaseContext(Context context) {
         //                MultiDex.install(base);  //这里比 onCreate 先执行,常用于 MultiDex 初始化,插件化框架的初始化
     }
 
@@ -43,7 +43,7 @@ public class AppLifecyclesImpl implements AppLifecycles {
             //                    });
         }
         //leakCanary内存泄露检查
-        ArmsUtils.INSTANCE.obtainArmsComponent(application)
+        LifecycleUtils.INSTANCE.obtainLifecycleComponent(application)
                 .extras()
                 .put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
 
@@ -51,7 +51,7 @@ public class AppLifecyclesImpl implements AppLifecycles {
         CrashUtils.init(application, RepositoryUtils.INSTANCE.obtainRepositoryComponent(application).cacheFile());
 
         //扩展 AppManager 的远程遥控功能
-        ArmsUtils.INSTANCE.obtainArmsComponent(application).appManager()
+        LifecycleUtils.INSTANCE.obtainLifecycleComponent(application).appManager()
                 .setHandleListener((appManager, message) -> {
                     Timber.d("handleMessage: " + message.what);
                     //AppManager.post(message);

@@ -5,15 +5,13 @@ import android.support.v4.util.ArrayMap;
 
 import java.util.Map;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
-import me.xiaobailong24.mvvmarms.http.imageloader.BaseImageLoaderStrategy;
-import me.xiaobailong24.mvvmarms.http.imageloader.glide.GlideImageLoaderStrategy;
+import me.xiaobailong24.mvvmarms.di.scope.ArmsScope;
 
 /**
  * Created by xiaobailong24 on 2017/7/13.
+ * Dagger ArmsModule
  */
 @Module
 public class ArmsModule {
@@ -23,23 +21,8 @@ public class ArmsModule {
         this.mApplication = application;
     }
 
-//    @Singleton
-//    @Provides
-//    public Application provideApplication() {
-//        return this.mApplication;
-//    }
 
-
-    @Singleton
-    @Provides
-    BaseImageLoaderStrategy provideImageLoaderStrategy() {
-        //默认使用 Glide 加载图片
-        // TODO: 2017/9/28
-        return new GlideImageLoaderStrategy();
-    }
-
-
-    @Singleton
+    @ArmsScope
     @Provides
     Map<String, Object> provideExtras() {
         return new ArrayMap<>();

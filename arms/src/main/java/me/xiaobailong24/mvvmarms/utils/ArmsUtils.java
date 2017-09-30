@@ -3,7 +3,7 @@ package me.xiaobailong24.mvvmarms.utils;
 import android.app.Application;
 import android.content.Context;
 
-import me.xiaobailong24.mvvmarms.base.delegate.App;
+import me.xiaobailong24.mvvmarms.base.IArms;
 import me.xiaobailong24.mvvmarms.di.component.ArmsComponent;
 import me.xiaobailong24.mvvmarms.repository.utils.Preconditions;
 
@@ -19,12 +19,12 @@ public enum ArmsUtils {
     INSTANCE;
 
     public ArmsComponent obtainArmsComponent(Context context) {
-        Preconditions.checkState(context.getApplicationContext() instanceof App, "Application does not implements App");
-        return ((App) context.getApplicationContext()).getArmsComponent();
+        Preconditions.checkState(context.getApplicationContext() instanceof IArms, "Application does not implements IArms");
+        return ((IArms) context.getApplicationContext()).getArmsComponent();
     }
 
     public ArmsComponent obtainArmsComponent(Application application) {
-        Preconditions.checkState(application instanceof App, "Application does not implements App");
-        return ((App) application).getArmsComponent();
+        Preconditions.checkState(application instanceof IArms, "Application does not implements IArms");
+        return ((IArms) application).getArmsComponent();
     }
 }

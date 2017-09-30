@@ -10,13 +10,13 @@ import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
 
-import me.xiaobailong24.mvvmarms.base.delegate.AppLifecycles;
-import me.xiaobailong24.mvvmarms.base.ConfigLifecycle;
-import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
+import me.xiaobailong24.mvvmarms.lifecycle.ConfigLifecycle;
+import me.xiaobailong24.mvvmarms.lifecycle.delegate.AppLifecycles;
+import me.xiaobailong24.mvvmarms.lifecycle.utils.LifecycleUtils;
 
 /**
  * Created by xiaobailong24 on 2017/7/24.
- * app的全局配置信息在此配置,需要将此实现类声明到AndroidManifest中
+ * Lifecycle 的全局配置信息在此配置,需要将此实现类声明到 AndroidManifest 中
  */
 public class LifecycleConfiguration implements ConfigLifecycle {
 
@@ -49,7 +49,7 @@ public class LifecycleConfiguration implements ConfigLifecycle {
             @Override
             public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
                 //这里应该是检测 Fragment 而不是 FragmentLifecycleCallbacks 的泄露。
-                ((RefWatcher) (ArmsUtils.INSTANCE.obtainArmsComponent(f.getContext()))
+                ((RefWatcher) (LifecycleUtils.INSTANCE.obtainLifecycleComponent(f.getContext()))
                         .extras()
                         .get(RefWatcher.class.getName()))
                         .watch(f);

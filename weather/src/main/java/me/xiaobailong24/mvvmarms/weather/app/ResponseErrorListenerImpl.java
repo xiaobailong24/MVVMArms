@@ -12,7 +12,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
-import me.xiaobailong24.mvvmarms.utils.UiUtils;
+import me.xiaobailong24.mvvmarms.lifecycle.utils.UiUtils;
 import retrofit2.HttpException;
 import timber.log.Timber;
 

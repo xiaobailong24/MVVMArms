@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
-import me.xiaobailong24.mvvmarms.base.delegate.IFragment;
+import me.xiaobailong24.mvvmarms.lifecycle.delegate.IFragment;
 import me.xiaobailong24.mvvmarms.mvvm.IViewModel;
 
 /**
