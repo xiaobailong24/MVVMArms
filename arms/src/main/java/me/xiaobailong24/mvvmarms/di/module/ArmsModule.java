@@ -5,9 +5,10 @@ import android.support.v4.util.ArrayMap;
 
 import java.util.Map;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
-import me.xiaobailong24.mvvmarms.di.scope.ArmsScope;
 
 /**
  * Created by xiaobailong24 on 2017/7/13.
@@ -22,7 +23,13 @@ public class ArmsModule {
     }
 
 
-    @ArmsScope
+    @Singleton
+    @Provides
+    Application provideApplication() {
+        return this.mApplication;
+    }
+
+    @Singleton
     @Provides
     Map<String, Object> provideExtras() {
         return new ArrayMap<>();

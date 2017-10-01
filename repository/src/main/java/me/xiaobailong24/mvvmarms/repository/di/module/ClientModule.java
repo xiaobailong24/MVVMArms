@@ -2,6 +2,7 @@ package me.xiaobailong24.mvvmarms.repository.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -33,11 +34,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class ClientModule {
+    private Application mApplication;
     private static final int TIME_OUT = 10;
+
+    public ClientModule(@NonNull Application application) {
+        mApplication = application;
+    }
 
     @Singleton
     @Provides
-    Retrofit provideRetrofit(Application application, @Nullable RetrofitConfiguration configuration,
+    Retrofit provideRetrofit(@Nullable RetrofitConfiguration configuration,
                              Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
         builder.baseUrl(httpUrl)//域名
                 .client(client)//设置okhttp
@@ -45,13 +51,13 @@ public class ClientModule {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用rxjava
                 .addConverterFactory(GsonConverterFactory.create());//使用Gson
         if (configuration != null)
-            configuration.configRetrofit(application, builder);
+            configuration.configRetrofit(mApplication, builder);
         return builder.build();
     }
 
     @Singleton
     @Provides
-    OkHttpClient provideClient(Application application, @Nullable OkhttpConfiguration configuration,
+    OkHttpClient provideClient(@Nullable OkhttpConfiguration configuration,
                                OkHttpClient.Builder builder, Interceptor intercept,
                                @Nullable List<Interceptor> interceptors, @Nullable final GlobalHttpHandler handler) {
         builder.connectTimeout(TIME_OUT, TimeUnit.SECONDS)
@@ -73,7 +79,7 @@ public class ClientModule {
         }
 
         if (configuration != null)
-            configuration.configOkhttp(application, builder);
+            configuration.configOkhttp(mApplication, builder);
         return builder.build();
     }
 
@@ -100,10 +106,10 @@ public class ClientModule {
 
     @Singleton
     @Provides
-    RxErrorHandler provideRxErrorHandler(Application application, ResponseErrorListener listener) {
+    RxErrorHandler provideRxErrorHandler(ResponseErrorListener listener) {
         return RxErrorHandler
                 .builder()
-                .with(application)
+                .with(mApplication)
                 .responseErrorListener(listener)
                 .build();
     }
@@ -111,10 +117,10 @@ public class ClientModule {
 
     @Singleton
     @Provides
-    Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
+    Gson provideGson(@Nullable GsonConfiguration configuration) {
         GsonBuilder builder = new GsonBuilder();
         if (configuration != null)
-            configuration.configGson(application, builder);
+            configuration.configGson(mApplication, builder);
         return builder.create();
     }
 

@@ -9,6 +9,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.xiaobailong24.mvvmarms.lifecycle.delegate.ActivityLifecycle;
+import me.xiaobailong24.mvvmarms.lifecycle.delegate.AppManager;
 
 /**
  * Created by xiaobailong24 on 2017/9/30.
@@ -24,8 +26,14 @@ public class LifecycleModule {
 
     @Singleton
     @Provides
-    Application provideApplication() {
-        return this.mApplication;
+    AppManager provideAppManager() {
+        return new AppManager(mApplication);
+    }
+
+    @Singleton
+    @Provides
+    ActivityLifecycle provideActivityLifecycle(AppManager appManager, Map<String, Object> extras) {
+        return new ActivityLifecycle(appManager, mApplication, extras);
     }
 
     @Singleton

@@ -2,26 +2,26 @@ package me.xiaobailong24.mvvmarms.di.component;
 
 import android.app.Application;
 
+import javax.inject.Singleton;
+
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 import me.xiaobailong24.mvvmarms.base.ArmsInjector;
 import me.xiaobailong24.mvvmarms.di.module.ArmsConfigModule;
 import me.xiaobailong24.mvvmarms.di.module.ArmsModule;
 import me.xiaobailong24.mvvmarms.di.module.ViewModelFactoryModule;
-import me.xiaobailong24.mvvmarms.di.scope.ArmsScope;
 import me.xiaobailong24.mvvmarms.http.imageloader.ImageLoader;
-import me.xiaobailong24.mvvmarms.lifecycle.di.component.LifecycleComponent;
+import me.xiaobailong24.mvvmarms.lifecycle.di.module.LifecycleModule;
 import me.xiaobailong24.mvvmarms.repository.di.module.RepositoryModule;
 
 /**
  * Created by xiaobailong24 on 2017/7/13.
  * Dagger ArmsComponent
  */
-@ArmsScope
-@Component(dependencies = LifecycleComponent.class,
-        modules = {AndroidInjectionModule.class, ViewModelFactoryModule.class,
-                RepositoryModule.class,
-                ArmsModule.class, ArmsConfigModule.class})
+@Singleton
+@Component(modules = {AndroidInjectionModule.class, ViewModelFactoryModule.class,
+        RepositoryModule.class, LifecycleModule.class,
+        ArmsModule.class, ArmsConfigModule.class})
 public interface ArmsComponent {
     Application application();
 

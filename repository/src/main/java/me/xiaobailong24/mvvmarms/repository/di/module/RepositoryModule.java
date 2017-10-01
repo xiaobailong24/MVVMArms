@@ -2,10 +2,14 @@ package me.xiaobailong24.mvvmarms.repository.di.module;
 
 import android.app.Application;
 
+import javax.inject.Singleton;
+
+import dagger.Lazy;
 import dagger.Module;
 import dagger.Provides;
 import me.xiaobailong24.mvvmarms.repository.IRepositoryManager;
 import me.xiaobailong24.mvvmarms.repository.RepositoryManager;
+import retrofit2.Retrofit;
 
 /**
  * Created by xiaobailong24 on 2017/9/28.
@@ -19,15 +23,9 @@ public class RepositoryModule {
         this.mApplication = application;
     }
 
-//    @Singleton
+    @Singleton
     @Provides
-    Application provideApplication() {
-        return this.mApplication;
-    }
-
-//    @Singleton
-    @Provides
-    IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager) {
-        return repositoryManager;
+    IRepositoryManager provideRepositoryManager(Lazy<Retrofit> retrofit, DBModule.RoomConfiguration roomConfiguration) {
+        return new RepositoryManager(mApplication, retrofit, roomConfiguration);
     }
 }

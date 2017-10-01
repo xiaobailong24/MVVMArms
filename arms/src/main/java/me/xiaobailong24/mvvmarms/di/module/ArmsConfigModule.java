@@ -1,8 +1,9 @@
 package me.xiaobailong24.mvvmarms.di.module;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
-import me.xiaobailong24.mvvmarms.di.scope.ArmsScope;
 import me.xiaobailong24.mvvmarms.http.imageloader.BaseImageLoaderStrategy;
 import me.xiaobailong24.mvvmarms.http.imageloader.glide.GlideImageLoaderStrategy;
 
@@ -15,7 +16,7 @@ public class ArmsConfigModule {
     private BaseImageLoaderStrategy mImageLoaderStrategy;
 
 
-    @ArmsScope
+    @Singleton
     @Provides
     BaseImageLoaderStrategy provideImageLoaderStrategy() {
         //默认使用 Glide 加载图片

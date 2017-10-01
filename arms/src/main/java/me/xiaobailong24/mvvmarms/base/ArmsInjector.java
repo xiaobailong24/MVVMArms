@@ -12,9 +12,7 @@ import me.xiaobailong24.mvvmarms.di.component.DaggerArmsComponent;
 import me.xiaobailong24.mvvmarms.di.module.ArmsConfigModule;
 import me.xiaobailong24.mvvmarms.di.module.ArmsModule;
 import me.xiaobailong24.mvvmarms.http.imageloader.glide.ImageConfigImpl;
-import me.xiaobailong24.mvvmarms.lifecycle.utils.LifecycleUtils;
 import me.xiaobailong24.mvvmarms.lifecycle.utils.Preconditions;
-import me.xiaobailong24.mvvmarms.repository.IRepository;
 import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.utils.ManifestArmsParser;
 
@@ -41,8 +39,8 @@ public class ArmsInjector implements IArms {
         if (mArmsModule == null)
             mArmsModule = new ArmsModule(mApplication);
         mArmsComponent = DaggerArmsComponent.builder()
-                .lifecycleComponent(LifecycleUtils.INSTANCE.obtainLifecycleComponent(mApplication))
-                .repositoryModule(((IRepository) mApplication).getRepositoryModule())
+                // .lifecycleModule(((ILifecycle) mApplication).getLifecycleModule())
+                // .repositoryModule(((IRepository) mApplication).getRepositoryModule())
                 .armsConfigModule(getArmsConfigModule(mApplication, mConfigArmses))
                 .armsModule(new ArmsModule(mApplication))
                 .build();

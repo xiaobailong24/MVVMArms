@@ -1,12 +1,15 @@
 package me.xiaobailong24.mvvmarms.repository.di.module;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,6 +27,7 @@ import okhttp3.Interceptor;
  */
 @Module
 public class RepositoryConfigModule {
+    private Application mApplication;
     private HttpUrl mApiUrl;
     private BaseUrl mBaseUrl;
     private File mCacheFile;
@@ -38,6 +42,7 @@ public class RepositoryConfigModule {
 
 
     private RepositoryConfigModule(Builder builder) {
+        this.mApplication = builder.application;
         this.mApiUrl = builder.apiUrl;
         this.mBaseUrl = builder.baseUrl;
         this.mHandler = builder.handler;
@@ -56,7 +61,7 @@ public class RepositoryConfigModule {
     }
 
 
-//    @Singleton
+    @Singleton
     @Provides
     @Nullable
     List<Interceptor> provideInterceptors() {
@@ -64,7 +69,7 @@ public class RepositoryConfigModule {
     }
 
 
-//    @Singleton
+    @Singleton
     @Provides
     HttpUrl provideBaseUrl() {
         if (mBaseUrl != null) {
@@ -76,14 +81,14 @@ public class RepositoryConfigModule {
         return mApiUrl == null ? HttpUrl.parse("https://api.github.com/") : mApiUrl;
     }
 
-//    @Singleton
+    @Singleton
     @Provides
-    File provideCacheFile(Application application) {
+    File provideCacheFile() {
         //提供缓存文件
-        return mCacheFile == null ? DataHelper.getCacheFile(application) : mCacheFile;
+        return mCacheFile == null ? DataHelper.getCacheFile(mApplication) : mCacheFile;
     }
 
-//    @Singleton
+    @Singleton
     @Provides
     @Nullable
     GlobalHttpHandler provideGlobalHttpHandler() {
@@ -91,27 +96,27 @@ public class RepositoryConfigModule {
     }
 
 
-//    @Singleton
+    @Singleton
     @Provides
     ResponseErrorListener provideResponseErrorListener() {
         return mErrorListener == null ? ResponseErrorListener.EMPTY : mErrorListener;
     }
 
-//    @Singleton
+    @Singleton
     @Provides
     @Nullable
     ClientModule.RetrofitConfiguration provideRetrofitConfiguration() {
         return mRetrofitConfiguration;
     }
 
-//    @Singleton
+    @Singleton
     @Provides
     @Nullable
     ClientModule.OkhttpConfiguration provideOkhttpConfiguration() {
         return mOkhttpConfiguration;
     }
 
-//    @Singleton
+    @Singleton
     @Provides
     @Nullable
     ClientModule.GsonConfiguration provideGsonConfiguration() {
@@ -119,20 +124,21 @@ public class RepositoryConfigModule {
     }
 
 
-//    @Singleton
+    @Singleton
     @Provides
     @Nullable
     RequestInterceptor.Level providePrintHttpLogLevel() {
         return mPrintHttpLogLevel;
     }
 
-//    @Singleton
+    @Singleton
     @Provides
     DBModule.RoomConfiguration provideRoomConfiguration() {
         return mRoomConfiguration == null ? DBModule.RoomConfiguration.EMPTY : mRoomConfiguration;
     }
 
     public static final class Builder {
+        private Application application;
         private HttpUrl apiUrl;
         private BaseUrl baseUrl;
         private File cacheFile;
@@ -147,6 +153,12 @@ public class RepositoryConfigModule {
 
 
         private Builder() {
+        }
+
+        @NonNull
+        public Builder application(Application application) {
+            this.application = application;
+            return this;
         }
 
         public Builder baseUrl(String baseUrl) {//基础url

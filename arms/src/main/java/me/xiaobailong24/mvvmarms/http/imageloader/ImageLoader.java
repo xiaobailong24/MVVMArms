@@ -3,14 +3,13 @@ package me.xiaobailong24.mvvmarms.http.imageloader;
 import android.content.Context;
 
 import javax.inject.Inject;
-
-import me.xiaobailong24.mvvmarms.di.scope.ArmsScope;
+import javax.inject.Singleton;
 
 /**
  * Created by xiaobailong24 on 2017/8/17.
  * 策略模式，封装类，持有 BaseImageLoaderStrategy 的引用
  */
-@ArmsScope
+@Singleton
 public final class ImageLoader {
     private BaseImageLoaderStrategy mStrategy;
 

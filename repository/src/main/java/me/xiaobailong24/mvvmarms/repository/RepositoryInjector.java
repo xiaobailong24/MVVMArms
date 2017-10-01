@@ -33,7 +33,7 @@ public class RepositoryInjector implements IRepository {
             mRepositoryModule = new RepositoryModule(mApplication);
         mRepositoryComponent = DaggerRepositoryComponent.builder()
                 .repositoryModule(mRepositoryModule)
-                .clientModule(new ClientModule())
+                .clientModule(new ClientModule(mApplication))
                 .repositoryConfigModule(getRepositoryConfigModule(mApplication, mConfigRepositories))
                 .build();
         mRepositoryComponent.inject(this);
@@ -50,7 +50,7 @@ public class RepositoryInjector implements IRepository {
         RepositoryConfigModule.Builder builder = RepositoryConfigModule.builder();
         for (ConfigRepository repository : configRepositories)
             repository.applyOptions(context, builder);
-        return builder.build();
+        return builder.application(mApplication).build();
     }
 
     public RepositoryComponent getRepositoryComponent() {

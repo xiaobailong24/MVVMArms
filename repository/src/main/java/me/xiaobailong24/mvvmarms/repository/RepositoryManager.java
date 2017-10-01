@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import dagger.Lazy;
 import me.xiaobailong24.mvvmarms.repository.di.module.DBModule;
@@ -17,19 +18,19 @@ import retrofit2.Retrofit;
  * Created by xiaobailong24 on 2017/9/28.
  * 数据管理层实现类
  */
-//@Singleton
+@Singleton
 public class RepositoryManager implements IRepositoryManager {
-    @Inject
-    Application mApplication;
-    @Inject
-    Lazy<Retrofit> mRetrofit;
+    private Application mApplication;
+    private Lazy<Retrofit> mRetrofit;
     private final Map<String, Object> mRetrofitServiceCache = new HashMap<>();
     private final Map<String, Object> mRoomDatabaseCache = new HashMap<>();
-    @Inject
-    DBModule.RoomConfiguration mRoomConfiguration;
+    private DBModule.RoomConfiguration mRoomConfiguration;
 
     @Inject
-    public RepositoryManager() {
+    public RepositoryManager(Application application, Lazy<Retrofit> retrofit, DBModule.RoomConfiguration roomConfiguration) {
+        this.mApplication = application;
+        this.mRetrofit = retrofit;
+        this.mRoomConfiguration = roomConfiguration;
     }
 
     @Override
