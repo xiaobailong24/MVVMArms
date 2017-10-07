@@ -19,8 +19,7 @@ public enum ArmsUtils {
     INSTANCE;
 
     public ArmsComponent obtainArmsComponent(Context context) {
-        Preconditions.checkState(context.getApplicationContext() instanceof IArms, "Application does not implements IArms");
-        return ((IArms) context.getApplicationContext()).getArmsComponent();
+        return obtainArmsComponent((Application) context.getApplicationContext());
     }
 
     public ArmsComponent obtainArmsComponent(Application application) {

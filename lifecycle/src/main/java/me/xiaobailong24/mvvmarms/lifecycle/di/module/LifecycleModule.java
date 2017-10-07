@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import dagger.android.AndroidInjectionModule;
 import me.xiaobailong24.mvvmarms.lifecycle.delegate.ActivityLifecycle;
 import me.xiaobailong24.mvvmarms.lifecycle.delegate.AppManager;
 
@@ -16,7 +17,7 @@ import me.xiaobailong24.mvvmarms.lifecycle.delegate.AppManager;
  * Created by xiaobailong24 on 2017/9/30.
  * Dagger LifecycleModule
  */
-@Module
+@Module(includes = AndroidInjectionModule.class)
 public class LifecycleModule {
     private Application mApplication;
 

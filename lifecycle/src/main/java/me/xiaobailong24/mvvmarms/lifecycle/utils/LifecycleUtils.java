@@ -14,9 +14,7 @@ public enum LifecycleUtils {
     INSTANCE;
 
     public LifecycleComponent obtainLifecycleComponent(Context context) {
-        Preconditions.checkState(context.getApplicationContext() instanceof ILifecycle,
-                "%s does not implements ILifecycle", context.getApplicationContext());
-        return ((ILifecycle) context.getApplicationContext()).getLifecycleComponent();
+        return obtainLifecycleComponent((Application) context.getApplicationContext());
     }
 
     public LifecycleComponent obtainLifecycleComponent(Application application) {

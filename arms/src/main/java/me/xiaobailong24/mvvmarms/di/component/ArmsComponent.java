@@ -5,7 +5,6 @@ import android.app.Application;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import dagger.android.AndroidInjectionModule;
 import me.xiaobailong24.mvvmarms.base.ArmsInjector;
 import me.xiaobailong24.mvvmarms.di.module.ArmsConfigModule;
 import me.xiaobailong24.mvvmarms.di.module.ArmsModule;
@@ -19,7 +18,7 @@ import me.xiaobailong24.mvvmarms.repository.di.module.RepositoryModule;
  * Dagger ArmsComponent
  */
 @Singleton
-@Component(modules = {AndroidInjectionModule.class, ViewModelFactoryModule.class,
+@Component(modules = {ViewModelFactoryModule.class,
         RepositoryModule.class, LifecycleModule.class,
         ArmsModule.class, ArmsConfigModule.class})
 public interface ArmsComponent {

@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModel;
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
-import me.xiaobailong24.mvvmarms.di.module.ViewModelFactoryModule;
 import me.xiaobailong24.mvvmarms.di.scope.ViewModelScope;
 import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherDailyViewModel;
 
@@ -13,8 +12,7 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherDailyViewModel;
  * Created by xiaobailong24 on 2017/8/14.
  * MVVM WeatherDailyViewModelModule
  */
-@Module(includes = {ViewModelFactoryModule.class,
-        WeatherDailyModule.class})
+@Module(includes = {WeatherDailyModule.class})
 public abstract class WeatherDailyViewModelModule {
 
     @Binds

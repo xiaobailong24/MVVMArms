@@ -14,9 +14,7 @@ public enum RepositoryUtils {
     INSTANCE;
 
     public RepositoryComponent obtainRepositoryComponent(Context context) {
-        Preconditions.checkState(context.getApplicationContext() instanceof IRepository,
-                "%s does not implements IRepository", context.getApplicationContext());
-        return ((IRepository) context.getApplicationContext()).getRepositoryComponent();
+        return obtainRepositoryComponent((Application) context.getApplicationContext());
     }
 
     public RepositoryComponent obtainRepositoryComponent(Application application) {
