@@ -11,7 +11,7 @@ ext {
 
     version = [
             androidSupportSdkVersion: "26.1.0",
-            androidArchSdkVersion   : "1.0.0-beta1",
+            androidArchSdkVersion   : "1.0.0-beta2",
             retrofitSdkVersion      : "2.3.0",
             glideSdkVersion         : "4.1.1",
             dagger2SdkVersion       : "2.11",
@@ -30,7 +30,7 @@ ext {
             "constraint-layout"        : "com.android.support.constraint:constraint-layout:1.0.2",
 
             //view
-            "brvah"                    : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30",
+            "brvah"                    : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.31",
             "SuperTextView"            : "com.github.lygttpod:SuperTextView:2.1.4",
             "MaterialSearchView"       : "com.miguelcatalan:materialsearchview:1.4.0",
 
