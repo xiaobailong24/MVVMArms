@@ -9,8 +9,10 @@ import me.xiaobailong24.mvvmarms.di.module.ViewModelFactoryModule;
  * Created by xiaobailong24 on 2017/7/22.
  * Dagger AppModule
  */
-@Module(includes = {ViewModelFactoryModule.class, WeatherViewModelModule.class,
-        WeatherNowViewModelModule.class, WeatherDailyViewModelModule.class})
+@Module(includes = {ViewModelFactoryModule.class,
+        WeatherViewModelModule.class, WeatherActivityModule.class,
+        WeatherNowViewModelModule.class, WeatherNowFragmentModule.class,
+        WeatherDailyViewModelModule.class, WeatherDailyFragmentModule.class})
 public class AppModule {
 
     private Application mApplication;
