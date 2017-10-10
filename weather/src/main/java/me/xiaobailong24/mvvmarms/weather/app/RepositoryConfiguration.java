@@ -21,8 +21,6 @@ public class RepositoryConfiguration implements ConfigRepository {
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
 
         builder.baseUrl(Api.APP_DOMAIN)
-                //自己自定义图片加载逻辑
-                //                .imageLoaderStrategy(new CustomLoaderStrategy())
                 // 这里提供一个全局处理 Http 请求和响应结果的处理类,可以比客户端提前一步拿到服务器返回的结果
                 .globalHttpHandler(new GlobalHttpHandlerImpl())
                 // 用来处理 rxjava 中发生的所有错误,rxjava 中发生的每个错误都会回调此接口

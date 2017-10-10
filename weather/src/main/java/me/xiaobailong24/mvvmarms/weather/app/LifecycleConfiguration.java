@@ -48,7 +48,7 @@ public class LifecycleConfiguration implements ConfigLifecycle {
 
             @Override
             public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-                //这里应该是检测 Fragment 而不是 FragmentLifecycleCallbacks 的泄露。
+                //检测 Fragment 的内存泄露。
                 ((RefWatcher) (LifecycleUtils.INSTANCE.obtainLifecycleComponent(f.getContext()))
                         .extras()
                         .get(RefWatcher.class.getName()))

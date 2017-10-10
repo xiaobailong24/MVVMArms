@@ -13,6 +13,7 @@ public class ArmsConfiguration implements ConfigArms {
 
     @Override
     public void applyOptions(Context context, ArmsConfigModule.Builder builder) {
-        
+        //自己自定义图片加载逻辑
+        //        builder.imageLoaderStrategy(new CustomLoaderStrategy());
     }
 }
