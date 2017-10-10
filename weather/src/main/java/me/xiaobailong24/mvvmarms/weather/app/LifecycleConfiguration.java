@@ -12,7 +12,7 @@ import java.util.List;
 
 import me.xiaobailong24.mvvmarms.lifecycle.ConfigLifecycle;
 import me.xiaobailong24.mvvmarms.lifecycle.delegate.AppLifecycles;
-import me.xiaobailong24.mvvmarms.lifecycle.utils.LifecycleUtils;
+import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
 
 /**
  * Created by xiaobailong24 on 2017/7/24.
@@ -49,7 +49,7 @@ public class LifecycleConfiguration implements ConfigLifecycle {
             @Override
             public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
                 //检测 Fragment 的内存泄露。
-                ((RefWatcher) (LifecycleUtils.INSTANCE.obtainLifecycleComponent(f.getContext()))
+                ((RefWatcher) (RepositoryUtils.INSTANCE.obtainRepositoryComponent(f.getContext()))
                         .extras()
                         .get(RefWatcher.class.getName()))
                         .watch(f);

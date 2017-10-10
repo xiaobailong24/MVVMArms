@@ -8,6 +8,7 @@ import dagger.Component;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.xiaobailong24.mvvmarms.repository.IRepositoryManager;
 import me.xiaobailong24.mvvmarms.repository.RepositoryInjector;
+import me.xiaobailong24.mvvmarms.repository.cache.Cache;
 import me.xiaobailong24.mvvmarms.repository.di.module.ClientModule;
 import me.xiaobailong24.mvvmarms.repository.di.module.RepositoryConfigModule;
 import me.xiaobailong24.mvvmarms.repository.di.module.RepositoryModule;
@@ -31,6 +32,9 @@ public interface RepositoryComponent {
 
     //提供缓存文件
     File cacheFile();
+
+    //为外部使用提供Cache,切勿大量存放大容量数据
+    Cache<String, Object> extras();
 
     void inject(RepositoryInjector repositoryInjector);
 }

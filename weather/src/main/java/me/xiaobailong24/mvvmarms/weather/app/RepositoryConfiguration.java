@@ -5,6 +5,8 @@ import android.content.Context;
 import java.util.concurrent.TimeUnit;
 
 import me.xiaobailong24.mvvmarms.repository.ConfigRepository;
+import me.xiaobailong24.mvvmarms.repository.cache.Cache;
+import me.xiaobailong24.mvvmarms.repository.cache.LruCache;
 import me.xiaobailong24.mvvmarms.repository.di.module.RepositoryConfigModule;
 import me.xiaobailong24.mvvmarms.repository.utils.RequestInterceptor;
 import me.xiaobailong24.mvvmarms.weather.BuildConfig;
@@ -43,6 +45,10 @@ public class RepositoryConfiguration implements ConfigRepository {
                     // okhttpBuilder.sslSocketFactory()
                     okhttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
                 })
+                .rxCacheConfiguration((context1, rxCacheBuilder) -> {
+                    //这里可以自己自定义配置RxCache的参数
+                    rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
+                })
                 .roomConfiguration((context1, roomBuilder) -> {
                     //这里可以自定义配置RoomDatabase，比如数据库迁移升级
 /*                    roomBuilder.addMigrations(new Migration(1, 2) {
@@ -52,6 +58,19 @@ public class RepositoryConfiguration implements ConfigRepository {
                             // Since we didn't alter the table, there's nothing else to do here.
                         }
                     });*/
+                })
+                //可根据当前项目的情况以及环境为框架某些部件提供自定义的缓存策略,具有强大的扩展性
+                .cacheFactory(type -> {
+                    switch (type) {
+                        case EXTRAS_CACHE_TYPE:
+                            //外部 extras 默认最多只能缓存500个内容
+                            return new LruCache(500);
+                        /*case CUSTOM_CACHE_TYPE:
+                            return new CustomCache();//自定义 Cache*/
+                        default:
+                            //RepositoryManager 中的容器默认缓存 100 个内容
+                            return new LruCache(Cache.Factory.DEFAULT_CACHE_SIZE);
+                    }
                 });
     }
 

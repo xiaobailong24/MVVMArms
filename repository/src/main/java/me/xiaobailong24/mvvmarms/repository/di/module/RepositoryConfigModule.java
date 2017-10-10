@@ -14,6 +14,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
+import me.xiaobailong24.mvvmarms.repository.cache.Cache;
+import me.xiaobailong24.mvvmarms.repository.cache.CacheType;
+import me.xiaobailong24.mvvmarms.repository.cache.LruCache;
 import me.xiaobailong24.mvvmarms.repository.http.BaseUrl;
 import me.xiaobailong24.mvvmarms.repository.http.GlobalHttpHandler;
 import me.xiaobailong24.mvvmarms.repository.utils.DataHelper;
@@ -37,8 +40,10 @@ public class RepositoryConfigModule {
     private ClientModule.RetrofitConfiguration mRetrofitConfiguration;
     private ClientModule.OkhttpConfiguration mOkhttpConfiguration;
     private ClientModule.GsonConfiguration mGsonConfiguration;
+    private ClientModule.RxCacheConfiguration mRxCacheConfiguration;
     private RequestInterceptor.Level mPrintHttpLogLevel;
     private DBModule.RoomConfiguration mRoomConfiguration;
+    private Cache.Factory mCacheFactory;
 
 
     private RepositoryConfigModule(Builder builder) {
@@ -52,8 +57,10 @@ public class RepositoryConfigModule {
         this.mRetrofitConfiguration = builder.retrofitConfiguration;
         this.mOkhttpConfiguration = builder.okhttpConfiguration;
         this.mGsonConfiguration = builder.gsonConfiguration;
+        this.mRxCacheConfiguration = builder.rxCacheConfiguration;
         this.mPrintHttpLogLevel = builder.printHttpLogLevel;
         this.mRoomConfiguration = builder.roomConfiguration;
+        this.mCacheFactory = builder.cacheFactory;
     }
 
     public static Builder builder() {
@@ -123,6 +130,12 @@ public class RepositoryConfigModule {
         return mGsonConfiguration;
     }
 
+    @Singleton
+    @Provides
+    @Nullable
+    ClientModule.RxCacheConfiguration provideRxCacheConfiguration() {
+        return mRxCacheConfiguration;
+    }
 
     @Singleton
     @Provides
@@ -137,6 +150,27 @@ public class RepositoryConfigModule {
         return mRoomConfiguration == null ? DBModule.RoomConfiguration.EMPTY : mRoomConfiguration;
     }
 
+    @Singleton
+    @Provides
+    Cache.Factory provideCacheFactory() {
+        return mCacheFactory == null ? new Cache.Factory() {
+            @NonNull
+            @Override
+            public Cache build(CacheType type) {
+                //若想自定义 LruCache 的 size,或者不想使用 LruCache ,想使用自己自定义的策略
+                //请使用 RepositoryConfigModule.Builder#cacheFactory() 扩展
+                switch (type) {
+                    case EXTRAS_CACHE_TYPE:
+                        //外部 extras 默认最多只能缓存500个内容
+                        return new LruCache(500);
+                    default:
+                        //RepositoryManager 中的容器默认缓存 100 个内容
+                        return new LruCache(Cache.Factory.DEFAULT_CACHE_SIZE);
+                }
+            }
+        } : mCacheFactory;
+    }
+
     public static final class Builder {
         private Application application;
         private HttpUrl apiUrl;
@@ -148,8 +182,10 @@ public class RepositoryConfigModule {
         private ClientModule.RetrofitConfiguration retrofitConfiguration;
         private ClientModule.OkhttpConfiguration okhttpConfiguration;
         private ClientModule.GsonConfiguration gsonConfiguration;
+        private ClientModule.RxCacheConfiguration rxCacheConfiguration;
         private RequestInterceptor.Level printHttpLogLevel;
         private DBModule.RoomConfiguration roomConfiguration;
+        private Cache.Factory cacheFactory;
 
 
         private Builder() {
@@ -214,6 +250,11 @@ public class RepositoryConfigModule {
             return this;
         }
 
+        public Builder rxCacheConfiguration(ClientModule.RxCacheConfiguration rxCacheConfiguration) {
+            this.rxCacheConfiguration = rxCacheConfiguration;
+            return this;
+        }
+
         public Builder printHttpLogLevel(RequestInterceptor.Level printHttpLogLevel) { //是否让框架打印 Http 的请求和响应信息
             if (printHttpLogLevel == null)
                 throw new IllegalArgumentException("printHttpLogLevel == null. Use RequestInterceptor.Level.NONE instead.");
@@ -223,6 +264,11 @@ public class RepositoryConfigModule {
 
         public Builder roomConfiguration(DBModule.RoomConfiguration roomConfiguration) {
             this.roomConfiguration = roomConfiguration;
+            return this;
+        }
+
+        public Builder cacheFactory(Cache.Factory cacheFactory) {
+            this.cacheFactory = cacheFactory;
             return this;
         }
 
