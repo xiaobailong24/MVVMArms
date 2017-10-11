@@ -38,6 +38,7 @@ Welcome to communicate and discuss.
 - [Gson](https://github.com/google/gson)
 - [RxJava](https://github.com/ReactiveX/RxJava)
 - [RxAndroid](https://github.com/ReactiveX/RxAndroid)
+- [RxCache](https://github.com/VictorAlbertos/RxCache)
 - [Timber](https://github.com/JakeWharton/timber)
 - [LeakCanary](https://github.com/square/leakcanary)
 - [AndroidEventBus](https://github.com/hehonghui/AndroidEventBus)
@@ -49,7 +50,8 @@ Welcome to communicate and discuss.
 - etc...
 
 ## Update Log
-- [lifecycle](https://github.com/xiaobailong24/MVVMArms/tree/master/lifecycle) & [repository](https://github.com/xiaobailong24/MVVMArms/tree/master/repository) - 2017/10/01.
+- [RepositoryComponent](https://github.com/xiaobailong24/MVVMArms/blob/master/repository/src/main/java/me/xiaobailong24/mvvmarms/repository/di/component/RepositoryComponent.java) Provides [Cache](https://github.com/xiaobailong24/MVVMArms/blob/master/repository/src/main/java/me/xiaobailong24/mvvmarms/repository/cache/Cache.java) & RxCache. - 2017/10/11.
+- [lifecycle](https://github.com/xiaobailong24/MVVMArms/tree/master/lifecycle) & [repository](https://github.com/xiaobailong24/MVVMArms/tree/master/repository). - 2017/10/01.
 - [ArmsFragment](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/base/ArmsFragment.java) Support Lazy load. - 2017/09/24.
 - [ViewModel&LiveData](https://github.com/xiaobailong24/MVVMArms/blob/master/weather/src/main/java/me/xiaobailong24/mvvmarms/weather/mvvm/viewmodel/WeatherViewModel.java) Activity share data between fragments, and ViewModel retain data across configuration changes. - 2017/09/23.
 - [IRepositoryManager](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/repository/IRepositoryManager.java) Support RoomDatabase for customization(GlobalConfigModule.Builder) BUT injectRoomDatabase(DBClass) first in ConfigModule#registerComponents(). - 2017/09/22.
