@@ -84,6 +84,7 @@ mBinding.setViewModel(mViewModel);
 # Github
 更多细节请移步 Github，写了一个简单的 demo，欢迎 star、fork，issue、pr，希望可以一起交流：
 - [MVVMArms](https://github.com/xiaobailong24/MVVMArms)
+- [DaggerAndroid](https://github.com/xiaobailong24/DaggerAndroid)
 
 # 参考
 - [MVPArms](https://github.com/JessYanCoding/MVPArms)

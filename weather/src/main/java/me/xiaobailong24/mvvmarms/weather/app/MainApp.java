@@ -6,6 +6,8 @@ import me.xiaobailong24.mvvmarms.weather.di.component.DaggerAppComponent;
 
 /**
  * Created by xiaobailong24 on 2017/7/13.
+ * MainApp 配置框架
+ * {@link ArmsApplication}
  */
 
 public class MainApp extends ArmsApplication {
