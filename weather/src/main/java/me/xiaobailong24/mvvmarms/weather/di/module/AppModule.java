@@ -10,9 +10,9 @@ import me.xiaobailong24.mvvmarms.di.module.ViewModelFactoryModule;
  * Dagger AppModule
  */
 @Module(includes = {ViewModelFactoryModule.class,
-        WeatherViewModelModule.class, WeatherActivityModule.class,
-        WeatherNowViewModelModule.class, WeatherNowFragmentModule.class,
-        WeatherDailyViewModelModule.class, WeatherDailyFragmentModule.class})
+        WeatherActivityModule.class,
+        WeatherNowFragmentModule.class,
+        WeatherDailyFragmentModule.class})
 public class AppModule {
 
     private Application mApplication;

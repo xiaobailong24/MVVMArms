@@ -25,7 +25,8 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherViewModel;
 
 public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, WeatherNowViewModel> {
 
-    private TextContentAdapter mAdapter;
+    @Inject
+    TextContentAdapter mAdapter;
     @Inject
     WeatherViewModel mWeatherViewModel;//共享 Activity 数据
 
@@ -43,7 +44,6 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_now, container, false);
         mBinding.setViewModel(mViewModel);//设置ViewModel
         //RecyclerView设置Adapter
-        mAdapter = new TextContentAdapter(R.layout.super_text_item, null);
         mBinding.recyclerWeatherNow.setAdapter(mAdapter);
         //设置Refresh
         mBinding.refresh.setColorSchemeColors(

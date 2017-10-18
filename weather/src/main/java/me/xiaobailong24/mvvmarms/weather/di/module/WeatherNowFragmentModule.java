@@ -20,6 +20,7 @@ public abstract class WeatherNowFragmentModule {
      * 第一种{@link WeatherActivityModule}
      */
     @FragmentScope
-    @ContributesAndroidInjector(modules = WeatherNowModule.class)//DataModule
+    @ContributesAndroidInjector(modules =
+            {WeatherNowModule.class, WeatherNowViewModelModule.class})//DataModule
     abstract WeatherNowFragment contributeWeatherNowFragment();
 }

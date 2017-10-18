@@ -20,6 +20,7 @@ public abstract class WeatherDailyFragmentModule {
      * 第一种{@link WeatherActivityModule}
      */
     @FragmentScope
-    @ContributesAndroidInjector(modules = WeatherDailyModule.class)//DataModule
+    @ContributesAndroidInjector(modules =
+            {WeatherDailyModule.class, WeatherDailyViewModelModule.class})//DataModule
     abstract WeatherDailyFragment contributeWeatherDailyFragment();
 }

@@ -15,7 +15,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.xiaobailong24.mvvmarms.di.scope.AppScope;
+import me.xiaobailong24.mvvmarms.di.scope.FragmentScope;
 import me.xiaobailong24.mvvmarms.mvvm.BaseViewModel;
 import me.xiaobailong24.mvvmarms.repository.http.Status;
 import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
@@ -27,7 +27,7 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
  * Created by xiaobailong24 on 2017/8/14.
  * MVVM WeatherDailyViewModel
  */
-@AppScope
+@FragmentScope
 public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel> {
     private MutableLiveData<List<WeatherDailyResponse.DailyResult.Daily>> mDailyData;
     private MutableLiveData<String> mLocationName;

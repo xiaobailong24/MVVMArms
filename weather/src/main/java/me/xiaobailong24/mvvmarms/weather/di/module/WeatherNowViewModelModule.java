@@ -13,7 +13,7 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherNowViewModel;
  * Dagger WeatherNowViewModelModule
  * 包含ViewModelFactoryModule提供ViewModelProvider.Factory
  */
-@Module(includes = {WeatherNowModule.class})
+@Module
 public abstract class WeatherNowViewModelModule {
 
     @Binds

@@ -25,7 +25,8 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherViewModel;
 
 public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBinding, WeatherDailyViewModel> {
 
-    private WeatherDailyAdapter mAdapter;
+    @Inject
+    WeatherDailyAdapter mAdapter;
     @Inject
     WeatherViewModel mWeatherViewModel;//共享 Activity 数据
 
@@ -43,7 +44,6 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_daily, container, false);
         mBinding.setViewModel(mViewModel);//设置ViewModel
         //RecyclerView设置Adapter
-        mAdapter = new WeatherDailyAdapter(R.layout.super_item_daily, null);
         mBinding.recyclerWeatherDaily.setAdapter(mAdapter);
         //设置Refresh
         mBinding.refresh.setColorSchemeColors(
