@@ -27,7 +27,6 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
 
     @Inject
     WeatherDailyAdapter mAdapter;
-    @Inject
     WeatherViewModel mWeatherViewModel;//共享 Activity 数据
 
     public static WeatherDailyFragment newInstance(String location) {
@@ -40,6 +39,7 @@ public class WeatherDailyFragment extends ArmsFragment<FragmentWeatherDailyBindi
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mWeatherViewModel = ViewModelProviders.of(getActivity(), mViewModelFactory).get(WeatherViewModel.class);
         mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(WeatherDailyViewModel.class);
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_daily, container, false);
         mBinding.setViewModel(mViewModel);//设置ViewModel

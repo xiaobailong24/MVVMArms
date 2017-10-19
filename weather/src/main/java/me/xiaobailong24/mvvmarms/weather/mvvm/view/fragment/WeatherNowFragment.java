@@ -27,7 +27,6 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
 
     @Inject
     TextContentAdapter mAdapter;
-    @Inject
     WeatherViewModel mWeatherViewModel;//共享 Activity 数据
 
     public static WeatherNowFragment newInstance(String location) {
@@ -40,6 +39,7 @@ public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, 
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mWeatherViewModel = ViewModelProviders.of(getActivity(), mViewModelFactory).get(WeatherViewModel.class);
         mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(WeatherNowViewModel.class);
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_now, container, false);
         mBinding.setViewModel(mViewModel);//设置ViewModel

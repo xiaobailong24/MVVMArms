@@ -16,7 +16,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.xiaobailong24.mvvmarms.di.scope.AppScope;
+import me.xiaobailong24.mvvmarms.di.scope.ActivityScope;
 import me.xiaobailong24.mvvmarms.mvvm.BaseViewModel;
 import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.WeatherModel;
@@ -27,7 +27,7 @@ import timber.log.Timber;
  * Created by xiaobailong24 on 2017/7/31.
  * MVVM WeatherViewModel
  */
-@AppScope
+@ActivityScope
 public class WeatherViewModel extends BaseViewModel<WeatherModel> {
     private MutableLiveData<List<String>> mLocationPaths;
     private MutableLiveData<String> mLocation;//可以与 Fragment 共享此数据
