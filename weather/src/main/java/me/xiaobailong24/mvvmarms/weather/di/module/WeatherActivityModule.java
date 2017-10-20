@@ -11,12 +11,13 @@ import me.xiaobailong24.mvvmarms.weather.di.component.WeatherActivitySubcomponen
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.activity.WeatherActivity;
 
 /**
- * Created by xiaobailong24 on 2017/7/13.
+ * @author xiaobailong24
+ * @date 2017/7/13
  * Dagger WeatherActivityModule
  * 用于 Dagger.Android 依赖注入
+ * 第一种注入方式。需要 Subcomponent
  */
-@Module(subcomponents = WeatherActivitySubcomponent.class)//第一种注入方式。需要 Subcomponent
-//@Module 第二种注入方式。可以不再需要 Subcomponent
+@Module(subcomponents = WeatherActivitySubcomponent.class)
 public abstract class WeatherActivityModule {
     /**
      * 第一种注入方式。需要 Subcomponent

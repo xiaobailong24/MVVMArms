@@ -14,15 +14,16 @@ import me.xiaobailong24.mvvmarms.weather.app.utils.CrashUtils;
 import timber.log.Timber;
 
 /**
- * Created by xiaobailong24 on 2017/9/5.
+ * @author xiaobailong24
+ * @date 2017/9/5
  * 代理监听 Application 的生命周期回调
  */
-
 public class AppLifecyclesImpl implements AppLifecycles {
 
     @Override
     public void attachBaseContext(Context context) {
-        //                MultiDex.install(base);  //这里比 onCreate 先执行,常用于 MultiDex 初始化,插件化框架的初始化
+        // 这里比 onCreate 先执行,常用于 MultiDex 初始化,插件化框架的初始化
+        //                MultiDex.install(base);
     }
 
     @Override
@@ -42,7 +43,8 @@ public class AppLifecyclesImpl implements AppLifecycles {
             //                        }
             //                    });
         }
-        //leakCanary内存泄露检查
+
+        //LeakCanary内存泄露检查
         RepositoryUtils.INSTANCE.obtainRepositoryComponent(application)
                 .extras()
                 .put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);

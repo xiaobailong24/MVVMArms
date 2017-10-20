@@ -25,7 +25,8 @@ import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 
 /**
- * Created by xiaobailong24 on 2017/9/28.
+ * @author xiaobailong24
+ * @date 2017/9/28
  * RepositoryConfigModule
  */
 @Module

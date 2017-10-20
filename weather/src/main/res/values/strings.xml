@@ -7,4 +7,5 @@
     <string name="snack_input">Please input place</string>
     <string name="error_tap_to_retry">Error. Tap to retry</string>
     <string name="weather_source">From https://www.seniverse.com</string>
+    <string name="location_beijing">北京</string>
 </resources>

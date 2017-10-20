@@ -3,7 +3,6 @@ package me.xiaobailong24.mvvmarms.weather.app;
 import android.content.Context;
 import android.net.ParseException;
 
-import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 
 import org.json.JSONException;
@@ -17,11 +16,16 @@ import retrofit2.HttpException;
 import timber.log.Timber;
 
 /**
- * Created by xiaobailong24 on 2017/9/5.
+ * @author xiaobailong24
+ * @date 2017/9/5
  * 全局处理所有错误的监听
  */
-
 public class ResponseErrorListenerImpl implements ResponseErrorListener {
+    final int serverError = 500;
+    final int notFoundError = 404;
+    final int serverForbiddenError = 403;
+    final int redirectionError = 307;
+
     @Override
     public void handleResponseError(Context context, Throwable t) {
         //用来提供处理所有错误的监听
@@ -36,7 +40,7 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
         } else if (t instanceof HttpException) {
             HttpException httpException = (HttpException) t;
             msg = convertStatusCode(httpException);
-        } else if (t instanceof JsonParseException || t instanceof ParseException || t instanceof JSONException || t instanceof JsonIOException) {
+        } else if (t instanceof JsonParseException || t instanceof ParseException || t instanceof JSONException) {
             msg = "数据解析错误";
         }
         UiUtils.snackbarText(msg);
@@ -45,13 +49,13 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
 
     private String convertStatusCode(HttpException httpException) {
         String msg;
-        if (httpException.code() == 500) {
+        if (httpException.code() == serverError) {
             msg = "服务器发生错误";
-        } else if (httpException.code() == 404) {
+        } else if (httpException.code() == notFoundError) {
             msg = "请求地址不存在";
-        } else if (httpException.code() == 403) {
+        } else if (httpException.code() == serverForbiddenError) {
             msg = "请求被服务器拒绝";
-        } else if (httpException.code() == 307) {
+        } else if (httpException.code() == redirectionError) {
             msg = "请求被重定向到其他页面";
         } else {
             msg = httpException.message();

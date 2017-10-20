@@ -6,7 +6,8 @@ import me.xiaobailong24.mvvmarms.di.scope.FragmentScope;
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment.WeatherDailyFragment;
 
 /**
- * Created by xiaobailong24 on 2017/8/14.
+ * @author xiaobailong24
+ * @date 2017/8/14
  * Dagger WeatherDailyFragmentModule
  * 用于 Dagger.Android 依赖注入
  */
@@ -18,9 +19,12 @@ public abstract class WeatherDailyFragmentModule {
      * 可以不再需要 Subcomponent
      * <p>
      * 第一种{@link WeatherActivityModule}
+     *
+     * @return WeatherDailyFragment
      */
     @FragmentScope
-    @ContributesAndroidInjector(modules =
-            {WeatherDailyModule.class, WeatherDailyViewModelModule.class})//DataModule
+    @ContributesAndroidInjector(
+            //DataModule
+            modules = {WeatherDailyModule.class, WeatherDailyViewModelModule.class})
     abstract WeatherDailyFragment contributeWeatherDailyFragment();
 }

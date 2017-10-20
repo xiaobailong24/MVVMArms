@@ -12,7 +12,8 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
 import me.xiaobailong24.mvvmarms.weather.util.TestUtil;
 
 /**
- * Created by xiaobailong24 on 2017/7/30.
+ * @author xiaobailong24
+ * @date 2017/7/30
  * Room Database Test
  * {@link me.xiaobailong24.mvvmarms.weather.mvvm.model.db.WeatherNowDao}
  */

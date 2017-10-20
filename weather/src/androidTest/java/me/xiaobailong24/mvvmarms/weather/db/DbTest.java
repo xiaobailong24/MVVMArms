@@ -9,11 +9,11 @@ import org.junit.Before;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.db.WeatherNowDb;
 
 /**
- * Created by xiaobailong24 on 2017/7/30.
+ * @author xiaobailong24
+ * @date 2017/7/30
  * Room Database Test
  */
-
-abstract public class DbTest {
+public abstract class DbTest {
     protected WeatherNowDb db;
 
     @Before

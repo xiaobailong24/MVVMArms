@@ -7,10 +7,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 /**
- * Created by xiaobailong24 on 2017/8/15.
- * Alibaba UltraViewPager Adapter
+ * @author xiaobailong24
+ * @date 2017/8/15
+ * ViewPager Adapter for Fragment
  */
-
 public class WeatherPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragments;
     private List<String> mTitles;

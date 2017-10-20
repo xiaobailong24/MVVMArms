@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * @author xiaobailong24
+ * @date 2017/6/16
  * Activity 生命周期代理接口
  */
 interface ActivityDelegate extends Parcelable {

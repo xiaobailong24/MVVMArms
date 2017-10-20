@@ -11,10 +11,10 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.db.WeatherNowDb;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
 
 /**
- * Created by xiaobailong24 on 2017/7/31.
+ * @author xiaobailong24
+ * @date 2017/7/31
  * MVVM WeatherModel
  */
-
 public class WeatherModel extends BaseModel {
 
     @Inject
@@ -22,7 +22,12 @@ public class WeatherModel extends BaseModel {
         super(application);
     }
 
-    //从Room数据库查询所有位置信息
+
+    /**
+     * 从Room数据库查询所有位置信息
+     *
+     * @return 所有位置信息列表
+     */
     public List<Location> getAllLocations() {
         return mRepositoryManager
                 .obtainRoomDatabase(WeatherNowDb.class, WeatherNowDb.class.getSimpleName())

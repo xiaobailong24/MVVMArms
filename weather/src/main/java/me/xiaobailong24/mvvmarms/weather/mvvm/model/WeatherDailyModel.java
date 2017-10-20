@@ -12,7 +12,8 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.service.WeatherService;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
 
 /**
- * Created by xiaobailong24 on 2017/8/14.
+ * @author xiaobailong24
+ * @date 2017/8/14
  * MVVM WeatherDailyModel
  */
 public class WeatherDailyModel extends BaseModel {
@@ -22,7 +23,13 @@ public class WeatherDailyModel extends BaseModel {
         super(application);
     }
 
-    //从网络获取未来三天天气
+
+    /**
+     * 从网络获取未来三天天气
+     *
+     * @param request 请求信息
+     * @return 未来三天天气结果
+     */
     public Observable<WeatherDailyResponse> getWeatherDaily(Map<String, String> request) {
         return mRepositoryManager
                 .obtainRetrofitService(WeatherService.class)

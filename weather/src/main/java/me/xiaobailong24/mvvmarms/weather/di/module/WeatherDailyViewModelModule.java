@@ -9,7 +9,8 @@ import me.xiaobailong24.mvvmarms.di.scope.ViewModelScope;
 import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherDailyViewModel;
 
 /**
- * Created by xiaobailong24 on 2017/8/14.
+ * @author xiaobailong24
+ * @date 2017/8/14
  * MVVM WeatherDailyViewModelModule
  */
 @Module

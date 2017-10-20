@@ -8,10 +8,10 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by xiaobailong24 on 2017/8/15.
+ * @author xiaobailong24
+ * @date 2017/8/15
  * 位置信息，存储数据库
  */
-
 @Entity(tableName = "Location")
 public class Location {
     /**

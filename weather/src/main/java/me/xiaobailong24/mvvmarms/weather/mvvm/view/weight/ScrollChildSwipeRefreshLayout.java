@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
+ * @author xiaobailong24
+ * @date 2017/7/31
  * Extends {@link SwipeRefreshLayout} to support non-direct descendant scrolling views.
  * <p>
  * {@link SwipeRefreshLayout} works as expected when a scroll view is a direct child: it triggers

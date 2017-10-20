@@ -8,13 +8,17 @@ import me.xiaobailong24.mvvmarms.weather.di.module.WeatherViewModelModule;
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.activity.WeatherActivity;
 
 /**
- * Created by xiaobailong24 on 2017/7/13.
+ * @author xiaobailong24
+ * @date 2017/7/13
  * Dagger WeatherActivitySubcomponent
  */
 @ActivityScope
-@Subcomponent(modules = {WeatherModule.class, WeatherViewModelModule.class})///DataModule
+@Subcomponent(modules = {WeatherModule.class, WeatherViewModelModule.class})//DataModule
 public interface WeatherActivitySubcomponent extends AndroidInjector<WeatherActivity> {
 
+    /**
+     * AndroidInjector.Builder
+     */
     @Subcomponent.Builder
     abstract class Builder extends AndroidInjector.Builder<WeatherActivity> {
     }

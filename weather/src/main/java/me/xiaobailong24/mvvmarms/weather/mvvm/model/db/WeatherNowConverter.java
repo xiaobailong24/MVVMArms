@@ -7,10 +7,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by xiaobailong24 on 2017/7/29.
+ * @author xiaobailong24
+ * @date 2017/7/29
  * Room Database Converter
  */
-
 public class WeatherNowConverter {
 
     @TypeConverter

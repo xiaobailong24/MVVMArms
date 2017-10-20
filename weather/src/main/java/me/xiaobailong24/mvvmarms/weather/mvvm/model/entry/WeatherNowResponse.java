@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by xiaobailong24 on 2017/7/26.
+ * @author xiaobailong24
+ * @date 2017/7/26
  * 天气实况结果
  */
 public class WeatherNowResponse {

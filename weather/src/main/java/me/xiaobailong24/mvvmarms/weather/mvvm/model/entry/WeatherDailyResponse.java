@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by xiaobailong24 on 2017/8/14.
+ * @author xiaobailong24
+ * @date 2017/8/14
  * 未来三日天气结果
  */
-
 public class WeatherDailyResponse {
 
     private List<DailyResult> results;

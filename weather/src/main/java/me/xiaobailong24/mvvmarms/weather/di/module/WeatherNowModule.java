@@ -9,7 +9,8 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.WeatherNowModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.adapter.TextContentAdapter;
 
 /**
- * Created by xiaobailong24 on 2017/7/15.
+ * @author xiaobailong24
+ * @date 2017/7/15
  * Dagger WeatherNowModule
  */
 @Module
@@ -17,13 +18,13 @@ public class WeatherNowModule {
 
     @FragmentScope
     @Provides
-    public IModel provideWeatherNowModel(WeatherNowModel weatherNowModel) {
+    IModel provideWeatherNowModel(WeatherNowModel weatherNowModel) {
         return weatherNowModel;
     }
 
     @FragmentScope
     @Provides
-    public TextContentAdapter provideAdapter() {
+    TextContentAdapter provideAdapter() {
         return new TextContentAdapter(R.layout.super_text_item, null);
     }
 

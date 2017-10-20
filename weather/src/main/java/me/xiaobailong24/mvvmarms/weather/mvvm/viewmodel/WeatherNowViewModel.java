@@ -27,7 +27,8 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherNowResponse;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.pojo.TextContent;
 
 /**
- * Created by xiaobailong24 on 2017/7/21.
+ * @author xiaobailong24
+ * @date 2017/7/21
  * MVVM WeatherNowViewModel
  */
 @FragmentScope
@@ -42,14 +43,16 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel> {
 
     @SuppressWarnings("all")
     public LiveData<List<TextContent>> getWeatherNow(String locationName) {
-        if (mContents == null)
+        if (mContents == null) {
             mContents = new MutableLiveData<>();
+        }
 
         if (mLocationName == null) {
             mLocationName = new MutableLiveData<>();
         }
-        if (mLocationName.getValue() == null)
+        if (mLocationName.getValue() == null) {
             mLocationName.setValue("");
+        }
 
         if (!mLocationName.getValue().equalsIgnoreCase(locationName)) {
             mLocationName.setValue(locationName);
@@ -74,14 +77,16 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel> {
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(weatherNowResponse -> {
-                    if (weatherNowResponse.getResults().size() > 1)
+                    if (weatherNowResponse.getResults().size() > 1) {
                         throw new RuntimeException("WeatherNowResponse get MORE than one NowResult");
+                    }
                     //查询数据库
                     Location location =
                             mModel.getLocationByName(weatherNowResponse.getResults().get(0).getLocation().getName());
                     //存储位置信息
-                    if (location == null)
+                    if (location == null) {
                         mModel.saveLocation(weatherNowResponse.getResults().get(0).getLocation());
+                    }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(weatherNowResponse -> {
@@ -117,8 +122,9 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel> {
 
     @Override
     public void retry() {
-        if (mLocationName != null && mLocationName.getValue() != null)
+        if (mLocationName != null && mLocationName.getValue() != null) {
             loadWeather(mLocationName.getValue());
+        }
     }
 
     @Override

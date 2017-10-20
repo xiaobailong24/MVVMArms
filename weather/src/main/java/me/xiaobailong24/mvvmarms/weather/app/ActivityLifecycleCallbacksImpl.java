@@ -5,11 +5,11 @@ import android.app.Application;
 import android.os.Bundle;
 
 /**
- * Created by xiaobailong24 on 2017/9/3.
+ * @author xiaobailong24
+ * @date 2017/9/3
  * ActivityLifecycleCallbacksImpl
  * 只需重写需要的方法
  */
-
 public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityCreated(Activity activity, Bundle bundle) {

@@ -13,14 +13,17 @@ import me.xiaobailong24.mvvmarms.weather.BuildConfig;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 
 /**
- * Created by xiaobailong24 on 2017/9/28.
+ * @author xiaobailong24
+ * @date 2017/9/28
  * Repository 的全局配置信息在此配置,需要将此实现类声明到 AndroidManifest 中
  */
 public class RepositoryConfiguration implements ConfigRepository {
     @Override
     public void applyOptions(Context context, RepositoryConfigModule.Builder builder) {
-        if (!BuildConfig.LOG_DEBUG) //Release 时,让框架不再打印 Http 请求和响应的信息
+        //Release 时,让框架不再打印 Http 请求和响应的信息
+        if (!BuildConfig.LOG_DEBUG) {
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
+        }
 
         builder.baseUrl(Api.APP_DOMAIN)
                 // 这里提供一个全局处理 Http 请求和响应结果的处理类,可以比客户端提前一步拿到服务器返回的结果
@@ -42,7 +45,7 @@ public class RepositoryConfiguration implements ConfigRepository {
                 //这里可以自己自定义配置Okhttp的参数
                 .okhttpConfiguration((context1, okhttpBuilder) -> {
                     //支持 Https
-                    // okhttpBuilder.sslSocketFactory()
+                    //okhttpBuilder.sslSocketFactory()
                     okhttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
                 })
                 .rxCacheConfiguration((context1, rxCacheBuilder) -> {

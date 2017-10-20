@@ -4,10 +4,10 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 /**
- * Created by xiaobailong24 on 2017/5/15.
- * TextContent
+ * @author xiaobailong24
+ * @date 2017/5/15
+ * 主要封装标题、内容项，配合 DataBinding，自动更新 UI
  */
-
 public class TextContent extends BaseObservable {
     private String title;
     private String content;

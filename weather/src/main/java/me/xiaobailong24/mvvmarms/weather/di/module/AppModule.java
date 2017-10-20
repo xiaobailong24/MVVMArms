@@ -6,7 +6,8 @@ import dagger.Module;
 import me.xiaobailong24.mvvmarms.di.module.ViewModelFactoryModule;
 
 /**
- * Created by xiaobailong24 on 2017/7/22.
+ * @author xiaobailong24
+ * @date 2017/7/22
  * Dagger AppModule
  */
 @Module(includes = {ViewModelFactoryModule.class,

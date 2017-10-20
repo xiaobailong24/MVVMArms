@@ -20,10 +20,10 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
 
 /**
- * Created by xiaobailong24 on 2017/8/15.
+ * @author xiaobailong24
+ * @date 2017/8/15
  * RecyclerView DataBinding Adapter
  */
-
 public class WeatherDailyAdapter extends BaseBindAdapter<WeatherDailyResponse.DailyResult.Daily> {
 
     public WeatherDailyAdapter(@LayoutRes int layoutResId, @Nullable List<WeatherDailyResponse.DailyResult.Daily> data) {

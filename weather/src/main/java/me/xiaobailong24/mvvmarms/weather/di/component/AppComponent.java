@@ -7,12 +7,18 @@ import me.xiaobailong24.mvvmarms.weather.app.MainApp;
 import me.xiaobailong24.mvvmarms.weather.di.module.AppModule;
 
 /**
- * Created by xiaobailong24 on 2017/7/15.
+ * @author xiaobailong24
+ * @date 2017/7/15
  * Dagger AppComponent
  */
 @AppScope
 @Component(dependencies = ArmsComponent.class,
         modules = AppModule.class)
 public interface AppComponent {
+    /**
+     * Dagger 注入
+     *
+     * @param mainApp MainApp
+     */
     void inject(MainApp mainApp);
 }
