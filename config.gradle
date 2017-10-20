@@ -6,12 +6,12 @@ ext {
             minSdkVersion    : 15,
             targetSdkVersion : 26,
             versionCode      : 3,
-            versionName      : "1.0.0-beta3"
+            versionName      : "1.0.0-beta4"
     ]
 
     version = [
             androidSupportSdkVersion: "26.1.0",
-            androidArchSdkVersion   : "1.0.0-beta2",
+            androidArchSdkVersion   : "1.0.0-rc1",
             retrofitSdkVersion      : "2.3.0",
             glideSdkVersion         : "4.1.1",
             dagger2SdkVersion       : "2.11",
