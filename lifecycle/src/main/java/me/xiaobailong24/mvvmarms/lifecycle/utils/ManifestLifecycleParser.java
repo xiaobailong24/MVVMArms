@@ -11,10 +11,10 @@ import java.util.List;
 import me.xiaobailong24.mvvmarms.lifecycle.ConfigLifecycle;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * @author xiaobailong24
+ * @date 2017/6/16
  * AndroidManifest.xml ManifestLifecycleParser
  */
-@SuppressWarnings("all")
 public final class ManifestLifecycleParser {
     private static final String MODULE_VALUE = "ConfigLifecycle";
 
@@ -32,7 +32,7 @@ public final class ManifestLifecycleParser {
             if (appInfo.metaData != null) {
                 for (String key : appInfo.metaData.keySet()) {
                     if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
-                        Log.d("ManifestLifecycleParser ---> ",
+                        Log.d("Lifecycle ---> ",
                                 String.format("Find ConfigLifecycle in [%s]", key));
                         configLifecycles.add(parseModule(key));
                     }
@@ -56,9 +56,7 @@ public final class ManifestLifecycleParser {
         Object lifecycle;
         try {
             lifecycle = clazz.newInstance();
-        } catch (InstantiationException e) {
-            throw new RuntimeException("Unable to instantiate ConfigLifecycle implementation for " + clazz, e);
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException("Unable to instantiate ConfigLifecycle implementation for " + clazz, e);
         }
 

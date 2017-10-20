@@ -6,7 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by xiaobailong24 on 2017/10/10.
+ * @author xiaobailong24
+ * @date 2017/10/10
  * LRU 即 Least Recently Used,最近最少使用,也就是说,当缓存满了,会优先淘汰那些最近最不常访问的数据
  * 此种缓存策略为框架默认提供,可自行实现其他缓存策略,如磁盘缓存,为框架或开发者提供缓存的功能
  */
@@ -155,7 +156,7 @@ public class LruCache<K, V> implements Cache<K, V> {
     /**
      * 当指定的 size 小于当前缓存已占用的总 size 时,会开始清除缓存中最近最少使用的条目
      *
-     * @param size
+     * @param size 缓存大小
      */
     protected synchronized void trimToSize(int size) {
         Map.Entry<K, V> last;

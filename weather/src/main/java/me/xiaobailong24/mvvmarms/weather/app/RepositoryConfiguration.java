@@ -8,7 +8,7 @@ import me.xiaobailong24.mvvmarms.repository.ConfigRepository;
 import me.xiaobailong24.mvvmarms.repository.cache.Cache;
 import me.xiaobailong24.mvvmarms.repository.cache.LruCache;
 import me.xiaobailong24.mvvmarms.repository.di.module.RepositoryConfigModule;
-import me.xiaobailong24.mvvmarms.repository.utils.RequestInterceptor;
+import me.xiaobailong24.mvvmarms.repository.http.RequestInterceptor;
 import me.xiaobailong24.mvvmarms.weather.BuildConfig;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 

@@ -1,5 +1,6 @@
 package me.xiaobailong24.mvvmarms.repository.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
@@ -14,9 +15,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
+ * @author xiaobailong24
+ * @date 2017/9/7
  * SharedPreferences 数据管理工具类
  */
-@SuppressWarnings("all")
 public class DataHelper {
     private static SharedPreferences mSharedPreferences;
     public static final String SP_NAME = "config";
@@ -27,10 +29,11 @@ public class DataHelper {
     }
 
     /**
-     * 存储重要信息到sharedPreferences；
+     * 存储重要信息到 SharedPreference
      *
-     * @param key
-     * @param value
+     * @param context Context
+     * @param key     Key
+     * @param value   Value
      */
     public static void setStringSF(Context context, String key, String value) {
         if (mSharedPreferences == null) {
@@ -40,10 +43,11 @@ public class DataHelper {
     }
 
     /**
-     * 返回存在sharedPreferences的信息
+     * 返回存在 SharedPreference 的信息
      *
-     * @param key
-     * @return
+     * @param context Context
+     * @param key     Key
+     * @return Value
      */
     public static String getStringSF(Context context, String key) {
         if (mSharedPreferences == null) {
@@ -53,12 +57,13 @@ public class DataHelper {
     }
 
     /**
-     * 存储重要信息到sharedPreferences；
+     * 存储重要信息到 SharedPreference
      *
-     * @param key
-     * @param value
+     * @param context Context
+     * @param key     Key
+     * @param value   Value
      */
-    public static void setIntergerSF(Context context, String key, int value) {
+    public static void setIntegerSF(Context context, String key, int value) {
         if (mSharedPreferences == null) {
             mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
@@ -66,12 +71,12 @@ public class DataHelper {
     }
 
     /**
-     * 返回存在sharedPreferences的信息
+     * 返回存在 SharedPreference 的信息
      *
-     * @param key
-     * @return
+     * @param key Key
+     * @return Value，默认值 -1.
      */
-    public static int getIntergerSF(Context context, String key) {
+    public static int getIntegerSF(Context context, String key) {
         if (mSharedPreferences == null) {
             mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
@@ -80,6 +85,9 @@ public class DataHelper {
 
     /**
      * 清除某个内容
+     *
+     * @param context Context
+     * @param key     Key
      */
     public static void removeSF(Context context, String key) {
         if (mSharedPreferences == null) {
@@ -89,9 +97,11 @@ public class DataHelper {
     }
 
     /**
-     * 清除Shareprefrence
+     * 清除 SharedPreference
+     *
+     * @param context Context
      */
-    public static void clearShareprefrence(Context context) {
+    public static void clearSharedPreference(Context context) {
         if (mSharedPreferences == null) {
             mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
@@ -99,26 +109,26 @@ public class DataHelper {
     }
 
     /**
-     * 将对象储存到sharepreference
+     * 将对象储存到 SharedPreference
      *
-     * @param key
-     * @param device
-     * @param <T>
+     * @param context Context
+     * @param key     Key
+     * @param device  自定义类对象
      */
     public static <T> boolean saveDeviceData(Context context, String key, T device) {
         if (mSharedPreferences == null) {
             mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try {   //Device为自定义类
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        try {
             // 创建对象输出流，并封装字节流
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            ObjectOutputStream oos = new ObjectOutputStream(stream);
             // 将对象写入字节流
             oos.writeObject(device);
             // 将字节流编码成base64的字符串
-            String oAuth_Base64 = new String(Base64.encode(baos
+            String oauthBase64 = new String(Base64.encode(stream
                     .toByteArray(), Base64.DEFAULT));
-            mSharedPreferences.edit().putString(key, oAuth_Base64).apply();
+            mSharedPreferences.edit().putString(key, oauthBase64).apply();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -127,11 +137,11 @@ public class DataHelper {
     }
 
     /**
-     * 将对象从shareprerence中取出来
+     * 将对象从 SharedPreference 中取出来
      *
-     * @param key
-     * @param <T>
-     * @return
+     * @param context Context
+     * @param key     Key
+     * @return T 自定义类对象
      */
     public static <T> T getDeviceData(Context context, String key) {
         if (mSharedPreferences == null) {
@@ -143,14 +153,14 @@ public class DataHelper {
         if (productBase64 == null) {
             return null;
         }
-        // 读取字节
+        //读取字节
         byte[] base64 = Base64.decode(productBase64.getBytes(), Base64.DEFAULT);
 
-        // 封装到字节流
-        ByteArrayInputStream bais = new ByteArrayInputStream(base64);
+        //封装到字节流
+        ByteArrayInputStream stream = new ByteArrayInputStream(base64);
         try {
-            // 再次封装
-            ObjectInputStream bis = new ObjectInputStream(bais);
+            //再次封装
+            ObjectInputStream bis = new ObjectInputStream(stream);
 
             // 读取对象
             device = (T) bis.readObject();
@@ -163,12 +173,17 @@ public class DataHelper {
 
     /**
      * 返回缓存文件夹
+     *
+     * @param context Context
+     * @return 缓存文件夹
      */
     public static File getCacheFile(Context context) {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            File file = null;
-            file = context.getExternalCacheDir();//获取系统管理的sd卡缓存文件
-            if (file == null) {//如果获取的文件为空,就使用自己定义的缓存文件夹做缓存路径
+            File file;
+            //获取系统管理的sd卡缓存文件
+            file = context.getExternalCacheDir();
+            //如果获取的文件为空,就使用自己定义的缓存文件夹做缓存路径
+            if (file == null) {
                 file = new File(getCacheFilePath(context));
                 makeDirs(file);
             }
@@ -181,20 +196,21 @@ public class DataHelper {
     /**
      * 获取自定义缓存文件地址
      *
-     * @param context
-     * @return
+     * @param context Context
+     * @return 自定义缓存文件地址
      */
+    @SuppressLint("SdCardPath")
     public static String getCacheFilePath(Context context) {
         String packageName = context.getPackageName();
-        return "/mnt/sdcard/" + packageName;
+        return String.format("/mnt/sdcard/%s", packageName);
     }
 
 
     /**
      * 创建未存在的文件夹
      *
-     * @param file
-     * @return
+     * @param file 目标文件
+     * @return 新文件夹
      */
     public static File makeDirs(File file) {
         if (!file.exists()) {
@@ -206,8 +222,8 @@ public class DataHelper {
     /**
      * 使用递归获取目录文件大小
      *
-     * @param dir
-     * @return
+     * @param dir 目录文件
+     * @return 目录文件大小
      */
     public static long getDirSize(File dir) {
         if (dir == null) {
@@ -223,7 +239,8 @@ public class DataHelper {
                 dirSize += file.length();
             } else if (file.isDirectory()) {
                 dirSize += file.length();
-                dirSize += getDirSize(file); // 递归调用继续统计
+                //递归调用继续统计
+                dirSize += getDirSize(file);
             }
         }
         return dirSize;
@@ -232,8 +249,8 @@ public class DataHelper {
     /**
      * 使用递归删除文件夹
      *
-     * @param dir
-     * @return
+     * @param dir 文件夹
+     * @return 删除结果
      */
     public static boolean deleteDir(File dir) {
         if (dir == null) {
@@ -247,14 +264,21 @@ public class DataHelper {
             if (file.isFile()) {
                 file.delete();
             } else if (file.isDirectory()) {
-                deleteDir(file); // 递归调用继续删除
+                //递归调用继续删除
+                deleteDir(file);
             }
         }
         return true;
     }
 
 
-    public static String bytyToString(InputStream in) throws IOException {
+    /**
+     * 输入流转为 String
+     *
+     * @param in InputStream
+     * @return String
+     */
+    public static String byteToString(InputStream in) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         byte[] buf = new byte[1024];
         int num = 0;

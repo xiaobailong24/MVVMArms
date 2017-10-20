@@ -1,5 +1,8 @@
 package me.xiaobailong24.mvvmarms.base;
 
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.ViewModelProvider;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,21 +10,47 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.xiaobailong24.mvvmarms.lifecycle.delegate.IFragment;
+import javax.inject.Inject;
 
+import me.xiaobailong24.mvvmarms.lifecycle.delegate.IFragment;
+import me.xiaobailong24.mvvmarms.mvvm.IViewModel;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * @author xiaobailong24
+ * @date 2017/6/16
  * MVVM BaseFragment
  */
-public abstract class BaseFragment extends Fragment
-        implements IFragment {
+public abstract class BaseFragment<DB extends ViewDataBinding, VM extends IViewModel>
+        extends Fragment implements IFragment {
     protected final String TAG = this.getClass().getName();
-    protected boolean mVisible = false;//是否可见
-    protected boolean mFirst = true;//是否第一次加载
+    /**
+     * 是否可见，用于懒加载
+     */
+    protected boolean mVisible = false;
+    /**
+     * 是否第一次加载，用于懒加载
+     */
+    protected boolean mFirst = true;
     private View mRootView;
 
+    /**
+     * ViewDataBinding
+     */
+    protected DB mBinding;
+
+    /**
+     * MVVM ViewModel ViewModelProvider.Factory
+     */
+    @Inject
+    protected ViewModelProvider.Factory mViewModelFactory;
+    /**
+     * instance in subclass; 自动销毁
+     */
+    protected VM mViewModel;
+
+
     public BaseFragment() {
+        //必须确保在 Fragment 实例化时 setArguments()
         setArguments(new Bundle());
     }
 
@@ -30,27 +59,36 @@ public abstract class BaseFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = initView(inflater, container, savedInstanceState);
-        if (mVisible && mFirst)//可见，并且是首次加载
+        if (mViewModel != null) {
+            getLifecycle().addObserver((LifecycleObserver) mViewModel);
+        }
+        //可见，并且是首次加载
+        if (mVisible && mFirst) {
             onFragmentVisibleChange(true);
+        }
         return mRootView;
     }
 
+
+    @Override
+    public boolean injectable() {
+        //默认进行依赖注入
+        return true;
+    }
+
+
+    @Override
     public boolean useEventBus() {
         return true;
     }
 
     @Override
-    public boolean injectable() {
-        return true;//默认进行依赖注入
-    }
-
-
-    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         mVisible = isVisibleToUser;
-        if (mRootView == null)
+        if (mRootView == null) {
             return;
+        }
         //可见，并且首次加载时才调用
         onFragmentVisibleChange(mVisible & mFirst);
     }
@@ -71,6 +109,13 @@ public abstract class BaseFragment extends Fragment
     @Override
     public void onDestroy() {
         super.onDestroy();
+        this.mBinding = null;
         this.mRootView = null;
+        this.mViewModelFactory = null;
+        //移除LifecycleObserver
+        if (mViewModel != null) {
+            getLifecycle().removeObserver((LifecycleObserver) mViewModel);
+        }
+        this.mViewModel = null;
     }
 }

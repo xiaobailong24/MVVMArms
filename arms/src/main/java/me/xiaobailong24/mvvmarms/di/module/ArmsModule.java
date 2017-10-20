@@ -11,7 +11,8 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by xiaobailong24 on 2017/7/13.
+ * @author xiaobailong24
+ * @date 2017/7/13
  * Dagger ArmsModule
  */
 @Module

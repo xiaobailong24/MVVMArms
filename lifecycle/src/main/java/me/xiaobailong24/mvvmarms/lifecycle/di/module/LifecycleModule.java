@@ -14,7 +14,8 @@ import me.xiaobailong24.mvvmarms.lifecycle.delegate.ActivityLifecycle;
 import me.xiaobailong24.mvvmarms.lifecycle.delegate.AppManager;
 
 /**
- * Created by xiaobailong24 on 2017/9/30.
+ * @author xiaobailong24
+ * @date 2017/9/30
  * Dagger LifecycleModule
  */
 @Module(includes = AndroidInjectionModule.class)

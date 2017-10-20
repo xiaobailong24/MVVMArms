@@ -6,10 +6,12 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
 import me.xiaobailong24.mvvmarms.http.imageloader.BaseImageConfig;
 
-
 /**
- * Created by xiaobailong24 on 2017/8/17.
- * Glide 图片加载配置
+ * @author xiaobailong24
+ * @date 2017/8/17
+ * 这里存放图片请求的配置信息,可以一直扩展字段,如果外部调用时想让图片加载框架
+ * 做一些操作,比如清除缓存或者切换缓存策略,则可以定义一个 int 类型的变量,内部根据 switch(int) 做不同的操作
+ * 其他操作同理
  */
 public class ImageConfigImpl extends BaseImageConfig {
     /**
@@ -19,12 +21,27 @@ public class ImageConfigImpl extends BaseImageConfig {
      * @see com.bumptech.glide.load.engine.DiskCacheStrategy#RESOURCE : 3
      * @see com.bumptech.glide.load.engine.DiskCacheStrategy#AUTOMATIC : 4
      */
-    private int cacheStrategy;//缓存策略
-    private int fallback;//Fallback Drawables are shown when the requested url/model is null
-    private BitmapTransformation transformation;//改变图形形状
+    /**
+     * 缓存策略
+     */
+    private int cacheStrategy;
+    /**
+     * Fallback Drawables are shown when the requested url/model is null
+     */
+    private int fallback;
+    /**
+     * 改变图形形状
+     */
+    private BitmapTransformation transformation;
     private ImageView[] imageViews;
-    private boolean isClearMemory;//清除内存缓存
-    private boolean isClearDiskCache;//清除本地缓存
+    /**
+     * 清除内存缓存
+     */
+    private boolean isClearMemory;
+    /**
+     * 清除本地缓存
+     */
+    private boolean isClearDiskCache;
 
     public ImageConfigImpl(Builder builder) {
         this.url = builder.url;
@@ -68,16 +85,43 @@ public class ImageConfigImpl extends BaseImageConfig {
     }
 
     public static final class Builder {
+        /**
+         * 图片 Url
+         */
         private String url;
+        /**
+         * 要显示的 ImageView
+         */
         private ImageView imageView;
+        /**
+         * 图片占位符
+         */
         private int placeholder;
+        /**
+         * 错误图片占位符
+         */
         private int errorPic;
-        private int fallback;//Fallback Drawables are shown when the requested url/model is null
-        private int cacheStrategy;//缓存策略
-        private BitmapTransformation transformation;//改变图形形状
+        /**
+         * Fallback Drawables are shown when the requested url/model is null
+         */
+        private int fallback;
+        /**
+         * 缓存策略
+         */
+        private int cacheStrategy;
+        /**
+         * 改变图形形状
+         */
+        private BitmapTransformation transformation;
         private ImageView[] imageViews;
-        private boolean isClearMemory;//清除内存缓存
-        private boolean isClearDiskCache;//清除本地缓存
+        /**
+         * 清除内存缓存
+         */
+        private boolean isClearMemory;
+        /**
+         * 清除本地缓存
+         */
+        private boolean isClearDiskCache;
 
         private Builder() {
         }

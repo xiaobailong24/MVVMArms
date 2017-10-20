@@ -18,7 +18,8 @@ import me.xiaobailong24.mvvmarms.lifecycle.utils.ManifestLifecycleParser;
 import me.xiaobailong24.mvvmarms.lifecycle.utils.Preconditions;
 
 /**
- * Created by xiaobailong24 on 2017/9/30.
+ * @author xiaobailong24
+ * @date 2017/9/30
  * LifecycleInjector，需要在 Application 初始化，注入 LifecycleComponent
  */
 public class LifecycleInjector implements ILifecycle, AppLifecycles {
@@ -42,16 +43,18 @@ public class LifecycleInjector implements ILifecycle, AppLifecycles {
 
     @Override
     public void attachBaseContext(Context context) {
-        for (AppLifecycles lifecycle : mAppLifecycles)
+        for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.attachBaseContext(context);
+        }
     }
 
     @Override
     public void onCreate(Application application) {
         this.mApplication = application;
 
-        if (mLifecycleModule == null)
+        if (mLifecycleModule == null) {
             mLifecycleModule = new LifecycleModule(mApplication);
+        }
         mLifecycleComponent = DaggerLifecycleComponent.builder()
                 .lifecycleModule(mLifecycleModule)
                 .build();
@@ -63,25 +66,32 @@ public class LifecycleInjector implements ILifecycle, AppLifecycles {
 
         this.mConfigLifecycles = null;
 
-        for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles)
+        for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);
+        }
 
-        for (AppLifecycles lifecycle : mAppLifecycles)
+        for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.onCreate(mApplication);
+        }
     }
 
     @Override
     public void onTerminate(Application application) {
-        if (mActivityLifecycle != null)
+        if (mActivityLifecycle != null) {
             mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycle);
+        }
 
-        if (mActivityLifecycles != null && mActivityLifecycles.size() > 0)
-            for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles)
+        if (mActivityLifecycles != null && mActivityLifecycles.size() > 0) {
+            for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
                 mApplication.unregisterActivityLifecycleCallbacks(lifecycle);
+            }
+        }
 
-        if (mAppLifecycles != null && mAppLifecycles.size() > 0)
-            for (AppLifecycles lifecycle : mAppLifecycles)
+        if (mAppLifecycles != null && mAppLifecycles.size() > 0) {
+            for (AppLifecycles lifecycle : mAppLifecycles) {
                 lifecycle.onTerminate(mApplication);
+            }
+        }
 
         this.mLifecycleModule = null;
         this.mLifecycleComponent = null;

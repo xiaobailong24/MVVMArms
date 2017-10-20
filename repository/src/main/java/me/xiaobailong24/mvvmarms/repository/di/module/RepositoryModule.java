@@ -15,7 +15,8 @@ import me.xiaobailong24.mvvmarms.repository.cache.CacheType;
 import retrofit2.Retrofit;
 
 /**
- * Created by xiaobailong24 on 2017/9/28.
+ * @author xiaobailong24
+ * @date 2017/9/28
  * Dagger RepositoryModule
  */
 @Module
@@ -30,7 +31,7 @@ public class RepositoryModule {
     @Provides
     IRepositoryManager provideRepositoryManager(Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache,
                                                 Cache.Factory cacheFactory,
-                                                DBModule.RoomConfiguration roomConfiguration) {
+                                                DatabaseModule.RoomConfiguration roomConfiguration) {
         return new RepositoryManager(mApplication, retrofit, rxCache, cacheFactory, roomConfiguration);
     }
 

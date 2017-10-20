@@ -11,10 +11,10 @@ import java.util.List;
 import me.xiaobailong24.mvvmarms.base.ConfigArms;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * @author xiaobailong24
+ * @date 2017/6/16
  * AndroidManifest.xml ManifestArmsParser
  */
-@SuppressWarnings("all")
 public final class ManifestArmsParser {
     private static final String MODULE_VALUE = "ConfigArms";
 
@@ -32,7 +32,7 @@ public final class ManifestArmsParser {
             if (appInfo.metaData != null) {
                 for (String key : appInfo.metaData.keySet()) {
                     if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
-                        Log.d("ManifestArmsParser ---> ",
+                        Log.d("Arms ---> ",
                                 String.format("Find ConfigArms in [%s]", key));
                         armses.add(parseModule(key));
                     }
@@ -56,9 +56,7 @@ public final class ManifestArmsParser {
         Object arms;
         try {
             arms = clazz.newInstance();
-        } catch (InstantiationException e) {
-            throw new RuntimeException("Unable to instantiate ConfigArms implementation for " + clazz, e);
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException("Unable to instantiate ConfigArms implementation for " + clazz, e);
         }
 

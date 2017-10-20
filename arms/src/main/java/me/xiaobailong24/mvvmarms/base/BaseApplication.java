@@ -22,10 +22,11 @@ import me.xiaobailong24.mvvmarms.repository.di.component.RepositoryComponent;
 import me.xiaobailong24.mvvmarms.repository.di.module.RepositoryModule;
 
 /**
- * Created by xiaobailong24 on 2017/7/13.
- * MVVMArms ArmsApplication
+ * @author xiaobailong24
+ * @date 2017/7/13
+ * MVVMArms BaseApplication
  */
-public class ArmsApplication extends Application
+public class BaseApplication extends Application
         implements IArms, ILifecycle, IRepository, HasActivityInjector, HasSupportFragmentInjector {
     //Dagger.Android Activity 注入
     @Inject
@@ -37,10 +38,10 @@ public class ArmsApplication extends Application
     private AppLifecycles mAppDelegate;
 
     /**
-     * 这里会在 {@link ArmsApplication#onCreate} 之前被调用,可以做一些较早的初始化
+     * 这里会在 {@link BaseApplication#onCreate} 之前被调用,可以做一些较早的初始化
      * 常用于 MultiDex 以及插件化框架的初始化
      *
-     * @param context
+     * @param context Context
      */
     @Override
     protected void attachBaseContext(Context context) {

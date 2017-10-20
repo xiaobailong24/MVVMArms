@@ -20,7 +20,7 @@ import me.xiaobailong24.mvvmarms.repository.cache.LruCache;
 import me.xiaobailong24.mvvmarms.repository.http.BaseUrl;
 import me.xiaobailong24.mvvmarms.repository.http.GlobalHttpHandler;
 import me.xiaobailong24.mvvmarms.repository.utils.DataHelper;
-import me.xiaobailong24.mvvmarms.repository.utils.RequestInterceptor;
+import me.xiaobailong24.mvvmarms.repository.http.RequestInterceptor;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 
@@ -42,7 +42,7 @@ public class RepositoryConfigModule {
     private ClientModule.GsonConfiguration mGsonConfiguration;
     private ClientModule.RxCacheConfiguration mRxCacheConfiguration;
     private RequestInterceptor.Level mPrintHttpLogLevel;
-    private DBModule.RoomConfiguration mRoomConfiguration;
+    private DatabaseModule.RoomConfiguration mRoomConfiguration;
     private Cache.Factory mCacheFactory;
 
 
@@ -146,8 +146,8 @@ public class RepositoryConfigModule {
 
     @Singleton
     @Provides
-    DBModule.RoomConfiguration provideRoomConfiguration() {
-        return mRoomConfiguration == null ? DBModule.RoomConfiguration.EMPTY : mRoomConfiguration;
+    DatabaseModule.RoomConfiguration provideRoomConfiguration() {
+        return mRoomConfiguration == null ? DatabaseModule.RoomConfiguration.EMPTY : mRoomConfiguration;
     }
 
     @Singleton
@@ -184,7 +184,7 @@ public class RepositoryConfigModule {
         private ClientModule.GsonConfiguration gsonConfiguration;
         private ClientModule.RxCacheConfiguration rxCacheConfiguration;
         private RequestInterceptor.Level printHttpLogLevel;
-        private DBModule.RoomConfiguration roomConfiguration;
+        private DatabaseModule.RoomConfiguration roomConfiguration;
         private Cache.Factory cacheFactory;
 
 
@@ -262,7 +262,7 @@ public class RepositoryConfigModule {
             return this;
         }
 
-        public Builder roomConfiguration(DBModule.RoomConfiguration roomConfiguration) {
+        public Builder roomConfiguration(DatabaseModule.RoomConfiguration roomConfiguration) {
             this.roomConfiguration = roomConfiguration;
             return this;
         }

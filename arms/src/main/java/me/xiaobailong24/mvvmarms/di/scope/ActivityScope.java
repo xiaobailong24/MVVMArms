@@ -7,7 +7,8 @@ import javax.inject.Scope;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * @author xiaobailong24
+ * @date 2017/6/16
  * Dagger ActivityScope
  */
 @Scope

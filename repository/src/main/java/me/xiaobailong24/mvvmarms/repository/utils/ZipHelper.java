@@ -14,10 +14,10 @@ import java.util.zip.GZIPOutputStream;
 import java.util.zip.Inflater;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
- * ZipHelper
+ * @author xiaobailong24
+ * @date 2017/6/16
+ * 处理压缩和解压的工具类
  */
-@SuppressWarnings("all")
 public class ZipHelper {
 
     private ZipHelper() {
@@ -27,8 +27,8 @@ public class ZipHelper {
     /**
      * zlib decompress 2 String
      *
-     * @param bytesToDecompress
-     * @return
+     * @param bytesToDecompress byte[]
+     * @return String
      */
     public static String decompressToStringForZlib(byte[] bytesToDecompress) {
         return decompressToStringForZlib(bytesToDecompress, "UTF-8");
@@ -38,26 +38,17 @@ public class ZipHelper {
     /**
      * zlib decompress 2 String
      *
-     * @param bytesToDecompress
-     * @param charsetName
-     * @return
+     * @param bytesToDecompress byte[]
+     * @param charsetName       String
+     * @return String
      */
     public static String decompressToStringForZlib(byte[] bytesToDecompress, String charsetName) {
-        byte[] bytesDecompressed = decompressForZlib
-                (
-                        bytesToDecompress
-                );
+        byte[] bytesDecompressed = decompressForZlib(bytesToDecompress);
 
         String returnValue = null;
 
         try {
-            returnValue = new String
-                    (
-                            bytesDecompressed,
-                            0,
-                            bytesDecompressed.length,
-                            charsetName
-                    );
+            returnValue = new String(bytesDecompressed, 0, bytesDecompressed.length, charsetName);
         } catch (UnsupportedEncodingException uee) {
             uee.printStackTrace();
         }
@@ -70,8 +61,8 @@ public class ZipHelper {
     /**
      * zlib decompress 2 byte
      *
-     * @param bytesToDecompress
-     * @return
+     * @param bytesToDecompress byte[]
+     * @return byte[]
      */
     public static byte[] decompressForZlib(byte[] bytesToDecompress) {
         byte[] returnValues = null;
@@ -80,26 +71,16 @@ public class ZipHelper {
 
         int numberOfBytesToDecompress = bytesToDecompress.length;
 
-        inflater.setInput
-                (
-                        bytesToDecompress,
-                        0,
-                        numberOfBytesToDecompress
-                );
-
-        int bufferSizeInBytes = numberOfBytesToDecompress;
+        inflater.setInput(bytesToDecompress, 0, numberOfBytesToDecompress);
 
         int numberOfBytesDecompressedSoFar = 0;
-        List<Byte> bytesDecompressedSoFar = new ArrayList<Byte>();
+        List<Byte> bytesDecompressedSoFar = new ArrayList<>();
 
         try {
-            while (inflater.needsInput() == false) {
-                byte[] bytesDecompressedBuffer = new byte[bufferSizeInBytes];
+            while (!inflater.needsInput()) {
+                byte[] bytesDecompressedBuffer = new byte[numberOfBytesToDecompress];
 
-                int numberOfBytesDecompressedThisTime = inflater.inflate
-                        (
-                                bytesDecompressedBuffer
-                        );
+                int numberOfBytesDecompressedThisTime = inflater.inflate(bytesDecompressedBuffer);
 
                 numberOfBytesDecompressedSoFar += numberOfBytesDecompressedThisTime;
 
@@ -118,15 +99,14 @@ public class ZipHelper {
         }
 
         inflater.end();
-
         return returnValues;
     }
 
     /**
      * zlib compress 2 byte
      *
-     * @param bytesToCompress
-     * @return
+     * @param bytesToCompress byte[]
+     * @return byte[]
      */
     public static byte[] compressForZlib(byte[] bytesToCompress) {
         Deflater deflater = new Deflater();
@@ -139,14 +119,7 @@ public class ZipHelper {
 
         byte[] returnValues = new byte[numberOfBytesAfterCompression];
 
-        System.arraycopy
-                (
-                        bytesCompressed,
-                        0,
-                        returnValues,
-                        0,
-                        numberOfBytesAfterCompression
-                );
+        System.arraycopy(bytesCompressed, 0, returnValues, 0, numberOfBytesAfterCompression);
 
         return returnValues;
     }
@@ -154,18 +127,14 @@ public class ZipHelper {
     /**
      * zlib compress 2 byte
      *
-     * @param stringToCompress
-     * @return
+     * @param stringToCompress String
+     * @return byte[]
      */
     public static byte[] compressForZlib(String stringToCompress) {
         byte[] returnValues = null;
 
         try {
-
-            returnValues = compressForZlib
-                    (
-                            stringToCompress.getBytes("UTF-8")
-                    );
+            returnValues = compressForZlib(stringToCompress.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException uee) {
             uee.printStackTrace();
         }
@@ -176,9 +145,8 @@ public class ZipHelper {
     /**
      * gzip compress 2 byte
      *
-     * @param string
-     * @return
-     * @throws IOException
+     * @param string String
+     * @return byte[]
      */
     public static byte[] compressForGzip(String string) {
         ByteArrayOutputStream os = null;
@@ -187,8 +155,7 @@ public class ZipHelper {
             os = new ByteArrayOutputStream(string.length());
             gos = new GZIPOutputStream(os);
             gos.write(string.getBytes("UTF-8"));
-            byte[] compressed = os.toByteArray();
-            return compressed;
+            return os.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -201,9 +168,8 @@ public class ZipHelper {
     /**
      * gzip decompress 2 string
      *
-     * @param compressed
-     * @return
-     * @throws IOException
+     * @param compressed byte[]
+     * @return String
      */
     public static String decompressForGzip(byte[] compressed) {
         return decompressForGzip(compressed, "UTF-8");
@@ -212,9 +178,9 @@ public class ZipHelper {
     /**
      * gzip decompress 2 string
      *
-     * @param compressed
-     * @param charsetName
-     * @return
+     * @param compressed  byte[]
+     * @param charsetName String
+     * @return String
      */
     public static String decompressForGzip(byte[] compressed, String charsetName) {
         final int BUFFER_SIZE = compressed.length;

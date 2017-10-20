@@ -14,10 +14,10 @@ import java.util.List;
 import me.xiaobailong24.mvvmarms.R;
 
 /**
- * Created by xiaobailong24 on 2017/6/30.
- * BaseBindAdapter
+ * @author xiaobailong24
+ * @date 2017/6/30
+ * DataBinding BaseBindAdapter
  */
-
 public abstract class BaseBindAdapter<T> extends BaseQuickAdapter<T, BaseBindHolder> {
 
     public BaseBindAdapter(@LayoutRes int layoutResId, @Nullable List<T> data) {

@@ -6,7 +6,8 @@ import me.xiaobailong24.mvvmarms.repository.IRepositoryManager;
 import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * @author xiaobailong24
+ * @date 2017/6/16
  * MVVM BaseModel
  */
 public class BaseModel implements IModel {

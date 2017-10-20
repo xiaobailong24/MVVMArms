@@ -12,15 +12,15 @@ import dagger.Lazy;
 import io.rx_cache2.internal.RxCache;
 import me.xiaobailong24.mvvmarms.repository.cache.Cache;
 import me.xiaobailong24.mvvmarms.repository.cache.CacheType;
-import me.xiaobailong24.mvvmarms.repository.di.module.DBModule;
+import me.xiaobailong24.mvvmarms.repository.di.module.DatabaseModule;
 import me.xiaobailong24.mvvmarms.repository.utils.Preconditions;
 import retrofit2.Retrofit;
 
 /**
- * Created by xiaobailong24 on 2017/9/28.
+ * @author xiaobailong24
+ * @date 2017/9/28
  * 数据管理层实现类
  */
-@SuppressWarnings("all")
 @Singleton
 public class RepositoryManager implements IRepositoryManager {
     private Application mApplication;
@@ -30,11 +30,11 @@ public class RepositoryManager implements IRepositoryManager {
     private Cache<String, Object> mCacheServiceCache;
     private Cache<String, Object> mRoomDatabaseCache;
     private final Cache.Factory mCacheFactory;
-    private DBModule.RoomConfiguration mRoomConfiguration;
+    private DatabaseModule.RoomConfiguration mRoomConfiguration;
 
     @Inject
     public RepositoryManager(Application application, Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache,
-                             Cache.Factory cacheFactory, DBModule.RoomConfiguration roomConfiguration) {
+                             Cache.Factory cacheFactory, DatabaseModule.RoomConfiguration roomConfiguration) {
         this.mApplication = application;
         this.mRetrofit = retrofit;
         this.mRxCache = rxCache;
@@ -44,8 +44,9 @@ public class RepositoryManager implements IRepositoryManager {
 
     @Override
     public <T> T obtainRetrofitService(Class<T> service) {
-        if (mRetrofitServiceCache == null)
+        if (mRetrofitServiceCache == null) {
             mRetrofitServiceCache = mCacheFactory.build(CacheType.RETROFIT_SERVICE_CACHE_TYPE);
+        }
         Preconditions.checkNotNull(mRetrofitServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
         T retrofitService;
         synchronized (mRetrofitServiceCache) {
@@ -61,8 +62,9 @@ public class RepositoryManager implements IRepositoryManager {
 
     @Override
     public <T> T obtainCacheService(Class<T> cache) {
-        if (mCacheServiceCache == null)
+        if (mCacheServiceCache == null) {
             mCacheServiceCache = mCacheFactory.build(CacheType.CACHE_SERVICE_CACHE_TYPE);
+        }
         Preconditions.checkNotNull(mCacheServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
         T cacheService;
         synchronized (mCacheServiceCache) {
@@ -87,16 +89,19 @@ public class RepositoryManager implements IRepositoryManager {
 
     @Override
     public <DB extends RoomDatabase> DB obtainRoomDatabase(Class<DB> database, String dbName) {
-        if (mRoomDatabaseCache == null)
+        if (mRoomDatabaseCache == null) {
             mRoomDatabaseCache = mCacheFactory.build(CacheType.ROOM_DATABASE_CACHE_TYPE);
+        }
         Preconditions.checkNotNull(mRoomDatabaseCache, "Cannot return null from a Cache.Factory#build(int) method");
         DB roomDatabase;
         synchronized (mRoomDatabaseCache) {
             roomDatabase = (DB) mRoomDatabaseCache.get(database.getName());
             if (roomDatabase == null) {
                 RoomDatabase.Builder builder = Room.databaseBuilder(mApplication, database, dbName);
-                if (mRoomConfiguration != null)//自定义 Room 配置
+                //自定义 Room 配置
+                if (mRoomConfiguration != null) {
                     mRoomConfiguration.configRoom(mApplication, builder);
+                }
                 roomDatabase = (DB) builder.build();
                 mRoomDatabaseCache.put(database.getName(), roomDatabase);
             }

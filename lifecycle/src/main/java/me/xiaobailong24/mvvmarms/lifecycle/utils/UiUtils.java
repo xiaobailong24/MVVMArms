@@ -6,12 +6,18 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Message;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.SpannedString;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.MessageDigest;
@@ -23,18 +29,36 @@ import static me.xiaobailong24.mvvmarms.lifecycle.delegate.AppManager.KILL_ALL;
 import static me.xiaobailong24.mvvmarms.lifecycle.delegate.AppManager.SHOW_SNACKBAR;
 import static me.xiaobailong24.mvvmarms.lifecycle.delegate.AppManager.START_ACTIVITY;
 
-
 /**
- * Created by xiaobailong24 on 2017/6/27.
+ * @author xiaobailong24
+ * @date 2017/6/27
  * UiUtils
  */
-@SuppressWarnings("all")
 public class UiUtils {
-    static public Toast mToast;
+    private static Toast mToast;
 
 
     private UiUtils() {
         throw new IllegalStateException("you can't instantiate me!");
+    }
+
+    /**
+     * 设置hint大小
+     *
+     * @param size
+     * @param v
+     * @param res
+     */
+    public static void setViewHintSize(Context context, int size, TextView v, int res) {
+        SpannableString ss = new SpannableString(getResources(context).getString(
+                res));
+        // 新建一个属性对象,设置文字的大小
+        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(size, true);
+        // 附加属性到文本
+        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // 设置hint,一定要进行转换,否则属性会消失
+        v.setHint(new SpannedString(ss));
     }
 
 
@@ -73,25 +97,25 @@ public class UiUtils {
 
 
     /**
-     * 从dimens中获得尺寸
+     * 从 dimens 中获得尺寸
      *
-     * @param homePicHeight
+     * @param context
+     * @param id
      * @return
      */
-
-    public static int getDimens(Context context, int homePicHeight) {
-        return (int) getResources(context).getDimension(homePicHeight);
+    public static int getDimens(Context context, int id) {
+        return (int) getResources(context).getDimension(id);
     }
 
     /**
-     * 从dimens中获得尺寸
+     * 从 dimens 中获得尺寸
      *
-     * @param
+     * @param context
+     * @param dimenName
      * @return
      */
-
-    public static float getDimens(Context context, String dimenNmae) {
-        return getResources(context).getDimension(getResources(context).getIdentifier(dimenNmae, "dimen", context.getPackageName()));
+    public static float getDimens(Context context, String dimenName) {
+        return getResources(context).getDimension(getResources(context).getIdentifier(dimenName, "dimen", context.getPackageName()));
     }
 
     /**
@@ -143,7 +167,7 @@ public class UiUtils {
     }
 
     /**
-     * 根据lauout名字获得id
+     * 根据 layout 名字获得 id
      *
      * @param layoutName
      * @return
@@ -164,11 +188,10 @@ public class UiUtils {
     }
 
     /**
-     * 单列toast
+     * 单例 toast
      *
      * @param string
      */
-
     public static void makeText(Context context, String string) {
         if (mToast == null) {
             mToast = Toast.makeText(context, string, Toast.LENGTH_SHORT);
@@ -178,7 +201,7 @@ public class UiUtils {
     }
 
     /**
-     * 用snackbar显示
+     * 使用 {@link Snackbar} 显示文本消息
      *
      * @param text
      */
@@ -191,7 +214,7 @@ public class UiUtils {
     }
 
     /**
-     * 用snackbar长时间显示
+     * 使用 {@link Snackbar} 长时间显示文本消息
      *
      * @param text
      */
@@ -211,35 +234,24 @@ public class UiUtils {
      * @return
      */
     public static Drawable getDrawablebyResource(Context context, int rID) {
-        return getResources(context).getDrawable(rID);
+        return getResources(context).getDrawable(rID, null);
     }
 
-    /**
-     * 跳转界面
-     *
-     * @param activity
-     * @param homeActivityClass
-     */
-    public static void startActivity(Activity activity, Class homeActivityClass) {
-        Intent intent = new Intent(activity.getApplicationContext(), homeActivityClass);
-        activity.startActivity(intent);
-    }
 
     /**
-     * 跳转界面3
+     * 跳转界面 1 ,通过 {@link AppManager#startActivity(Class)}
      *
-     * @param
-     * @param homeActivityClass
+     * @param activityClass
      */
-    public static void startActivity(Class homeActivityClass) {
+    public static void startActivity(Class activityClass) {
         Message message = new Message();
         message.what = START_ACTIVITY;
-        message.obj = homeActivityClass;
+        message.obj = activityClass;
         AppManager.post(message);
     }
 
     /**
-     * 跳转界面3
+     * 跳转界面 2 ,通过 {@link AppManager#startActivity(Intent)}
      *
      * @param
      */
@@ -250,17 +262,25 @@ public class UiUtils {
         AppManager.post(message);
     }
 
+
     /**
-     * 跳转界面4
+     * 跳转界面 3
+     *
+     * @param activity
+     * @param homeActivityClass
+     */
+    public static void startActivity(Activity activity, Class homeActivityClass) {
+        Intent intent = new Intent(activity.getApplicationContext(), homeActivityClass);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 跳转界面 4
      *
      * @param
      */
     public static void startActivity(Activity activity, Intent intent) {
         activity.startActivity(intent);
-    }
-
-    public static int getLayoutId(Context context, String layoutName) {
-        return getResources(context).getIdentifier(layoutName, "layout", context.getPackageName());
     }
 
     /**
@@ -286,7 +306,7 @@ public class UiUtils {
      * 获得颜色
      */
     public static int getColor(Context context, int rid) {
-        return getResources(context).getColor(rid);
+        return getResources(context).getColor(rid, null);
     }
 
     /**
@@ -344,7 +364,7 @@ public class UiUtils {
 
 
     /**
-     * 全屏，并且沉侵式状态栏
+     * 全屏,并且沉侵式状态栏
      *
      * @param activity
      */
@@ -358,7 +378,7 @@ public class UiUtils {
 
 
     /**
-     * 配置recycleview
+     * 配置 recycleview
      *
      * @param recyclerView
      * @param layoutManager
@@ -371,13 +391,18 @@ public class UiUtils {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-
+    /**
+     * 远程遥控 {@link AppManager#killAll()}
+     */
     public static void killAll() {
         Message message = new Message();
         message.what = KILL_ALL;
         AppManager.post(message);
     }
 
+    /**
+     * 远程遥控 {@link AppManager#appExit()}
+     */
     public static void exitApp() {
         Message message = new Message();
         message.what = APP_EXIT;

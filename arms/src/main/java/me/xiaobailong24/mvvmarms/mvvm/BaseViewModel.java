@@ -13,15 +13,14 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import me.xiaobailong24.mvvmarms.repository.http.Status;
 
-
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * @author xiaobailong24
+ * @date 2017/6/16
  * MVVM BaseViewModel (ViewModel 不再持有 View，而是 store and manage UI-related data)
  * ViewModel objects are scoped to the Lifecycle passed to the ViewModelProvider when getting the ViewModel.
  * The ViewModel stays in memory until the Lifecycle it’s scoped to goes away permanently
  * —in the case of an activity, when it finishes;
  * in the case of a fragment, when it’s detached.
- *
  * @see <a href="https://developer.android.com/topic/libraries/architecture/viewmodel.html">ViewModel</a>
  */
 public class BaseViewModel<M extends IModel> extends AndroidViewModel
@@ -30,7 +29,9 @@ public class BaseViewModel<M extends IModel> extends AndroidViewModel
 
     protected M mModel;
 
-    //数据请求状态
+    /**
+     * 数据请求状态
+     */
     public final ObservableField<Status> mStatus = new ObservableField<>();
 
     public BaseViewModel(Application application) {
@@ -45,24 +46,35 @@ public class BaseViewModel<M extends IModel> extends AndroidViewModel
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     @Override
     public void onStart() {
-        if (useEventBus())
-            EventBus.getDefault().register(this);//注册eventbus
+        if (useEventBus()) {
+            //注册eventbus
+            EventBus.getDefault().register(this);
+        }
     }
 
-    //是否使用EventBus
+    /**
+     * 是否使用 EventBus
+     *
+     * @return True if use
+     */
     protected boolean useEventBus() {
         return true;
     }
 
-    //RxJava添加订阅
+    /**
+     * RxJava 添加订阅
+     */
     protected void addDispose(Disposable disposable) {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
         }
-        mCompositeDisposable.add(disposable);//将所有disposable放入,集中处理
+        //将所有disposable放入,集中处理
+        mCompositeDisposable.add(disposable);
     }
 
-    //RxJava自动解除订阅
+    /**
+     * RxJava自动解除订阅，也可以手动调用
+     */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     protected void unDispose() {
         if (mCompositeDisposable != null) {
@@ -74,12 +86,16 @@ public class BaseViewModel<M extends IModel> extends AndroidViewModel
     @Override
     protected void onCleared() {
         super.onCleared();
-        if (useEventBus())
-            EventBus.getDefault().unregister(this);//解除注册eventbus
+        if (useEventBus()) {
+            //解除注册eventbus
+            EventBus.getDefault().unregister(this);
+        }
         // TODO: 2017/8/2
     }
 
-    //用于封装刷新操作
+    /**
+     * 用于封装刷新操作
+     */
     public void retry() {
         //如果子类的业务有刷新逻辑，可以重写此方法
     }

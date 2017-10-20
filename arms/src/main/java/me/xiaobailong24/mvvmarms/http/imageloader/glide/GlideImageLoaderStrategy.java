@@ -17,7 +17,8 @@ import me.xiaobailong24.mvvmarms.repository.utils.Preconditions;
 import timber.log.Timber;
 
 /**
- * Created by xiaobailong24 on 2017/8/17.
+ * @author xiaobailong24
+ * @date 2017/8/17
  * Glide 图片默认加载策略
  */
 public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageConfigImpl>, GlideAppliesOptions {
@@ -31,10 +32,12 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         GlideRequests requests = GlideArms.with(context);
 
         GlideRequest<Drawable> glideRequest = requests.load(config.getUrl())
-                .transition(DrawableTransitionOptions.withCrossFade())//动画
+                //动画
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .fitCenter();//适应居中
 
-        switch (config.getCacheStrategy()) {//缓存策略
+        //缓存策略
+        switch (config.getCacheStrategy()) {
             case 0:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.ALL);
                 break;
@@ -50,19 +53,29 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
             case 4:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
                 break;
+            default:
+                break;
         }
 
-        if (config.getTransformation() != null)//自定义改变图片形状
+        //自定义改变图片形状
+        if (config.getTransformation() != null) {
             glideRequest.transform(config.getTransformation());
+        }
 
-        if (config.getPlaceholder() != 0)//设置占位符
+        //设置占位符
+        if (config.getPlaceholder() != 0) {
             glideRequest.placeholder(config.getPlaceholder());
+        }
 
-        if (config.getErrorPic() != 0)//设置错误图片
+        //设置错误图片
+        if (config.getErrorPic() != 0) {
             glideRequest.error(config.getErrorPic());
+        }
 
-        if (config.getFallback() != 0)//设置 url 为 null 是图片
+        //设置 url 为 null 是图片
+        if (config.getFallback() != 0) {
             glideRequest.fallback(config.getFallback());
+        }
 
         glideRequest.into(config.getImageView());
     }
@@ -76,8 +89,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         // when the Activity or Fragment you pass in to Glide.with() is destroyed.
         if (config.getImageViews() != null && config.getImageViews().length > 0) {
             //取消正在进行的加载任务，并释放资源
-            for (ImageView imageView : config.getImageViews())
+            for (ImageView imageView : config.getImageViews()) {
                 GlideArms.get(context).getRequestManagerRetriever().get(context).clear(imageView);
+            }
         }
 
         if (config.isClearDiskCache()) {

@@ -16,10 +16,10 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * @author xiaobailong24
+ * @date 2017/6/16
  * Activity 生命周期代理接口实现类
  */
-
 public class ActivityDelegateImpl implements ActivityDelegate, HasSupportFragmentInjector {
     private Activity mActivity;
     private IActivity iActivity;
@@ -33,9 +33,13 @@ public class ActivityDelegateImpl implements ActivityDelegate, HasSupportFragmen
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if (iActivity.useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().register(mActivity);//注册到事件主线
-        AndroidInjection.inject(mActivity);//Dagger.Android 依赖注入
+        //如果要使用eventbus请将此方法返回true
+        if (iActivity.useEventBus()) {
+            //注册到事件主线
+            EventBus.getDefault().register(mActivity);
+        }
+        //Dagger.Android 依赖注入
+        AndroidInjection.inject(mActivity);
     }
 
     @Override
@@ -65,8 +69,10 @@ public class ActivityDelegateImpl implements ActivityDelegate, HasSupportFragmen
 
     @Override
     public void onDestroy() {
-        if (iActivity.useEventBus())//如果要使用eventbus请将此方法返回true
+        //如果要使用eventbus请将此方法返回true
+        if (iActivity.useEventBus()) {
             EventBus.getDefault().unregister(mActivity);
+        }
         this.iActivity = null;
         this.mActivity = null;
     }

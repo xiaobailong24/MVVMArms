@@ -17,7 +17,8 @@ import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 import me.xiaobailong24.mvvmarms.utils.ManifestArmsParser;
 
 /**
- * Created by xiaobailong24 on 2017/9/30.
+ * @author xiaobailong24
+ * @date 2017/9/30
  * ArmsInjector，需要在 Application 初始化，注入 ArmsComponent
  */
 public class ArmsInjector implements IArms {
@@ -36,8 +37,9 @@ public class ArmsInjector implements IArms {
     public void onCreate(Application application) {
         this.mApplication = application;
 
-        if (mArmsModule == null)
+        if (mArmsModule == null) {
             mArmsModule = new ArmsModule(mApplication);
+        }
         mArmsComponent = DaggerArmsComponent.builder()
                 // .lifecycleModule(((ILifecycle) mApplication).getLifecycleModule())
                 // .repositoryModule(((IRepository) mApplication).getRepositoryModule())
@@ -52,8 +54,9 @@ public class ArmsInjector implements IArms {
 
 
     public void onTerminate(Application application) {
-        if (mComponentCallback != null)
+        if (mComponentCallback != null) {
             mApplication.unregisterComponentCallbacks(mComponentCallback);
+        }
         this.mComponentCallback = null;
     }
 
@@ -66,8 +69,9 @@ public class ArmsInjector implements IArms {
     private ArmsConfigModule getArmsConfigModule(Context context, List<ConfigArms> configArmses) {
         ArmsConfigModule.Builder builder = ArmsConfigModule.builder();
         // 注册 Arms 自定义配置
-        for (ConfigArms module : configArmses)
+        for (ConfigArms module : configArmses) {
             module.applyOptions(context, builder);
+        }
         return builder.build();
     }
 

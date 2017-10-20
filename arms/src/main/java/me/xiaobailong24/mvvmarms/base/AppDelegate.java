@@ -16,23 +16,36 @@ import me.xiaobailong24.mvvmarms.repository.di.component.RepositoryComponent;
 import me.xiaobailong24.mvvmarms.repository.di.module.RepositoryModule;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * @author xiaobailong24
+ * @date 2017/6/16
  * Application 生命周期代理接口实现类
  */
 public class AppDelegate implements AppLifecycles, ILifecycle, IRepository, IArms {
     private Application mApplication;
-    private RepositoryInjector mRepositoryInjector;//Repository
-    private LifecycleInjector mLifecycleInjector;//Lifecycle
-    private ArmsInjector mArmsInjector;//Arms
+    /**
+     * {@link RepositoryInjector}
+     */
+    private RepositoryInjector mRepositoryInjector;
+    /**
+     * {@link LifecycleInjector}
+     */
+    private LifecycleInjector mLifecycleInjector;
+    /**
+     * {@link ArmsInjector}
+     */
+    private ArmsInjector mArmsInjector;
 
 
     public AppDelegate(Context context) {
-        if (mRepositoryInjector == null)
+        if (mRepositoryInjector == null) {
             mRepositoryInjector = new RepositoryInjector(context);
-        if (mLifecycleInjector == null)
+        }
+        if (mLifecycleInjector == null) {
             mLifecycleInjector = new LifecycleInjector(context);
-        if (mArmsInjector == null)
+        }
+        if (mArmsInjector == null) {
             mArmsInjector = new ArmsInjector(context);
+        }
     }
 
     @Override

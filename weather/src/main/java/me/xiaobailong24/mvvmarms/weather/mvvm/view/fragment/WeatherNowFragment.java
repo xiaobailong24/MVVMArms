@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
-import me.xiaobailong24.mvvmarms.base.ArmsFragment;
+import me.xiaobailong24.mvvmarms.base.BaseFragment;
 import me.xiaobailong24.mvvmarms.weather.R;
 import me.xiaobailong24.mvvmarms.weather.databinding.FragmentWeatherNowBinding;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
@@ -23,7 +23,7 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherViewModel;
  * MVVM WeatherNowFragment
  */
 
-public class WeatherNowFragment extends ArmsFragment<FragmentWeatherNowBinding, WeatherNowViewModel> {
+public class WeatherNowFragment extends BaseFragment<FragmentWeatherNowBinding, WeatherNowViewModel> {
 
     @Inject
     TextContentAdapter mAdapter;

@@ -3,13 +3,26 @@ package me.xiaobailong24.mvvmarms.http.imageloader;
 import android.widget.ImageView;
 
 /**
- * Created by xiaobailong24 on 2017/8/17.
+ * @author xiaobailong24
+ * @date 2017/8/17
  * 公共图片加载配置，可以自由扩展
  */
 public class BaseImageConfig {
+    /**
+     * 图片 Url
+     */
     protected String url;
+    /**
+     * 要显示的 ImageView
+     */
     protected ImageView imageView;
+    /**
+     * 图片占位符
+     */
     protected int placeholder;
+    /**
+     * 错误图片占位符
+     */
     protected int errorPic;
 
     public String getUrl() {

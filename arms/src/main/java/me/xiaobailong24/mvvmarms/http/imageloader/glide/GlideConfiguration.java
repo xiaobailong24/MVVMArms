@@ -25,14 +25,18 @@ import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
 import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
 
 /**
- * Created by xiaobailong24 on 2017/8/17.
- * Glide 配置
- *
- * @link http://bumptech.github.io/glide/doc/configuration.html
+ * @author xiaobailong24
+ * @date 2017/8/17
+ * {@link AppGlideModule} 的默认实现类
+ * 用于配置缓存文件夹,切换图片请求框架等操作
+ * @see <a href="http://bumptech.github.io/glide/doc/configuration.html">Glide Configuration </a>
  */
 @GlideModule(glideName = "GlideArms")
 public class GlideConfiguration extends AppGlideModule {
-    public static final int IMAGE_DISK_CACHE_MAX_SIZE = 100 * 1024 * 1024;//图片缓存文件最大值为 100Mb
+    /**
+     * 图片缓存文件最大值为 100Mb
+     */
+    public static final int IMAGE_DISK_CACHE_MAX_SIZE = 100 * 1024 * 1024;
 
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {

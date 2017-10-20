@@ -11,7 +11,8 @@ import java.lang.annotation.Target;
 import dagger.MapKey;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * @author xiaobailong24
+ * @date 2017/6/16
  * Dagger ViewModelScope
  */
 @Documented

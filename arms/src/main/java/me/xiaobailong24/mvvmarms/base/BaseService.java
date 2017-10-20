@@ -11,10 +11,10 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Created by xiaobailong24 on 2017/8/22.
+ * @author xiaobailong24
+ * @date 2017/8/22
  * MVVMArms BaseService
  */
-
 public abstract class BaseService extends Service {
     protected final String TAG = this.getClass().getSimpleName();
     protected CompositeDisposable mCompositeDisposable;
@@ -42,13 +42,14 @@ public abstract class BaseService extends Service {
 
 
     /**
-     * Description: 添加 RxJava 订阅
+     * 添加 RxJava 订阅
      *
      * @param disposable Disposable
      */
     protected void addDispose(Disposable disposable) {
-        if (mCompositeDisposable == null)
+        if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
+        }
         mCompositeDisposable.add(disposable);
     }
 
@@ -56,8 +57,9 @@ public abstract class BaseService extends Service {
      * 当 Service 销毁时自动解除所有订阅，也可以手动执行
      */
     protected void unDisposeAll() {
-        if (mCompositeDisposable != null)
+        if (mCompositeDisposable != null) {
             mCompositeDisposable.clear();
+        }
     }
 
 

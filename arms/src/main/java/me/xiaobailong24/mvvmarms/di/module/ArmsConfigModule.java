@@ -8,7 +8,9 @@ import me.xiaobailong24.mvvmarms.http.imageloader.BaseImageLoaderStrategy;
 import me.xiaobailong24.mvvmarms.http.imageloader.glide.GlideImageLoaderStrategy;
 
 /**
- * Created by xiaobailong24 on 2017/9/29.
+ *
+ * @author xiaobailong24
+ * @date 2017/9/29
  * 配置 Arms 框架里的组件，可以自由扩展
  */
 @Module

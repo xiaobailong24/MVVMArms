@@ -8,10 +8,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import me.xiaobailong24.mvvmarms.R;
 
 /**
- * Created by xiaobailong24 on 2017/6/30.
- * BaseBindHolder
+ * @author xiaobailong24
+ * @date 2017/6/30
+ * DataBinding BaseBindHolder
  */
-
 public class BaseBindHolder extends BaseViewHolder {
 
     public BaseBindHolder(View view) {

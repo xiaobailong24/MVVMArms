@@ -12,6 +12,8 @@ import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
 /**
+ * @author xiaobailong24
+ * @date 2017/8/17
  * A simple model loader for fetching media over http/https using OkHttp.
  */
 public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {

@@ -25,7 +25,8 @@ import me.xiaobailong24.mvvmarms.lifecycle.ConfigLifecycle;
 import timber.log.Timber;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * @author xiaobailong24
+ * @date 2017/6/16
  * 用于管理所有 activity,和在前台的 activity
  * 可以通过直接持有 AppManager 对象执行对应方法
  * 也可以通过 {@link #post(Message)} ,远程遥控执行对应方法,用法和 EventBus 类似
@@ -34,17 +35,26 @@ import timber.log.Timber;
 public final class AppManager {
     protected final String TAG = this.getClass().getSimpleName();
     public static final String APPMANAGER_MESSAGE = "appmanager_message";
-    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";//true 为不需要加入到 Activity 容器进行统一管理,反之亦然
+    /**
+     * true 为不需要加入到 Activity 容器进行统一管理,反之亦然
+     */
+    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";
     public static final int START_ACTIVITY = 5000;
     public static final int SHOW_SNACKBAR = 5001;
     public static final int KILL_ALL = 5002;
     public static final int APP_EXIT = 5003;
     private Application mApplication;
-    //管理所有activity
+    /**
+     * 管理所有activity
+     */
     public List<Activity> mActivityList;
-    //当前在前台的activity
+    /**
+     * 当前在前台的activity
+     */
     private Activity mCurrentActivity;
-    //提供给外部扩展 AppManager 的 onReceive 方法
+    /**
+     * 提供给外部扩展 AppManager 的 onReceive 方法
+     */
     private HandleListener mHandleListener;
 
     @Inject
@@ -61,13 +71,15 @@ public final class AppManager {
     public void onReceive(Message message) {
         switch (message.what) {
             case START_ACTIVITY:
-                if (message.obj == null)
+                if (message.obj == null) {
                     break;
+                }
                 dispatchStart(message);
                 break;
             case SHOW_SNACKBAR:
-                if (message.obj == null)
+                if (message.obj == null) {
                     break;
+                }
                 showSnackbar((String) message.obj, message.arg1 != 0);
                 break;
             case KILL_ALL:
@@ -86,10 +98,11 @@ public final class AppManager {
     }
 
     private void dispatchStart(Message message) {
-        if (message.obj instanceof Intent)
+        if (message.obj instanceof Intent) {
             startActivity((Intent) message.obj);
-        else if (message.obj instanceof Class)
+        } else if (message.obj instanceof Class) {
             startActivity((Class) message.obj);
+        }
     }
 
 
@@ -352,10 +365,6 @@ public final class AppManager {
      * 关闭所有 activity
      */
     public void killAll() {
-        //        while (getActivityList().size() != 0) { //此方法只能兼容LinkedList
-        //            getActivityList().remove(0).finish();
-        //        }
-
         Iterator<Activity> iterator = getActivityList().iterator();
         while (iterator.hasNext()) {
             Activity next = iterator.next();
@@ -375,8 +384,9 @@ public final class AppManager {
         while (iterator.hasNext()) {
             Activity next = iterator.next();
 
-            if (excludeList.contains(next.getClass()))
+            if (excludeList.contains(next.getClass())) {
                 continue;
+            }
 
             iterator.remove();
             next.finish();
@@ -394,8 +404,9 @@ public final class AppManager {
         while (iterator.hasNext()) {
             Activity next = iterator.next();
 
-            if (excludeList.contains(next.getClass().getName()))
+            if (excludeList.contains(next.getClass().getName())) {
                 continue;
+            }
 
             iterator.remove();
             next.finish();
@@ -420,6 +431,12 @@ public final class AppManager {
     }
 
     public interface HandleListener {
+        /**
+         * 扩展 AppManager 的远程遥控功能
+         *
+         * @param appManager AppManager
+         * @param message    Message
+         */
         void handleMessage(AppManager appManager, Message message);
     }
 }

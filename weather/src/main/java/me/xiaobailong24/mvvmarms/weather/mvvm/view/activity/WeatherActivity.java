@@ -13,7 +13,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.xiaobailong24.mvvmarms.base.ArmsActivity;
+import me.xiaobailong24.mvvmarms.base.BaseActivity;
 import me.xiaobailong24.mvvmarms.weather.R;
 import me.xiaobailong24.mvvmarms.weather.app.EventBusTags;
 import me.xiaobailong24.mvvmarms.weather.app.utils.KeyboardUtils;
@@ -24,7 +24,10 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment.WeatherNowFragment;
 import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherViewModel;
 import timber.log.Timber;
 
-public class WeatherActivity extends ArmsActivity<ActivityWeatherBinding, WeatherViewModel> {
+/**
+ * @author xiaobailong24
+ */
+public class WeatherActivity extends BaseActivity<ActivityWeatherBinding, WeatherViewModel> {
 
     private int mReplace = 0;
     private List<Fragment> mFragments;

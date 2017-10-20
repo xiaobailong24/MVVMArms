@@ -9,11 +9,11 @@ import android.view.View;
 import timber.log.Timber;
 
 /**
- * Created by xiaobailong24 on 2017/9/5.
+ * @author xiaobailong24
+ * @date 2017/9/5
  * Fragment 生命周期回调。
  * 在 Fragment 对应生命周期方法执行完毕后进行的。
  */
-
 public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallbacks {
 
     @Override

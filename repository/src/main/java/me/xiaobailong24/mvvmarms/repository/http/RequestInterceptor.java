@@ -1,5 +1,6 @@
-package me.xiaobailong24.mvvmarms.repository.utils;
+package me.xiaobailong24.mvvmarms.repository.http;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.io.IOException;
@@ -11,8 +12,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import me.xiaobailong24.mvvmarms.repository.http.CharacterHandler;
-import me.xiaobailong24.mvvmarms.repository.http.GlobalHttpHandler;
+import me.xiaobailong24.mvvmarms.repository.utils.ZipHelper;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -26,7 +26,8 @@ import timber.log.Timber;
 import static timber.log.Timber.w;
 
 /**
- * Created by xiaobailong24 on 2017/6/16.
+ * @author xiaobailong24
+ * @date 2017/6/16
  * Http 请求/响应拦截器
  */
 @Singleton
@@ -35,23 +36,47 @@ public class RequestInterceptor implements Interceptor {
     private final Level printLevel;
 
     public enum Level {
-        NONE,       //不打印log
-        REQUEST,    //只打印请求信息
-        RESPONSE,   //只打印响应信息
-        ALL         //所有数据全部打印
+        /**
+         * 不打印log
+         */
+        NONE,
+
+        /**
+         * 只打印请求信息
+         */
+        REQUEST,
+
+        /**
+         * 只打印响应信息
+         */
+        RESPONSE,
+
+        /**
+         * 所有数据全部打印
+         */
+        ALL
     }
 
     @Inject
     public RequestInterceptor(@Nullable GlobalHttpHandler handler, @Nullable Level level) {
         this.mHandler = handler;
-        if (level == null)
+        if (level == null) {
             printLevel = Level.ALL;
-        else
+        } else {
             printLevel = level;
+        }
     }
 
+
+    /**
+     * Response 拦截
+     *
+     * @param chain Chain
+     * @return Response
+     * @throws IOException IOException
+     */
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
 
         boolean logRequest = printLevel == Level.ALL || (printLevel != Level.NONE && printLevel == Level.REQUEST);
@@ -79,7 +104,9 @@ public class RequestInterceptor implements Interceptor {
         long t2 = logResponse ? System.nanoTime() : 0;
 
         if (logResponse) {
-            String bodySize = originalResponse.body().contentLength() != -1 ? originalResponse.body().contentLength() + "-byte" : "unknown-length";
+            String bodySize = originalResponse.body().contentLength() != -1
+                    ? originalResponse.body().contentLength() + "-byte"
+                    : "unknown-length";
             //打印响应时间以及响应头
             Timber.w("HTTP RESPONSE in [ %d-ms ] , [ %s ] >>>%n%s",
                     TimeUnit.NANOSECONDS.toMillis(t2 - t1), bodySize, originalResponse.headers());
@@ -88,8 +115,10 @@ public class RequestInterceptor implements Interceptor {
         //打印响应结果
         String bodyString = printResult(request, originalResponse.newBuilder().build(), logResponse);
 
-        if (mHandler != null)//这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
+        //这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
+        if (mHandler != null) {
             return mHandler.onHttpResultResponse(bodyString, chain, originalResponse);
+        }
 
         return originalResponse;
     }
@@ -97,11 +126,11 @@ public class RequestInterceptor implements Interceptor {
     /**
      * 打印响应结果
      *
-     * @param request
-     * @param response
-     * @param logResponse
-     * @return
-     * @throws IOException
+     * @param request     Request
+     * @param response    Response
+     * @param logResponse 是否打印
+     * @return String
+     * @throws IOException IOException
      */
     @Nullable
     private String printResult(Request request, Response response, boolean logResponse) throws IOException {
@@ -111,7 +140,8 @@ public class RequestInterceptor implements Interceptor {
         if (isParseable(responseBody.contentType())) {
             try {
                 BufferedSource source = responseBody.source();
-                source.request(Long.MAX_VALUE); // Buffer the entire body.
+                // Buffer the entire body.
+                source.request(Long.MAX_VALUE);
                 Buffer buffer = source.buffer();
 
                 //获取content的压缩类型
@@ -154,10 +184,10 @@ public class RequestInterceptor implements Interceptor {
     /**
      * 解析服务器响应的内容
      *
-     * @param responseBody
-     * @param encoding
-     * @param clone
-     * @return
+     * @param responseBody ResponseBody
+     * @param encoding     编码
+     * @param clone        Buffer
+     * @return String
      */
     private String parseContent(ResponseBody responseBody, String encoding, Buffer clone) {
         Charset charset = Charset.forName("UTF-8");
@@ -165,26 +195,38 @@ public class RequestInterceptor implements Interceptor {
         if (contentType != null) {
             charset = contentType.charset(charset);
         }
-        if (encoding != null && encoding.equalsIgnoreCase("gzip")) {//content使用gzip压缩
-            return ZipHelper.decompressForGzip(clone.readByteArray(), convertCharset(charset));//解压
-        } else if (encoding != null && encoding.equalsIgnoreCase("zlib")) {//content使用zlib压缩
-            return ZipHelper.decompressToStringForZlib(clone.readByteArray(), convertCharset(charset));//解压
-        } else {//content没有被压缩
+        //content 使用 gzip 压缩
+        if (encoding != null && encoding.equalsIgnoreCase("gzip")) {
+            //解压
+            return ZipHelper.decompressForGzip(clone.readByteArray(), convertCharset(charset));
+            //content 使用 zlib 压缩
+        } else if (encoding != null && encoding.equalsIgnoreCase("zlib")) {
+            //解压
+            return ZipHelper.decompressToStringForZlib(clone.readByteArray(), convertCharset(charset));
+        } else {
+            //content没有被压缩
             return clone.readString(charset);
         }
     }
 
+    /**
+     * 解析请求服务器的请求参数
+     *
+     * @param body RequestBody
+     * @return String
+     * @throws UnsupportedEncodingException UnsupportedEncodingException
+     */
     public static String parseParams(RequestBody body) throws UnsupportedEncodingException {
         if (isParseable(body.contentType())) {
             try {
-                Buffer requestbuffer = new Buffer();
-                body.writeTo(requestbuffer);
+                Buffer requestBuffer = new Buffer();
+                body.writeTo(requestBuffer);
                 Charset charset = Charset.forName("UTF-8");
                 MediaType contentType = body.contentType();
                 if (contentType != null) {
                     charset = contentType.charset(charset);
                 }
-                return URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset));
+                return URLDecoder.decode(requestBuffer.readString(charset), convertCharset(charset));
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -193,12 +235,19 @@ public class RequestInterceptor implements Interceptor {
         return "This params isn't parsed";
     }
 
+    /**
+     * 是否可以解析
+     *
+     * @param mediaType MediaType
+     * @return 是否可以解析
+     */
     public static boolean isParseable(MediaType mediaType) {
-        if (mediaType == null)
-            return false;
-        return mediaType.toString().toLowerCase().contains("text")
-                || isJson(mediaType) || isForm(mediaType)
-                || isHtml(mediaType) || isXml(mediaType);
+        return mediaType != null
+                && (mediaType.toString().toLowerCase().contains("text")
+                || isJson(mediaType)
+                || isForm(mediaType)
+                || isHtml(mediaType)
+                || isXml(mediaType));
     }
 
     public static boolean isJson(MediaType mediaType) {
@@ -220,8 +269,9 @@ public class RequestInterceptor implements Interceptor {
     public static String convertCharset(Charset charset) {
         String s = charset.toString();
         int i = s.indexOf("[");
-        if (i == -1)
+        if (i == -1) {
             return s;
+        }
         return s.substring(i + 1, s.length() - 1);
     }
 }

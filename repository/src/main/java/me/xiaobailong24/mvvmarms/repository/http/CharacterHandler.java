@@ -22,30 +22,31 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 /**
- * Created by zhiyicx on 2016/3/16.
+ * @author xiaobailong24
+ * @date 2016/3/16
+ * 处理字符串的工具类
  */
-@SuppressWarnings("all")
 public class CharacterHandler {
-
     private CharacterHandler() {
         throw new IllegalStateException("you can't instantiate me!");
     }
 
-    public static final InputFilter emojiFilter = new InputFilter() {//emoji过滤器
-
+    /**
+     * emoji 过滤器
+     */
+    public static final InputFilter emojiFilter = new InputFilter() {
         Pattern emoji = Pattern.compile(
                 "[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
                 Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
 
         @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart,
-                                   int dend) {
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
+                                   int dstart, int dend) {
 
             Matcher emojiMatcher = emoji.matcher(source);
             if (emojiMatcher.find()) {
                 return "";
             }
-
             return null;
         }
     };
@@ -76,8 +77,8 @@ public class CharacterHandler {
     /**
      * json 格式化
      *
-     * @param json
-     * @return
+     * @param json 要格式化的 json 字符串
+     * @return 格式化后的新字符串
      */
     public static String jsonFormat(String json) {
         if (TextUtils.isEmpty(json)) {
@@ -105,8 +106,8 @@ public class CharacterHandler {
     /**
      * xml 格式化
      *
-     * @param xml
-     * @return
+     * @param xml 要格式化的 xml 字符串
+     * @return 格式化后的新字符串
      */
     public static String xmlFormat(String xml) {
         if (TextUtils.isEmpty(xml)) {
