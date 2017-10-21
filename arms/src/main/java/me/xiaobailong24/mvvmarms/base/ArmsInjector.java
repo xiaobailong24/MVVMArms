@@ -11,6 +11,7 @@ import me.xiaobailong24.mvvmarms.di.component.ArmsComponent;
 import me.xiaobailong24.mvvmarms.di.component.DaggerArmsComponent;
 import me.xiaobailong24.mvvmarms.di.module.ArmsConfigModule;
 import me.xiaobailong24.mvvmarms.di.module.ArmsModule;
+import me.xiaobailong24.mvvmarms.http.imageloader.glide.GlideArms;
 import me.xiaobailong24.mvvmarms.http.imageloader.glide.ImageConfigImpl;
 import me.xiaobailong24.mvvmarms.lifecycle.utils.Preconditions;
 import me.xiaobailong24.mvvmarms.utils.ArmsUtils;
@@ -101,7 +102,14 @@ public class ArmsInjector implements IArms {
 
         @Override
         public void onTrimMemory(int level) {
-
+            //在 App 被置换到后台的时候，清理图片请求框架的内存缓存
+            if (level == TRIM_MEMORY_UI_HIDDEN) {
+                ArmsUtils.INSTANCE.obtainArmsComponent(mApplication)
+                        .imageLoader()
+                        .clear(mApplication, ImageConfigImpl.builder().isClearMemory(true).build());
+            }
+            //交给 Glide 处理内存情况
+            GlideArms.get(mApplication).trimMemory(level);
         }
 
         @Override

@@ -34,7 +34,8 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         GlideRequest<Drawable> glideRequest = requests.load(config.getUrl())
                 //动画
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .fitCenter();//适应居中
+                //适应居中
+                .fitCenter();
 
         //缓存策略
         switch (config.getCacheStrategy()) {

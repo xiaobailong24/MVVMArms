@@ -118,7 +118,7 @@ public class WeatherActivity extends BaseActivity<ActivityWeatherBinding, Weathe
                 String location = locations.get(0);
                 //如果位置是全路径，则截取城市名
                 if (location.contains(comma)) {
-                    location = location.substring(0, location.indexOf(","));
+                    location = location.substring(0, location.indexOf(comma));
                 }
                 if (TextUtils.equals(mViewModel.getLocation().getValue(), getString(R.string.location_beijing))) {
                     mViewModel.getLocation().setValue(location);
@@ -148,7 +148,7 @@ public class WeatherActivity extends BaseActivity<ActivityWeatherBinding, Weathe
     private void doSearch(String location) {
         //如果位置是全路径，则截取城市名
         if (location.contains(comma)) {
-            location = location.substring(0, location.indexOf(","));
+            location = location.substring(0, location.indexOf(comma));
         }
         mViewModel.getLocation().setValue(location);
         mBinding.searchView.closeSearch();
