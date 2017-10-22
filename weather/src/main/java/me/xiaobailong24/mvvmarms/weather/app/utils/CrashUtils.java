@@ -27,8 +27,9 @@ import java.util.Locale;
  * </pre>
  */
 public final class CrashUtils {
-
-    //单例工具类持有Application的弱引用
+    /**
+     * 单例工具类持有Application的弱引用
+     */
     private static WeakReference<Application> mApplication;
 
     private static boolean mInitialized;
@@ -64,8 +65,9 @@ public final class CrashUtils {
                 Date now = new Date(System.currentTimeMillis());
                 String fileName = FORMAT.format(now) + ".txt";
                 final String fullPath = (dir == null ? defaultDir : dir) + fileName;
-                if (!createOrExistsFile(fullPath))
+                if (!createOrExistsFile(fullPath)) {
                     return;
+                }
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -107,8 +109,9 @@ public final class CrashUtils {
      * @return {@code true}: 初始化成功<br>{@code false}: 初始化失败
      */
     public static boolean init(Application application) {
-        if (mApplication == null)
+        if (mApplication == null) {
             mApplication = new WeakReference<>(application);
+        }
         return init(application, "");
     }
 
@@ -120,8 +123,9 @@ public final class CrashUtils {
      * @return {@code true}: 初始化成功<br>{@code false}: 初始化失败
      */
     public static boolean init(Application application, @NonNull final File crashDir) {
-        if (mApplication == null)
+        if (mApplication == null) {
             mApplication = new WeakReference<>(application);
+        }
         return init(application, crashDir.getAbsolutePath() + FILE_SEP);
     }
 
@@ -133,19 +137,21 @@ public final class CrashUtils {
      * @return {@code true}: 初始化成功<br>{@code false}: 初始化失败
      */
     public static boolean init(Application application, final String crashDir) {
-        if (mApplication == null)
+        if (mApplication == null) {
             mApplication = new WeakReference<>(application);
+        }
         if (isSpace(crashDir)) {
             dir = null;
         } else {
             dir = crashDir.endsWith(FILE_SEP) ? dir : dir + FILE_SEP;
         }
-        if (mInitialized)
+        if (mInitialized) {
             return true;
+        }
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
-                && mApplication.get().getExternalCacheDir() != null)
+                && mApplication.get().getExternalCacheDir() != null) {
             defaultDir = mApplication.get().getExternalCacheDir() + FILE_SEP + "crash" + FILE_SEP;
-        else {
+        } else {
             defaultDir = mApplication.get().getCacheDir() + FILE_SEP + "crash" + FILE_SEP;
         }
         Thread.setDefaultUncaughtExceptionHandler(UNCAUGHT_EXCEPTION_HANDLER);
@@ -154,10 +160,12 @@ public final class CrashUtils {
 
     private static boolean createOrExistsFile(final String filePath) {
         File file = new File(filePath);
-        if (file.exists())
+        if (file.exists()) {
             return file.isFile();
-        if (!createOrExistsDir(file.getParentFile()))
+        }
+        if (!createOrExistsDir(file.getParentFile())) {
             return false;
+        }
         try {
             return file.createNewFile();
         } catch (IOException e) {
@@ -171,8 +179,9 @@ public final class CrashUtils {
     }
 
     private static boolean isSpace(final String s) {
-        if (s == null)
+        if (s == null) {
             return true;
+        }
         for (int i = 0, len = s.length(); i < len; ++i) {
             if (!Character.isWhitespace(s.charAt(i))) {
                 return false;

@@ -183,9 +183,9 @@ public class WeatherActivity extends BaseActivity<ActivityWeatherBinding, Weathe
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         //保存当前 Activity 显示的 Fragment 索引
         outState.putInt(EventBusTags.ACTIVITY_FRAGMENT_REPLACE, mReplace);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

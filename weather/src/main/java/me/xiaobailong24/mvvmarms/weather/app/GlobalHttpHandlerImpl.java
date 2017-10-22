@@ -23,9 +23,9 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
         create a new request and modify it accordingly using the new token*/
         /* 如果使用okhttp将新的请求,请求成功后,将返回的response  return出去即可，
         如果不需要返回新的结果,则直接把response参数返回出去 */
-        //                        Request newRequest = chain.request().newBuilder().header("token", newToken).build();
-        //                        retry the request
-        //                        response.body().close();
+        /* Request newRequest = chain.request().newBuilder().header("token", newToken).build();
+        retry the request
+        response.body().close(); */
 
         return response;
     }

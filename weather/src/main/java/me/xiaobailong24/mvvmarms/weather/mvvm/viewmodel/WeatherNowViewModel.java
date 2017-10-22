@@ -62,7 +62,7 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel> {
     }
 
     private void loadWeather(String locationName) {
-        Map<String, String> request = new HashMap<>();
+        Map<String, String> request = new HashMap<>(4);
         request.put(Api.API_KEY_KEY, Api.API_KEY);
         request.put(Api.API_KEY_TEMP_UNIT, "c");
         request.put(Api.API_KEY_LANGUAGE, "zh-Hans");

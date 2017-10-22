@@ -24,7 +24,6 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
 import timber.log.Timber;
 
 /**
- *
  * @author xiaobailong24
  * @date 2017/7/31
  * MVVM WeatherViewModel
@@ -32,7 +31,9 @@ import timber.log.Timber;
 @ActivityScope
 public class WeatherViewModel extends BaseViewModel<WeatherModel> {
     private MutableLiveData<List<String>> mLocationPaths;
-    //可以与 Fragment 共享此数据
+    /**
+     * 可以与 Fragment 共享此数据
+     */
     private MutableLiveData<String> mLocation;
 
     @Inject
@@ -40,7 +41,11 @@ public class WeatherViewModel extends BaseViewModel<WeatherModel> {
         super(application, model);
     }
 
-    //获取储存的位置记录
+    /**
+     * 获取储存的位置记录
+     *
+     * @return 历史位置记录列表
+     */
     public LiveData<List<String>> getHistoryLocations() {
         if (mLocationPaths == null) {
             mLocationPaths = new MutableLiveData<>();
