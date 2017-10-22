@@ -39,8 +39,10 @@ public class RepositoryConfiguration implements ConfigRepository {
                 })
                 //这里可以自己自定义配置Retrofit的参数,甚至你可以替换系统配置好的okhttp对象
                 .retrofitConfiguration((context1, retrofitBuilder) -> {
-                    // 比如使用fastjson替代gson
-                    // retrofitBuilder.addConverterFactory(FastJsonConverterFactory.create());
+                     /*比如使用fastjson替代gson
+                     retrofitBuilder.addConverterFactory(FastJsonConverterFactory.create());*/
+                    /*适配 LiveData
+                    retrofitBuilder.addCallAdapterFactory(new LiveDataCallAdapterFactory());*/
                 })
                 //这里可以自己自定义配置Okhttp的参数
                 .okhttpConfiguration((context1, okhttpBuilder) -> {
