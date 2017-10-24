@@ -60,6 +60,11 @@ public abstract class BaseActivity<DB extends ViewDataBinding, VM extends IViewM
         return true;
     }
 
+    @Override
+    public boolean injectable() {
+        return true;
+    }
+
     @SuppressWarnings("all")
     @Override
     protected void onSaveInstanceState(Bundle outState) {

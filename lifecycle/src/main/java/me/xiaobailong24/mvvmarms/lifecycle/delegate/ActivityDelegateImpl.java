@@ -39,7 +39,9 @@ public class ActivityDelegateImpl implements ActivityDelegate, HasSupportFragmen
             EventBus.getDefault().register(mActivity);
         }
         //Dagger.Android 依赖注入
-        AndroidInjection.inject(mActivity);
+        if (iActivity.injectable()) {
+            AndroidInjection.inject(mActivity);
+        }
     }
 
     @Override

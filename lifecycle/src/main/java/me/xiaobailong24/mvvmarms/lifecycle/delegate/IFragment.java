@@ -43,7 +43,7 @@ public interface IFragment {
     void setData(Object data);
 
     /**
-     * Fragment 是否依赖注入
+     * Fragment 是否依赖注入，如果不需要，则重写此方法，返回 false
      *
      * @return true: 进行依赖注入；false:不进行依赖注入
      */
