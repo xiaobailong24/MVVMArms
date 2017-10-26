@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -53,20 +52,20 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //arms
-    compile project(':arms')
+    implementation project(':arms')
 
     //view
-    compile rootProject.ext.dependencies["constraint-layout"]
-    compile rootProject.ext.dependencies["SuperTextView"]
-    compile rootProject.ext.dependencies["MaterialSearchView"]
+    implementation rootProject.ext.dependencies["constraint-layout"]
+    implementation rootProject.ext.dependencies["SuperTextView"]
+    implementation rootProject.ext.dependencies["MaterialSearchView"]
 
     //mvvm(Lifecycles, LiveData, and ViewModel, Room)
     annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
     annotationProcessor rootProject.ext.dependencies["room-compiler"]
-    testCompile(rootProject.ext.dependencies["room-testing"]) {
+    testImplementation(rootProject.ext.dependencies["room-testing"]) {
         exclude module: 'support-compat'
         exclude module: 'support-annotations'
         exclude module: 'support-core-utils'
@@ -81,14 +80,14 @@ dependencies {
     annotationProcessor(rootProject.ext.dependencies["dagger2-android-processor"]) {
         exclude module: 'jsr305'
     }
-    compile rootProject.ext.dependencies["multidex"]
+    implementation rootProject.ext.dependencies["multidex"]
 
     //test
-    testCompile rootProject.ext.dependencies["junit"]
-    androidTestCompile(rootProject.ext.dependencies["espresso-core"]) {
+    testImplementation rootProject.ext.dependencies["junit"]
+    androidTestImplementation(rootProject.ext.dependencies["espresso-core"]) {
         exclude module: 'support-annotations'
     }
-    debugCompile rootProject.ext.dependencies["canary-debug"]
-    releaseCompile rootProject.ext.dependencies["canary-release"]
-    testCompile rootProject.ext.dependencies["canary-release"]
+    debugImplementation rootProject.ext.dependencies["canary-debug"]
+    releaseImplementation rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["canary-release"]
 }

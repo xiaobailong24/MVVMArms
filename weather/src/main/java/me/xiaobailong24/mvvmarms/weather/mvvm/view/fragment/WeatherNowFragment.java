@@ -48,6 +48,8 @@ public class WeatherNowFragment extends BaseFragment<FragmentWeatherNowBinding, 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_now, container, false);
         //设置ViewModel
         mBinding.setViewModel(mViewModel);
+        mBinding.retry.setViewModel(mViewModel);
+        mBinding.weatherSource.setViewModel(mViewModel);
         //RecyclerView设置Adapter
         mBinding.recyclerWeatherNow.setAdapter(mAdapter);
         //设置Refresh

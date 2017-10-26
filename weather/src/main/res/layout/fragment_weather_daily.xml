@@ -16,7 +16,6 @@
     <me.xiaobailong24.mvvmarms.weather.mvvm.view.weight.ScrollChildSwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:bind="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/refresh"
         android:layout_width="match_parent"
@@ -31,8 +30,7 @@
 
             <include
                 android:id="@+id/weather_source"
-                layout="@layout/include_logo"
-                bind:viewModel="@{viewModel}"/>
+                layout="@layout/include_logo"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_weather_daily"
@@ -53,8 +51,7 @@
 
             <include
                 android:id="@+id/retry"
-                layout="@layout/include_retry"
-                bind:viewModel="@{viewModel}"/>
+                layout="@layout/include_retry"/>
 
         </android.support.constraint.ConstraintLayout>
     </me.xiaobailong24.mvvmarms.weather.mvvm.view.weight.ScrollChildSwipeRefreshLayout>

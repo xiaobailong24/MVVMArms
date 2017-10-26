@@ -1,1 +1,1 @@
-include ':arms', ':weather', ':repository', ':lifecycle'
+include ':lifecycle', ':repository', ':arms', ':weather'

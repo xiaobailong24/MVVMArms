@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -44,72 +43,70 @@ buildscript {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
     //repository
-    compile project(':repository')
-    compile project(':lifecycle')
+    api project(':repository')
+    api project(':lifecycle')
 
     //support
-    compile(rootProject.ext.dependencies["support-v4"]) {
+    api(rootProject.ext.dependencies["support-v4"]) {
         exclude module: 'support-annotations'
     }
-    compile(rootProject.ext.dependencies["appcompat-v7"]) {
+    api(rootProject.ext.dependencies["appcompat-v7"]) {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    compile(rootProject.ext.dependencies["design"]) {
+    api(rootProject.ext.dependencies["design"]) {
         exclude module: 'support-annotations'
         exclude module: 'appcompat-v7'
         exclude module: 'support-v4'
     }
-    compile(rootProject.ext.dependencies["cardview-v7"]) {
+    api(rootProject.ext.dependencies["cardview-v7"]) {
         exclude module: 'support-annotations'
     }
-    compile rootProject.ext.dependencies["annotations"]
+    api rootProject.ext.dependencies["annotations"]
 
     //view
-    compile(rootProject.ext.dependencies["brvah"]) {
+    api(rootProject.ext.dependencies["brvah"]) {
         exclude module: 'recyclerview-v7'
     }
 
     //mvvm(Lifecycles, LiveData, and ViewModel, Room)
-    compile rootProject.ext.dependencies["lifecycle-runtime"]
-    compile rootProject.ext.dependencies["lifecycle-extensions"]
+    api rootProject.ext.dependencies["lifecycle-runtime"]
+    api rootProject.ext.dependencies["lifecycle-extensions"]
     annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
-    compile rootProject.ext.dependencies["room-runtime"]
+    api rootProject.ext.dependencies["room-runtime"]
     annotationProcessor rootProject.ext.dependencies["room-compiler"]
-    testCompile(rootProject.ext.dependencies["room-testing"]) {
+    testApi(rootProject.ext.dependencies["room-testing"]) {
         exclude module: 'support-compat'
         exclude module: 'support-annotations'
         exclude module: 'support-core-utils'
         exclude module: 'gson'
     }
-    compile rootProject.ext.dependencies["room-rxjava2"]
+    api rootProject.ext.dependencies["room-rxjava2"]
 
     //tools
     provided rootProject.ext.dependencies["javax.annotation"]
-    compile rootProject.ext.dependencies["dagger2"]
+    api rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    compile(rootProject.ext.dependencies["dagger2-android"]) {
+    api(rootProject.ext.dependencies["dagger2-android"]) {
         exclude module: 'jsr305'
     }
-    compile(rootProject.ext.dependencies["dagger2-android-support"]) {
+    api(rootProject.ext.dependencies["dagger2-android-support"]) {
         exclude module: 'jsr305'
         exclude module: 'appcompat-v7'
     }
     annotationProcessor(rootProject.ext.dependencies["dagger2-android-processor"]) {
         exclude module: 'jsr305'
     }
-    compile rootProject.ext.dependencies["androideventbus"]
+    api rootProject.ext.dependencies["androideventbus"]
     annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
         exclude module: 'jsr305'
     }
 
     //test
-    compile rootProject.ext.dependencies["timber"]
-    testCompile rootProject.ext.dependencies["junit"]
-    androidTestCompile(rootProject.ext.dependencies["espresso-core"]) {
+    api rootProject.ext.dependencies["timber"]
+    testApi rootProject.ext.dependencies["junit"]
+    androidTestApi(rootProject.ext.dependencies["espresso-core"]) {
         exclude module: 'support-annotations'
     }
 
