@@ -50,12 +50,13 @@ public class RepositoryConfiguration implements ConfigRepository {
                     //okhttpBuilder.sslSocketFactory()
                     okhttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
                 })
+                //这里可以自己自定义配置 RxCache 的参数
                 .rxCacheConfiguration((context1, rxCacheBuilder) -> {
-                    //这里可以自己自定义配置RxCache的参数
                     rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
+                    return null;
                 })
+                //这里可以自定义配置 RoomDatabase，比如数据库迁移升级
                 .roomConfiguration((context1, roomBuilder) -> {
-                    //这里可以自定义配置RoomDatabase，比如数据库迁移升级
 /*                    roomBuilder.addMigrations(new Migration(1, 2) {
                         @Override
                         public void migrate(SupportSQLiteDatabase database) {

@@ -56,8 +56,8 @@ public class ClientModule {
                 .baseUrl(httpUrl)
                 //设置okhttp
                 .client(client)
-                // TODO: 2017/10/20
-                //                .addCallAdapterFactory(new LiveDataCallAdapterFactory())//使用LiveData
+                // TODO: 2017/10/20 使用LiveData
+                //                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 //使用rxjava
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 //使用Gson
@@ -153,11 +153,14 @@ public class ClientModule {
     @Provides
     RxCache provideRxCache(@Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
         RxCache.Builder builder = new RxCache.Builder();
+        RxCache rxCache = null;
         if (configuration != null) {
-            configuration.configRxCache(mApplication, builder);
+            rxCache = configuration.configRxCache(mApplication, builder);
         }
-        return builder
-                .persistence(cacheDirectory, new GsonSpeaker());
+        if (rxCache != null) {
+            return rxCache;
+        }
+        return builder.persistence(cacheDirectory, new GsonSpeaker());
     }
 
     /**
@@ -207,10 +210,14 @@ public class ClientModule {
     public interface RxCacheConfiguration {
         /**
          * 提供接口，自定义配置 RxCache
+         * 若想自定义 RxCache 的缓存文件夹或者解析方式, 如改成 fastjson
+         * 请 {@code return rxCacheBuilder.persistence(cacheDirectory, new FastJsonSpeaker());},
+         * 否则请 {@code return null;}
          *
          * @param context Context
          * @param builder RxCache.Builder
+         * @return RxCache
          */
-        void configRxCache(Context context, RxCache.Builder builder);
+        RxCache configRxCache(Context context, RxCache.Builder builder);
     }
 }

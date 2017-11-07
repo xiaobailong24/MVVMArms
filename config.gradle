@@ -1,22 +1,22 @@
 ext {
 
     android = [
-            compileSdkVersion: 27,
+            compileSdkVersion: 26,
             buildToolsVersion: "26.0.2",
             minSdkVersion    : 15,
-            targetSdkVersion : 27,
-            versionCode      : 3,
-            versionName      : "1.0.0-beta4"
+            targetSdkVersion : 26,
+            versionCode      : 10,
+            versionName      : "1.0.0"
     ]
 
     version = [
-            androidSupportSdkVersion: "27.0.0",
-            androidArchSdkVersion   : "1.0.0-rc1",
+            androidSupportSdkVersion: "26.1.0",
+            androidArchSdkVersion   : "1.0.0",
             retrofitSdkVersion      : "2.3.0",
-            glideSdkVersion         : "4.1.1",
-            dagger2SdkVersion       : "2.11",
-            espressoSdkVersion      : "2.2.2",
-            canarySdkVersion        : "1.5.1"
+            glideSdkVersion         : "4.2.0",
+            dagger2SdkVersion       : "2.12",
+            espressoSdkVersion      : "3.0.0",
+            canarySdkVersion        : "1.5.4"
     ]
 
     dependencies = [
@@ -30,8 +30,8 @@ ext {
             "constraint-layout"        : "com.android.support.constraint:constraint-layout:1.0.2",
 
             //view
-            "brvah"                    : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.31",
-            "SuperTextView"            : "com.github.lygttpod:SuperTextView:2.1.4",
+            "brvah"                    : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.33",
+            "SuperTextView"            : "com.github.lygttpod:SuperTextView:2.1.5",
             "MaterialSearchView"       : "com.miguelcatalan:materialsearchview:1.4.0",
 
             //mvvm( Lifecycles, LiveData, and ViewModel, Room)
@@ -55,7 +55,7 @@ ext {
             "glide-loader-okhttp3"     : "com.github.bumptech.glide:okhttp3-integration:${version["glideSdkVersion"]}",
 
             //rx2
-            "rxjava2"                  : "io.reactivex.rxjava2:rxjava:2.1.5",
+            "rxjava2"                  : "io.reactivex.rxjava2:rxjava:2.1.6",
             "rxandroid2"               : "io.reactivex.rxjava2:rxandroid:2.0.1",
             "rxerrorhandler2"          : "me.jessyan:rxerrorhandler:2.1.0",
             "rxcache"                  : "com.github.VictorAlbertos.RxCache:runtime:1.8.1-2.x",
@@ -68,14 +68,14 @@ ext {
             "dagger2-android-support"  : "com.google.dagger:dagger-android-support:${version["dagger2SdkVersion"]}",
             "dagger2-android-processor": "com.google.dagger:dagger-android-processor:${version["dagger2SdkVersion"]}",
             "androideventbus"          : "org.simple:androideventbus:1.0.5.1",
-            "gson"                     : "com.google.code.gson:gson:2.8.1",
+            "gson"                     : "com.google.code.gson:gson:2.8.2",
             "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
             "multidex"                 : "com.android.support:multidex:1.0.1",
 
             //test
             "junit"                    : "junit:junit:4.12",
             "androidJUnitRunner"       : "android.support.test.runner.AndroidJUnitRunner",
-            "runner"                   : "com.android.support.test:runner:0.5",
+            "runner"                   : "com.android.support.test:runner:1.0.0",
             "espresso-core"            : "com.android.support.test.espresso:espresso-core:${version["espressoSdkVersion"]}",
             "espresso-contrib"         : "com.android.support.test.espresso:espresso-contrib:${version["espressoSdkVersion"]}",
             "espresso-intents"         : "com.android.support.test.espresso:espresso-intents:${version["espressoSdkVersion"]}",

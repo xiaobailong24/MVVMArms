@@ -34,7 +34,7 @@ public final class ImageLoader {
     }
 
     /**
-     * 停止加载
+     * 停止加载或清理缓存
      *
      * @param context Context
      * @param config  ImageConfig
