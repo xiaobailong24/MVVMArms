@@ -9,7 +9,7 @@ import java.util.List;
  * @date 2017/8/19
  * DiffUtil.Callback 主要就是为了限定两个数据集中，子项的比对规则
  * 提高 RecyclerView 效率
- * @link {}https://juejin.im/post/5995ba616fb9a024747ed8e8}
+ * @link https://juejin.im/post/5995ba616fb9a024747ed8e8
  */
 public class RecyclerViewDiffCallback<T> extends DiffUtil.Callback {
     private List<T> mOldList;
