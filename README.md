@@ -50,6 +50,7 @@ Welcome to communicate and discuss.
 - etc...
 
 ## Update Log
+- Release 1.0.0.
 - [RepositoryComponent](https://github.com/xiaobailong24/MVVMArms/blob/master/repository/src/main/java/me/xiaobailong24/mvvmarms/repository/di/component/RepositoryComponent.java) Provides [Cache](https://github.com/xiaobailong24/MVVMArms/blob/master/repository/src/main/java/me/xiaobailong24/mvvmarms/repository/cache/Cache.java) & RxCache. - 2017/10/11.
 - [lifecycle](https://github.com/xiaobailong24/MVVMArms/tree/master/lifecycle) & [repository](https://github.com/xiaobailong24/MVVMArms/tree/master/repository). - 2017/10/01.
 - [ArmsFragment](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/base/ArmsFragment.java) Support Lazy load. - 2017/09/24.
