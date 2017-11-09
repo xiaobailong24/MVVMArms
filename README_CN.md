@@ -80,6 +80,29 @@ mBinding.setViewModel(mViewModel);
 - [ArmsActivity](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/base/ArmsActivity.java)
 - [ArmsFragment](https://github.com/xiaobailong24/MVVMArms/blob/master/arms/src/main/java/me/xiaobailong24/mvvmarms/base/ArmsFragment.java)
 
+以下引用**谷歌开发者**微信公众号的介绍：
+> **Lifecycles**: 每个 Android 开发者都应该面对过生命周期问题，即操作系统启动、停止和销毁 Activity。
+这意味着开发者需要根据生命周期的不同阶段，有针对性地管理组件状态，比如用于更新用户界面的可观察对象。
+生命周期管理（Lifecycles）帮助开发者创建 “可感知生命周期的” 组件，让其自己管理自己的生命周期，
+从而减少内存泄露和崩溃的可能性。生命周期库是其他架构组件（如 LiveData）的基础。
+
+> **LiveData**: LiveData 是一款基于观察者模式的可感知生命周期的核心组件。
+LiveData 为界面代码 （Observer）的监视对象 （Observable），当 LiveData 所持有的数据改变时，
+它会通知相应的界面代码进行更新。同时，LiveData 持有界面代码 Lifecycle 的引用，
+这意味着它会在界面代码（LifecycleOwner）的生命周期处于 started 或 resumed 时作出相应更新，
+而在 LifecycleOwner 被销毁时停止更新。通过 LiveData，开发者可以方便地构建安全性更高、性能更好的高响应度用户界面。
+
+> **ViewModel**: ViewModel 将视图的数据和逻辑从具有生命周期特性的实体（如 Activity 和 Fragment）中剥离开来。
+直到关联的 Activity 或 Fragment 完全销毁时，ViewModel 才会随之消失，
+也就是说，即使在旋转屏幕导致 Fragment 被重新创建等事件中，视图数据依旧会被保留。
+ViewModels 不仅消除了常见的生命周期问题，而且可以帮助构建更为模块化、更方便测试的用户界面。
+
+> **Room**: 几乎所有 App 都需要在本地储存数据。
+自从最早版本开始，Android 就提供了 SQLite，但是直接使用 SQLite是件苦差事。
+因此，我们推出了 Room，一款简单好用的对象映射层。它和 SQLite 有一样强大的功能，但是节省了很多重复编码的麻烦事儿。
+它的一些功能，如编译时的数据查询验证、内置迁移支持等，让开发者能够更简单地构建健壮的持久层。
+而且 Room 可以和 LiveData 集成在一起，提供可观测数据库并感知生命周期的对象。
+Room 集简洁、强大和可靠性为一身，在管理本地储存上表现卓越，我们强烈推荐各位开发者试用一下。
 
 # Github
 更多细节请移步 Github，写了一个简单的 demo，欢迎 star、fork，issue、pr，希望可以一起交流：
@@ -89,3 +112,4 @@ mBinding.setViewModel(mViewModel);
 # 参考
 - [MVPArms](https://github.com/JessYanCoding/MVPArms)
 - [android-architecture-components](https://github.com/googlesamples/android-architecture-components)
+- [正式发布 Android 架构组件 1.0 稳定版](https://mp.weixin.qq.com/s/9rC_5GhdAA_EMEbWKJT5vQ)
