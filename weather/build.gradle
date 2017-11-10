@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+//    useLibrary 'org.apache.http.legacy'
 
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
@@ -49,6 +50,10 @@ android {
     dataBinding {
         enabled true
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -73,7 +78,7 @@ dependencies {
     }
 
     //tools
-    provided rootProject.ext.dependencies["javax.annotation"]
+    compileOnly rootProject.ext.dependencies["javax.annotation"]
     annotationProcessor(rootProject.ext.dependencies["dagger2-compiler"]) {
         exclude module: 'js305'
     }

@@ -1,21 +1,21 @@
 ext {
 
     android = [
-            compileSdkVersion: 27,
-            buildToolsVersion: "27.0.0",
+            compileSdkVersion: 26,
+            buildToolsVersion: "26.0.2",
             minSdkVersion    : 15,
-            targetSdkVersion : 27,
+            targetSdkVersion : 26,
             versionCode      : 10,
             versionName      : "1.0.0"
     ]
 
     version = [
-            androidSupportSdkVersion: "27.0.0",
+            androidSupportSdkVersion: "26.1.0",
             androidArchSdkVersion   : "1.0.0",
             retrofitSdkVersion      : "2.3.0",
             glideSdkVersion         : "4.2.0",
             dagger2SdkVersion       : "2.12",
-            espressoSdkVersion      : "3.0.0",
+            espressoSdkVersion      : "3.0.1",
             canarySdkVersion        : "1.5.4"
     ]
 
@@ -75,7 +75,7 @@ ext {
             //test
             "junit"                    : "junit:junit:4.12",
             "androidJUnitRunner"       : "android.support.test.runner.AndroidJUnitRunner",
-            "runner"                   : "com.android.support.test:runner:1.0.0",
+            "runner"                   : "com.android.support.test:runner:1.0.1",
             "espresso-core"            : "com.android.support.test.espresso:espresso-core:${version["espressoSdkVersion"]}",
             "espresso-contrib"         : "com.android.support.test.espresso:espresso-contrib:${version["espressoSdkVersion"]}",
             "espresso-intents"         : "com.android.support.test.espresso:espresso-intents:${version["espressoSdkVersion"]}",

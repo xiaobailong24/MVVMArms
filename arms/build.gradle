@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
-    useLibrary 'org.apache.http.legacy'
+//    useLibrary 'org.apache.http.legacy'
 
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
@@ -33,6 +33,10 @@ android {
     //DataBinding
     dataBinding {
         enabled true
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -85,7 +89,7 @@ dependencies {
     api rootProject.ext.dependencies["room-rxjava2"]
 
     //tools
-    provided rootProject.ext.dependencies["javax.annotation"]
+    compileOnly rootProject.ext.dependencies["javax.annotation"]
     api rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     api(rootProject.ext.dependencies["dagger2-android"]) {
@@ -111,3 +115,5 @@ dependencies {
     }
 
 }
+
+apply from: 'bintray.gradle'
