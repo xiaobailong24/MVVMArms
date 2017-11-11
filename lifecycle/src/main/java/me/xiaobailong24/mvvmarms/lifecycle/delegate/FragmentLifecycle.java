@@ -20,7 +20,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
         super.onFragmentAttached(fm, f, context);
         if (f instanceof IFragment && f.getArguments() != null) {
-            Timber.i(f.toString() + " ---> onFragmentAttached");
+            Timber.i(String.format("%s ---> onFragmentAttached", f.toString()));
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate == null || !fragmentDelegate.isAdded()) {
                 fragmentDelegate = new FragmentDelegateImpl(fm, f);
@@ -35,7 +35,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         super.onFragmentCreated(fm, f, savedInstanceState);
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
-            Timber.i(f.toString() + " ---> onFragmentCreated");
+            Timber.i(String.format("%s ---> onFragmentCreated", f.toString()));
             fragmentDelegate.onCreate(savedInstanceState);
         }
     }
@@ -45,7 +45,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         super.onFragmentViewCreated(fm, f, v, savedInstanceState);
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
-            Timber.i(f.toString() + " ---> onFragmentViewCreated");
+            Timber.i(String.format("%s ---> onFragmentViewCreated", f.toString()));
             fragmentDelegate.onCreateView(v, savedInstanceState);
         }
     }
@@ -55,7 +55,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         super.onFragmentActivityCreated(fm, f, savedInstanceState);
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
-            Timber.i(f.toString() + " ---> onFragmentActivityCreated");
+            Timber.i(String.format("%s ---> onFragmentActivityCreated", f.toString()));
             fragmentDelegate.onActivityCreate(savedInstanceState);
         }
     }
@@ -65,7 +65,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         super.onFragmentStarted(fm, f);
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
-            Timber.i(f.toString() + " ---> onFragmentStarted");
+            Timber.i(String.format("%s ---> onFragmentStarted", f.toString()));
             fragmentDelegate.onStart();
         }
     }
@@ -75,7 +75,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         super.onFragmentResumed(fm, f);
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
-            Timber.i(f.toString() + " ---> onFragmentResumed");
+            Timber.i(String.format("%s ---> onFragmentResumed", f.toString()));
             fragmentDelegate.onResume();
         }
     }
@@ -85,7 +85,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         super.onFragmentPaused(fm, f);
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
-            Timber.i(f.toString() + " ---> onFragmentPaused");
+            Timber.i(String.format("%s ---> onFragmentPaused", f.toString()));
             fragmentDelegate.onPause();
         }
     }
@@ -95,7 +95,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         super.onFragmentStopped(fm, f);
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
-            Timber.i(f.toString() + " ---> onFragmentStopped");
+            Timber.i(String.format("%s ---> onFragmentStopped", f.toString()));
             fragmentDelegate.onStop();
         }
     }
@@ -105,7 +105,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         super.onFragmentSaveInstanceState(fm, f, outState);
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
-            Timber.i(f.toString() + " ---> onFragmentSaveInstanceState");
+            Timber.i(String.format("%s ---> onFragmentSaveInstanceState", f.toString()));
             fragmentDelegate.onSaveInstanceState(outState);
         }
     }
@@ -115,7 +115,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         super.onFragmentViewDestroyed(fm, f);
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
-            Timber.i(f.toString() + " ---> onFragmentViewDestroyed");
+            Timber.i(String.format("%s ---> onFragmentViewDestroyed", f.toString()));
             fragmentDelegate.onDestroyView();
         }
     }
@@ -125,7 +125,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         super.onFragmentDestroyed(fm, f);
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
-            Timber.i(f.toString() + " ---> onFragmentDestroyed");
+            Timber.i(String.format("%s ---> onFragmentDestroyed", f.toString()));
             fragmentDelegate.onDestroy();
         }
     }
@@ -135,7 +135,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         super.onFragmentDetached(fm, f);
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
-            Timber.i(f.toString() + " ---> onFragmentDetached");
+            Timber.i(String.format("%s ---> onFragmentDetached", f.toString()));
             fragmentDelegate.onDetach();
             f.getArguments().clear();
         }

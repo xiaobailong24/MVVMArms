@@ -1,9 +1,10 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'//上传到jcenter工具
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
-//    useLibrary 'org.apache.http.legacy'
+    useLibrary 'org.apache.http.legacy'
 
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
@@ -33,10 +34,6 @@ android {
     //DataBinding
     dataBinding {
         enabled true
-    }
-
-    lintOptions {
-        abortOnError false
     }
 }
 

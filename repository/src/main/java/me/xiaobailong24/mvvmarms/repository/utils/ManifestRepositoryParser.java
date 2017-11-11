@@ -56,7 +56,9 @@ public final class ManifestRepositoryParser {
         Object repository;
         try {
             repository = clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException e) {
+            throw new RuntimeException("Unable to instantiate ConfigRepository implementation for " + clazz, e);
+        } catch (IllegalAccessException e) {
             throw new RuntimeException("Unable to instantiate ConfigRepository implementation for " + clazz, e);
         }
 

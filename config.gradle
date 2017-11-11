@@ -1,16 +1,16 @@
 ext {
 
     android = [
-            compileSdkVersion: 26,
-            buildToolsVersion: "26.0.2",
+            compileSdkVersion: 27,
+            buildToolsVersion: "27.0.0",
             minSdkVersion    : 15,
-            targetSdkVersion : 26,
+            targetSdkVersion : 27,
             versionCode      : 10,
             versionName      : "1.0.0"
     ]
 
     version = [
-            androidSupportSdkVersion: "26.1.0",
+            androidSupportSdkVersion: "27.0.0",
             androidArchSdkVersion   : "1.0.0",
             retrofitSdkVersion      : "2.3.0",
             glideSdkVersion         : "4.2.0",
@@ -80,7 +80,7 @@ ext {
             "espresso-contrib"         : "com.android.support.test.espresso:espresso-contrib:${version["espressoSdkVersion"]}",
             "espresso-intents"         : "com.android.support.test.espresso:espresso-intents:${version["espressoSdkVersion"]}",
             "mockito-core"             : "org.mockito:mockito-core:1.+",
-            "timber"                   : "com.jakewharton.timber:timber:4.5.1",
+            "timber"                   : "com.jakewharton.timber:timber:4.6.0",
             "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
             "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:${version["canarySdkVersion"]}",
     ]

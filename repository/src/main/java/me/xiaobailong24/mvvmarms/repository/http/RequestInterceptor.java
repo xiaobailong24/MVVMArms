@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -243,7 +244,7 @@ public class RequestInterceptor implements Interceptor {
      */
     public static boolean isParseable(MediaType mediaType) {
         return mediaType != null
-                && (mediaType.toString().toLowerCase().contains("text")
+                && (mediaType.toString().toLowerCase(Locale.ROOT).contains("text")
                 || isJson(mediaType)
                 || isForm(mediaType)
                 || isHtml(mediaType)
@@ -251,19 +252,19 @@ public class RequestInterceptor implements Interceptor {
     }
 
     public static boolean isJson(MediaType mediaType) {
-        return mediaType.toString().toLowerCase().contains("json");
+        return mediaType.toString().toLowerCase(Locale.ROOT).contains("json");
     }
 
     public static boolean isXml(MediaType mediaType) {
-        return mediaType.toString().toLowerCase().contains("xml");
+        return mediaType.toString().toLowerCase(Locale.ROOT).contains("xml");
     }
 
     public static boolean isHtml(MediaType mediaType) {
-        return mediaType.toString().toLowerCase().contains("html");
+        return mediaType.toString().toLowerCase(Locale.ROOT).contains("html");
     }
 
     public static boolean isForm(MediaType mediaType) {
-        return mediaType.toString().toLowerCase().contains("x-www-form-urlencoded");
+        return mediaType.toString().toLowerCase(Locale.ROOT).contains("x-www-form-urlencoded");
     }
 
     public static String convertCharset(Charset charset) {

@@ -15,6 +15,7 @@ import me.xiaobailong24.mvvmarms.lifecycle.ConfigLifecycle;
  * @date 2017/6/16
  * AndroidManifest.xml ManifestLifecycleParser
  */
+@SuppressWarnings("all")
 public final class ManifestLifecycleParser {
     private static final String MODULE_VALUE = "ConfigLifecycle";
 
@@ -56,7 +57,9 @@ public final class ManifestLifecycleParser {
         Object lifecycle;
         try {
             lifecycle = clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException e) {
+            throw new RuntimeException("Unable to instantiate ConfigLifecycle implementation for " + clazz, e);
+        } catch (IllegalAccessException e) {
             throw new RuntimeException("Unable to instantiate ConfigLifecycle implementation for " + clazz, e);
         }
 

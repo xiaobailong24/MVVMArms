@@ -56,7 +56,9 @@ public final class ManifestArmsParser {
         Object arms;
         try {
             arms = clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException e) {
+            throw new RuntimeException("Unable to instantiate ConfigArms implementation for " + clazz, e);
+        } catch (IllegalAccessException e) {
             throw new RuntimeException("Unable to instantiate ConfigArms implementation for " + clazz, e);
         }
 

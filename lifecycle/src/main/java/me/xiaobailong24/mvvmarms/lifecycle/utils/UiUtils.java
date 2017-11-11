@@ -1,5 +1,6 @@
 package me.xiaobailong24.mvvmarms.lifecycle.utils;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import static me.xiaobailong24.mvvmarms.lifecycle.delegate.AppManager.START_ACTI
  * @date 2017/6/27
  * UiUtils
  */
+@SuppressWarnings("all")
 public class UiUtils {
     private static Toast mToast;
 
@@ -233,6 +235,7 @@ public class UiUtils {
      * @param rID
      * @return
      */
+    @TargetApi(value = 21)
     public static Drawable getDrawablebyResource(Context context, int rID) {
         return getResources(context).getDrawable(rID, null);
     }
@@ -305,6 +308,7 @@ public class UiUtils {
     /**
      * 获得颜色
      */
+    @TargetApi(value = 23)
     public static int getColor(Context context, int rid) {
         return getResources(context).getColor(rid, null);
     }
