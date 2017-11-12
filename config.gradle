@@ -2,24 +2,29 @@ ext {
 
     android = [
             compileSdkVersion: 27,
-            buildToolsVersion: "27.0.0",
+            buildToolsVersion: "27.0.1",
             minSdkVersion    : 15,
             targetSdkVersion : 27,
             versionCode      : 10,
-            versionName      : "1.0.0"
+            versionName      : "0.1.0"
     ]
 
     version = [
-            androidSupportSdkVersion: "27.0.0",
+            androidSupportSdkVersion: "27.0.1",
             androidArchSdkVersion   : "1.0.0",
             retrofitSdkVersion      : "2.3.0",
             glideSdkVersion         : "4.2.0",
-            dagger2SdkVersion       : "2.12",
+            dagger2SdkVersion       : "2.13",
             espressoSdkVersion      : "3.0.1",
             canarySdkVersion        : "1.5.4"
     ]
 
     dependencies = [
+            //arms
+            "lifecycle"                : "me.xiaobailong24.mvvmarms:lifecycle:${android["versionName"]}",
+            "repository"               : "me.xiaobailong24.mvvmarms:repository:${android["versionName"]}",
+            "arms"                     : "me.xiaobailong24.mvvmarms:arms:${android["versionName"]}",
+
             //support
             "appcompat-v7"             : "com.android.support:appcompat-v7:${version["androidSupportSdkVersion"]}",
             "design"                   : "com.android.support:design:${version["androidSupportSdkVersion"]}",
@@ -30,7 +35,7 @@ ext {
             "constraint-layout"        : "com.android.support.constraint:constraint-layout:1.0.2",
 
             //view
-            "brvah"                    : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.33",
+            "brvah"                    : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34",
             "SuperTextView"            : "com.github.lygttpod:SuperTextView:2.1.5",
             "MaterialSearchView"       : "com.miguelcatalan:materialsearchview:1.4.0",
 
@@ -69,8 +74,7 @@ ext {
             "dagger2-android-processor": "com.google.dagger:dagger-android-processor:${version["dagger2SdkVersion"]}",
             "androideventbus"          : "org.simple:androideventbus:1.0.5.1",
             "gson"                     : "com.google.code.gson:gson:2.8.2",
-            "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
-            "multidex"                 : "com.android.support:multidex:1.0.1",
+            "multidex"                 : "com.android.support:multidex:1.0.2",
 
             //test
             "junit"                    : "junit:junit:4.12",
