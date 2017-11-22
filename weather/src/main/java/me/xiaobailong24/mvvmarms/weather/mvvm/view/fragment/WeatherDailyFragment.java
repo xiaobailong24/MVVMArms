@@ -48,8 +48,8 @@ public class WeatherDailyFragment extends BaseFragment<FragmentWeatherDailyBindi
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_daily, container, false);
         //设置ViewModel
         mBinding.setViewModel(mViewModel);
-        mBinding.retry.setViewModel(mViewModel);
-        mBinding.weatherSource.setViewModel(mViewModel);
+        mBinding.retry.setRetry(mViewModel);
+        mBinding.weatherSource.setRetry(mViewModel);
         //RecyclerView设置Adapter
         mBinding.recyclerWeatherDaily.setAdapter(mAdapter);
         //设置Refresh
@@ -70,6 +70,13 @@ public class WeatherDailyFragment extends BaseFragment<FragmentWeatherDailyBindi
                 onFragmentVisibleChange(true);
             }
         });
+        mViewModel.getWeatherDaily()
+                .observe(WeatherDailyFragment.this, dailies -> {
+                    mBinding.refresh.setRefreshing(false);
+                    mAdapter.replaceData(dailies);
+                    //加载完成
+                    mFirst = false;
+                });
     }
 
     @SuppressWarnings("all")
@@ -90,12 +97,7 @@ public class WeatherDailyFragment extends BaseFragment<FragmentWeatherDailyBindi
         super.onFragmentVisibleChange(isVisible);
         if (mViewModel != null && isVisible) {
             //调用ViewModel的方法获取天气
-            mViewModel.getWeatherDaily(mWeatherViewModel.getLocation().getValue())
-                    .observe(WeatherDailyFragment.this, dailies -> {
-                        mAdapter.replaceData(dailies);
-                        //加载完成
-                        mFirst = false;
-                    });
+            mViewModel.loadWeatherDaily(mWeatherViewModel.getLocation().getValue());
         }
     }
 

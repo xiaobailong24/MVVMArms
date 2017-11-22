@@ -2,6 +2,7 @@ package me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import java.util.HashMap;
@@ -10,18 +11,15 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.xiaobailong24.mvvmarms.di.scope.FragmentScope;
 import me.xiaobailong24.mvvmarms.mvvm.BaseViewModel;
+import me.xiaobailong24.mvvmarms.repository.http.IRetry;
+import me.xiaobailong24.mvvmarms.repository.http.Resource;
 import me.xiaobailong24.mvvmarms.repository.http.Status;
-import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.WeatherDailyModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
+import timber.log.Timber;
 
 /**
  * @author xiaobailong24
@@ -29,91 +27,65 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.WeatherDailyResponse;
  * MVVM WeatherDailyViewModel
  */
 @FragmentScope
-public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel> {
-    private MutableLiveData<List<WeatherDailyResponse.DailyResult.Daily>> mDailyData;
-    private MutableLiveData<String> mLocationName;
+public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel>
+        implements IRetry {
+    private MediatorLiveData<List<WeatherDailyResponse.DailyResult.Daily>> mDailies
+            = new MediatorLiveData<>();
+    private MutableLiveData<Resource<WeatherDailyResponse>> mDailyResponse;
+    private String mLocationName;
 
     @Inject
     public WeatherDailyViewModel(Application application, WeatherDailyModel weatherDailyModel) {
         super(application, weatherDailyModel);
     }
 
-    @SuppressWarnings("all")
-    public LiveData<List<WeatherDailyResponse.DailyResult.Daily>> getWeatherDaily(String locationName) {
-        if (mDailyData == null) {
-            mDailyData = new MutableLiveData<>();
-        }
-
-        if (mLocationName == null) {
-            mLocationName = new MutableLiveData<>();
-        }
-        if (mLocationName.getValue() == null) {
-            mLocationName.setValue("");
-        }
-
-        if (!mLocationName.getValue().equalsIgnoreCase(locationName)) {
-            mLocationName.setValue(locationName);
-            loadWeatherDaily(locationName);
-        }
-        return mDailyData;
-    }
-
-    private void loadWeatherDaily(String locationName) {
+    public void loadWeatherDaily(String locationName) {
+        mLocationName = locationName;
         Map<String, String> request = new HashMap<>(4);
         request.put(Api.API_KEY_KEY, Api.API_KEY);
         request.put(Api.API_KEY_TEMP_UNIT, "c");
         request.put(Api.API_KEY_LANGUAGE, "zh-Hans");
         request.put(Api.API_KEY_LOCATION, locationName);
 
-        mModel.getWeatherDaily(request)
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(disposable -> {
-                    addDispose(disposable);
-                    mStatus.set(Status.LOADING);
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(Schedulers.io())
-                .doOnNext(weatherDailyResponse -> {
-                    if (weatherDailyResponse.getResults().size() > 1) {
-                        throw new RuntimeException("WeatherDailyResponse get MORE than one DailyResult");
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(weatherDailyResponse -> weatherDailyResponse.getResults().get(0).getDaily())
-                .subscribe(new ErrorHandleSubscriber<List<WeatherDailyResponse.DailyResult.Daily>>
-                        (RepositoryUtils.INSTANCE.obtainRepositoryComponent(getApplication()).rxErrorHandler()) {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        super.onSubscribe(d);
-                        //添加订阅
-                        addDispose(d);
-                    }
-
-                    @Override
-                    public void onNext(@NonNull List<WeatherDailyResponse.DailyResult.Daily> dailies) {
-                        mStatus.set(Status.SUCCESS);
-                        mDailyData.setValue(dailies);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        super.onError(e);
-                        mStatus.set(Status.ERROR);
-                    }
-                });
+        if (mDailyResponse != null) {
+            mDailies.removeSource(mDailyResponse);
+        }
+        mDailyResponse = mModel.getWeatherDaily(request);
+        mDailies.addSource(mDailyResponse, observer -> {
+            mDailies.removeSource(mDailyResponse);
+            mDailies.addSource(mDailyResponse, newResource -> {
+                if (newResource == null) {
+                    newResource = Resource.error("", null);
+                }
+                Timber.d("Load weather daily: %s", newResource.status);
+                if (newResource.status == Status.LOADING) {
+                    STATUS.set(Status.LOADING);
+                } else if (newResource.status == Status.SUCCESS) {
+                    STATUS.set(Status.SUCCESS);
+                    mDailies.postValue(newResource.data.getResults().get(0).getDaily());
+                } else if (newResource.status == Status.ERROR) {
+                    STATUS.set(Status.ERROR);
+                }
+            });
+        });
+    }
+    
+    public LiveData<List<WeatherDailyResponse.DailyResult.Daily>> getWeatherDaily() {
+        return mDailies;
     }
 
     @Override
     public void retry() {
-        if (mLocationName != null && mLocationName.getValue() != null) {
-            loadWeatherDaily(mLocationName.getValue());
+        if (mLocationName != null) {
+            mDailies.removeSource(mDailyResponse);
+            loadWeatherDaily(mLocationName);
         }
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        this.mDailyData = null;
+        this.mDailyResponse = null;
         this.mLocationName = null;
     }
 }

@@ -48,8 +48,8 @@ public class WeatherNowFragment extends BaseFragment<FragmentWeatherNowBinding, 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_now, container, false);
         //设置ViewModel
         mBinding.setViewModel(mViewModel);
-        mBinding.retry.setViewModel(mViewModel);
-        mBinding.weatherSource.setViewModel(mViewModel);
+        mBinding.retry.setRetry(mViewModel);
+        mBinding.weatherSource.setRetry(mViewModel);
         //RecyclerView设置Adapter
         mBinding.recyclerWeatherNow.setAdapter(mAdapter);
         //设置Refresh
@@ -70,6 +70,17 @@ public class WeatherNowFragment extends BaseFragment<FragmentWeatherNowBinding, 
                 onFragmentVisibleChange(true);
             }
         });
+        mViewModel.getWeatherNow()
+                .observe(this, contents -> {
+                    mBinding.refresh.setRefreshing(false);
+                    mAdapter.replaceData(contents);
+                    //加载完成
+                    mFirst = false;
+                    // TODO: 2017/8/19
+                    //            DiffUtil.DiffResult diffResult = DiffUtil
+                    //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), contents));
+                    //            diffResult.dispatchUpdatesTo(mAdapter);
+                });
     }
 
     @SuppressWarnings("all")
@@ -87,19 +98,11 @@ public class WeatherNowFragment extends BaseFragment<FragmentWeatherNowBinding, 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         //当 Fragment 显示/隐藏变化时执行该方法，根据是否显示 Fragment 加载数据
-        super.onFragmentVisibleChange(isVisible);
         if (mViewModel != null && isVisible) {
             //调用ViewModel的方法获取天气
-            mViewModel.getWeatherNow(mWeatherViewModel.getLocation().getValue())
-                    .observe(WeatherNowFragment.this, dailies -> {
-                        mAdapter.replaceData(dailies);
-                        //加载完成
-                        mFirst = false;
-                        // TODO: 2017/8/19
-                        //            DiffUtil.DiffResult diffResult = DiffUtil
-                        //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), dailies));
-                        //            diffResult.dispatchUpdatesTo(mAdapter);
-                    });
+            if (mWeatherViewModel.getLocation().getValue() != null) {
+                mViewModel.loadWeatherNow(mWeatherViewModel.getLocation().getValue());
+            }
         }
     }
 

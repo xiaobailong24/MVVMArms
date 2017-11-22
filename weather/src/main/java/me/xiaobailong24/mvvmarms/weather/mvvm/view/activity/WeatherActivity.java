@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.Menu;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -90,7 +89,7 @@ public class WeatherActivity extends BaseActivity<ActivityWeatherBinding, Weathe
 
             @Override
             public void onPageSelected(int position) {
-                Timber.i("onPageSelected: " + position);
+                Timber.i("onPageSelected: %s", position);
                 mReplace = position;
             }
 
@@ -108,21 +107,13 @@ public class WeatherActivity extends BaseActivity<ActivityWeatherBinding, Weathe
                 mBinding.searchView.showSearch());
         //Init SearchView,自动取消订阅
         mViewModel.getHistoryLocations().observe(this, locations -> {
-            if (locations.size() > 0) {
+            if (locations != null && locations.size() > 0) {
                 mBinding.searchView.setSuggestions(locations.toArray(new String[0]));
                 //Set Suggestions Listener
                 mBinding.searchView.setOnItemClickListener((adapterView, view, i, l) -> {
                     String query = (String) adapterView.getItemAtPosition(i);
                     doSearch(query);
                 });
-                String location = locations.get(0);
-                //如果位置是全路径，则截取城市名
-                if (location.contains(comma)) {
-                    location = location.substring(0, location.indexOf(comma));
-                }
-                if (TextUtils.equals(mViewModel.getLocation().getValue(), getString(R.string.location_beijing))) {
-                    mViewModel.getLocation().setValue(location);
-                }
             }
         });
         mBinding.searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {

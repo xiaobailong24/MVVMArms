@@ -3,11 +3,13 @@ package me.xiaobailong24.mvvmarms.weather.mvvm.model.db;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
 
 /**
@@ -24,7 +26,7 @@ public interface WeatherNowDao {
      *
      * @param locations 地址信息
      */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Location... locations);
 
     /**
@@ -33,7 +35,7 @@ public interface WeatherNowDao {
      * @return 所有地址列表
      */
     @Query("SELECT * FROM location")
-    List<Location> getAll();
+    Flowable<List<Location>> getAll();
 
     /**
      * 查询指定地址
@@ -42,7 +44,7 @@ public interface WeatherNowDao {
      * @return 地址信息
      */
     @Query("SELECT * FROM location WHERE name = :name")
-    Location getLocationByName(String name);
+    Flowable<List<Location>> getLocationByName(String name);
 
     /**
      * 更新地址信息

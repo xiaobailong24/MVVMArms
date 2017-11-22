@@ -57,7 +57,7 @@ public class RepositoryConfiguration implements ConfigRepository {
                 })
                 //这里可以自定义配置 RoomDatabase，比如数据库迁移升级
                 .roomConfiguration((context1, roomBuilder) -> {
-/*                    roomBuilder.addMigrations(new Migration(1, 2) {
+/*                    roomBuilder.addMigrations(new Migration(2, 3) {
                         @Override
                         public void migrate(SupportSQLiteDatabase database) {
                             // TODO: 2017/9/22

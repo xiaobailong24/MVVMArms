@@ -2,25 +2,18 @@ package me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.xiaobailong24.mvvmarms.di.scope.ActivityScope;
 import me.xiaobailong24.mvvmarms.mvvm.BaseViewModel;
-import me.xiaobailong24.mvvmarms.repository.utils.RepositoryUtils;
+import me.xiaobailong24.mvvmarms.repository.http.Resource;
+import me.xiaobailong24.mvvmarms.repository.http.Status;
 import me.xiaobailong24.mvvmarms.weather.mvvm.model.WeatherModel;
-import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
 import timber.log.Timber;
 
 /**
@@ -30,7 +23,11 @@ import timber.log.Timber;
  */
 @ActivityScope
 public class WeatherViewModel extends BaseViewModel<WeatherModel> {
-    private MutableLiveData<List<String>> mLocationPaths;
+    private final String comma = ",";
+
+    private final MediatorLiveData<List<String>> mLocationPaths = new MediatorLiveData<>();
+    private MutableLiveData<Resource<List<String>>> mLocationsResource;
+
     /**
      * 可以与 Fragment 共享此数据
      */
@@ -39,6 +36,33 @@ public class WeatherViewModel extends BaseViewModel<WeatherModel> {
     @Inject
     public WeatherViewModel(Application application, WeatherModel model) {
         super(application, model);
+        loadLocations();
+    }
+
+    public void loadLocations() {
+        mLocationsResource = mModel.getAllLocations();
+        mLocationPaths.addSource(mLocationsResource, observer -> {
+            mLocationPaths.removeSource(mLocationsResource);
+            mLocationPaths.addSource(mLocationsResource, newResource -> {
+                if (newResource == null) {
+                    newResource = Resource.error("", null);
+                }
+                Timber.d("Load history locations: %s", newResource.status);
+                if (newResource.status == Status.LOADING) {
+                    // TODO: 2017/11/15
+                } else if (newResource.status == Status.SUCCESS) {
+                    mLocationPaths.postValue(newResource.data);
+                    String location = newResource.data.get(0);
+                    //如果位置是全路径，则截取城市名
+                    if (location.contains(comma)) {
+                        location = location.substring(0, location.indexOf(comma));
+                    }
+                    mLocation.postValue(location);
+                } else if (newResource.status == Status.ERROR) {
+                    // TODO: 2017/11/15
+                }
+            });
+        });
     }
 
     /**
@@ -47,44 +71,12 @@ public class WeatherViewModel extends BaseViewModel<WeatherModel> {
      * @return 历史位置记录列表
      */
     public LiveData<List<String>> getHistoryLocations() {
-        if (mLocationPaths == null) {
-            mLocationPaths = new MutableLiveData<>();
-        }
-        loadLocationPaths();
         return mLocationPaths;
-    }
-
-    private void loadLocationPaths() {
-        Observable.create((ObservableOnSubscribe<List<Location>>) e -> e.onNext(mModel.getAllLocations()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(locations -> {
-                    List<String> locationPaths = new ArrayList<>();
-                    for (Location location : locations) {
-                        Timber.d("loadLocationPaths: " + location.getPath());
-                        locationPaths.add(location.getPath());
-                    }
-                    return locationPaths;
-                })
-                .subscribe(new ErrorHandleSubscriber<List<String>>
-                        (RepositoryUtils.INSTANCE.obtainRepositoryComponent(getApplication()).rxErrorHandler()) {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        super.onSubscribe(d);
-                        addDispose(d);
-                    }
-
-                    @Override
-                    public void onNext(@NonNull List<String> locationPaths) {
-                        mLocationPaths.setValue(locationPaths);
-                    }
-                });
     }
 
     public MutableLiveData<String> getLocation() {
         if (mLocation == null) {
             mLocation = new MutableLiveData<>();
-            mLocation.setValue("北京");
         }
         return mLocation;
     }
@@ -92,7 +84,6 @@ public class WeatherViewModel extends BaseViewModel<WeatherModel> {
     @Override
     public void onCleared() {
         super.onCleared();
-        this.mLocationPaths = null;
         this.mLocation = null;
     }
 

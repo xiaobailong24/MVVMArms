@@ -49,10 +49,10 @@ buildscript {
 
 dependencies {
     //repository
-//    api project(':repository')
-//    api project(':lifecycle')
-    api rootProject.ext.dependencies["lifecycle"]
-    api rootProject.ext.dependencies["repository"]
+    api project(':repository')
+    api project(':lifecycle')
+//    api rootProject.ext.dependencies["lifecycle"]
+//    api rootProject.ext.dependencies["repository"]
 
     //support
     api(rootProject.ext.dependencies["cardview-v7"]) {
