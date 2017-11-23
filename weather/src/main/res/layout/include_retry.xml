@@ -10,6 +10,10 @@
         <variable
             name="retry"
             type="me.xiaobailong24.mvvmarms.repository.http.IRetry"/>
+
+        <variable
+            name="viewModel"
+            type="me.xiaobailong24.mvvmarms.mvvm.BaseViewModel"/>
     </data>
 
     <TextView
@@ -22,6 +26,6 @@
         android:onClick="@{() -> retry.retry()}"
         android:text="@string/error_tap_to_retry"
         android:textColor="@color/colorSecondary"
-        app:visibleGone="@{retry.STATUS == Status.ERROR}"/>
+        app:visibleGone="@{viewModel.STATUS == Status.ERROR}"/>
 
 </layout>

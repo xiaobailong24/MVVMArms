@@ -5,8 +5,11 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.databinding.ObservableField;
 
 import org.simple.eventbus.EventBus;
+
+import me.xiaobailong24.mvvmarms.repository.http.Status;
 
 /**
  * @author xiaobailong24
@@ -22,6 +25,11 @@ public class BaseViewModel<M extends IModel> extends AndroidViewModel
         implements IViewModel, LifecycleObserver {
 
     protected M mModel;
+
+    /**
+     * 数据请求状态
+     */
+    public final ObservableField<Status> STATUS = new ObservableField<>();
 
     public BaseViewModel(Application application) {
         super(application);

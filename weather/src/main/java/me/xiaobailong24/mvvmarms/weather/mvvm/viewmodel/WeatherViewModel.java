@@ -50,7 +50,7 @@ public class WeatherViewModel extends BaseViewModel<WeatherModel> {
                 }
                 Timber.d("Load history locations: %s", newResource.status);
                 if (newResource.status == Status.LOADING) {
-                    // TODO: 2017/11/15
+                    STATUS.set(Status.LOADING);
                 } else if (newResource.status == Status.SUCCESS) {
                     mLocationPaths.postValue(newResource.data);
                     String location = newResource.data.get(0);
@@ -63,8 +63,9 @@ public class WeatherViewModel extends BaseViewModel<WeatherModel> {
                         mFirst = false;
                         mLocation.postValue(location);
                     }
+                    STATUS.set(Status.SUCCESS);
                 } else if (newResource.status == Status.ERROR) {
-                    // TODO: 2017/11/15
+                    STATUS.set(Status.ERROR);
                 }
             });
         });

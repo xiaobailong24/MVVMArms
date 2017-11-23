@@ -62,13 +62,13 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
                 if (newResource.status == Status.LOADING) {
                     STATUS.set(Status.LOADING);
                 } else if (newResource.status == Status.SUCCESS) {
-                    STATUS.set(Status.SUCCESS);
                     List<TextContent> contents = new ArrayList<>(3);
                     WeatherNowResponse.NowResult result = newResource.data.getResults().get(0);
                     contents.add(new TextContent("地点", result.getLocation().getPath()));
                     contents.add(new TextContent("天气", result.getNow().getText()));
                     contents.add(new TextContent("温度", result.getNow().getTemperature() + "º"));
                     mContents.postValue(contents);
+                    STATUS.set(Status.SUCCESS);
                 } else if (newResource.status == Status.ERROR) {
                     STATUS.set(Status.ERROR);
                 }

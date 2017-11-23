@@ -8,8 +8,8 @@
         <import type="me.xiaobailong24.mvvmarms.repository.http.Status"/>
 
         <variable
-            name="retry"
-            type="me.xiaobailong24.mvvmarms.repository.http.IRetry"/>
+            name="viewModel"
+            type="me.xiaobailong24.mvvmarms.mvvm.BaseViewModel"/>
     </data>
 
     <ImageView
@@ -19,5 +19,5 @@
         android:contentDescription="@string/weather_source"
         android:scaleType="fitCenter"
         android:src="@mipmap/ic_seniverse_logo"
-        app:visibleGone="@{retry.STATUS != Status.ERROR}"/>
+        app:visibleGone="@{viewModel.STATUS != Status.ERROR}"/>
 </layout>

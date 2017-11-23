@@ -61,8 +61,8 @@ public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel>
                 if (newResource.status == Status.LOADING) {
                     STATUS.set(Status.LOADING);
                 } else if (newResource.status == Status.SUCCESS) {
-                    STATUS.set(Status.SUCCESS);
                     mDailies.postValue(newResource.data.getResults().get(0).getDaily());
+                    STATUS.set(Status.SUCCESS);
                 } else if (newResource.status == Status.ERROR) {
                     STATUS.set(Status.ERROR);
                 }

@@ -47,7 +47,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/weather_source"
-                app:visibleGone="@{viewModel.STATUS != Status.ERROR}"
+                app:visibleGone="@{viewModel.STATUS == Status.SUCCESS}"
                 tools:listitem="@layout/super_text_item"/>
 
             <include

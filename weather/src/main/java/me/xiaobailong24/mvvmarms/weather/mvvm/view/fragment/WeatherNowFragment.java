@@ -3,6 +3,7 @@ package me.xiaobailong24.mvvmarms.weather.mvvm.view.fragment;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.api.Api;
 import me.xiaobailong24.mvvmarms.weather.mvvm.view.adapter.TextContentAdapter;
 import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherNowViewModel;
 import me.xiaobailong24.mvvmarms.weather.mvvm.viewmodel.WeatherViewModel;
+import timber.log.Timber;
 
 /**
  * @author xiaobailong24
@@ -31,6 +33,7 @@ public class WeatherNowFragment extends BaseFragment<FragmentWeatherNowBinding, 
      * 共享 Activity 数据
      */
     WeatherViewModel mWeatherViewModel;
+    private String mLocation;
 
     public static WeatherNowFragment newInstance(String location) {
         WeatherNowFragment weatherNowFragment = new WeatherNowFragment();
@@ -48,8 +51,9 @@ public class WeatherNowFragment extends BaseFragment<FragmentWeatherNowBinding, 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_now, container, false);
         //设置ViewModel
         mBinding.setViewModel(mViewModel);
+        mBinding.retry.setViewModel(mViewModel);
         mBinding.retry.setRetry(mViewModel);
-        mBinding.weatherSource.setRetry(mViewModel);
+        mBinding.weatherSource.setViewModel(mViewModel);
         //RecyclerView设置Adapter
         mBinding.recyclerWeatherNow.setAdapter(mAdapter);
         //设置Refresh
@@ -66,13 +70,16 @@ public class WeatherNowFragment extends BaseFragment<FragmentWeatherNowBinding, 
         mWeatherViewModel.getLocation().observe(this, s -> {
             //位置变化时，需要重新加载
             mFirst = true;
-            onFragmentVisibleChange(mVisible && savedInstanceState == null);
+            if (mLocation == null || !mLocation.equals(s)) {
+                onFragmentVisibleChange(mVisible);
+            }
         });
         mViewModel.getWeatherNow().observe(this, contents -> {
-            mBinding.refresh.setRefreshing(false);
             mAdapter.replaceData(contents);
             //加载完成
-            mFirst = false;
+            if (mLocation.equals(mWeatherViewModel.getLocation().getValue())) {
+                mFirst = false;
+            }
             // TODO: 2017/8/19
             //            DiffUtil.DiffResult diffResult = DiffUtil
             //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), contents));
@@ -97,8 +104,9 @@ public class WeatherNowFragment extends BaseFragment<FragmentWeatherNowBinding, 
         //当 Fragment 显示/隐藏变化时执行该方法，根据是否显示 Fragment 加载数据
         if (mViewModel != null && isVisible) {
             //调用ViewModel的方法获取天气
-            if (mWeatherViewModel.getLocation().getValue() != null) {
-                mViewModel.loadWeatherNow(mWeatherViewModel.getLocation().getValue());
+            mLocation = mWeatherViewModel.getLocation().getValue();
+            if (mLocation != null) {
+                mViewModel.loadWeatherNow(mLocation);
             }
         }
     }
@@ -106,7 +114,9 @@ public class WeatherNowFragment extends BaseFragment<FragmentWeatherNowBinding, 
     @Override
     public void onDestroy() {
         mWeatherViewModel.getLocation().removeObservers(this);
+        mViewModel.getWeatherNow().removeObservers(this);
         super.onDestroy();
+        this.mLocation = null;
         this.mAdapter = null;
         this.mWeatherViewModel = null;
     }

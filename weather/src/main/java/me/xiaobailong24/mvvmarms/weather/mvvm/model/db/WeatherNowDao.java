@@ -16,6 +16,7 @@ import me.xiaobailong24.mvvmarms.weather.mvvm.model.entry.Location;
  * @author xiaobailong24
  * @date 2017/7/29
  * Room Database DAO
+ * @see <a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2017/0726/8268.html">在Room中使用RxJava</a>
  */
 @Dao
 public interface WeatherNowDao {
