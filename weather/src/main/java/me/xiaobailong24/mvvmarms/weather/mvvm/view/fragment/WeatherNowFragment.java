@@ -63,24 +63,21 @@ public class WeatherNowFragment extends BaseFragment<FragmentWeatherNowBinding, 
     @Override
     public void initData(Bundle savedInstanceState) {
         //懒加载：onFragmentVisibleChange().
-        mWeatherViewModel.getLocation().observe(getActivity(), s -> {
+        mWeatherViewModel.getLocation().observe(this, s -> {
             //位置变化时，需要重新加载
             mFirst = true;
-            if (mVisible) {
-                onFragmentVisibleChange(true);
-            }
+            onFragmentVisibleChange(mVisible && savedInstanceState == null);
         });
-        mViewModel.getWeatherNow()
-                .observe(this, contents -> {
-                    mBinding.refresh.setRefreshing(false);
-                    mAdapter.replaceData(contents);
-                    //加载完成
-                    mFirst = false;
-                    // TODO: 2017/8/19
-                    //            DiffUtil.DiffResult diffResult = DiffUtil
-                    //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), contents));
-                    //            diffResult.dispatchUpdatesTo(mAdapter);
-                });
+        mViewModel.getWeatherNow().observe(this, contents -> {
+            mBinding.refresh.setRefreshing(false);
+            mAdapter.replaceData(contents);
+            //加载完成
+            mFirst = false;
+            // TODO: 2017/8/19
+            //            DiffUtil.DiffResult diffResult = DiffUtil
+            //                    .calculateDiff(new RecyclerViewDiffCallback<>(mAdapter.getData(), contents));
+            //            diffResult.dispatchUpdatesTo(mAdapter);
+        });
     }
 
     @SuppressWarnings("all")
@@ -108,6 +105,7 @@ public class WeatherNowFragment extends BaseFragment<FragmentWeatherNowBinding, 
 
     @Override
     public void onDestroy() {
+        mWeatherViewModel.getLocation().removeObservers(this);
         super.onDestroy();
         this.mAdapter = null;
         this.mWeatherViewModel = null;

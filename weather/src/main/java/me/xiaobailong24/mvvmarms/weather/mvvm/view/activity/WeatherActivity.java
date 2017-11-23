@@ -181,6 +181,7 @@ public class WeatherActivity extends BaseActivity<ActivityWeatherBinding, Weathe
 
     @Override
     protected void onDestroy() {
+        mViewModel.getLocation().removeObservers(this);
         super.onDestroy();
         this.mFragments = null;
         this.mFragmentTitles = null;

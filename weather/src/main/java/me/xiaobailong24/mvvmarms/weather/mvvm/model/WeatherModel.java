@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,7 +29,6 @@ import timber.log.Timber;
 public class WeatherModel extends BaseModel {
     private RxErrorHandler mErrorHandler;
     private MutableLiveData<Resource<List<String>>> mLocations;
-    private int mSize = 0;
 
     @Inject
     public WeatherModel(Application application) {
@@ -60,9 +60,8 @@ public class WeatherModel extends BaseModel {
                 .subscribe(new ErrorHandleSubscriberOfFlowable<List<Location>>(mErrorHandler) {
                     @Override
                     public void onSubscribe(Subscription s) {
-                        super.onSubscribe(s);
-                        s.request(Integer.MAX_VALUE);
                         mLocations.postValue(Resource.loading(null));
+                        s.request(Integer.MAX_VALUE);
                     }
 
                     @Override
@@ -81,11 +80,8 @@ public class WeatherModel extends BaseModel {
                                 paths.add(l.getPath());
                             }
                         }
-                        if (mSize != paths.size()) {
-                            mSize = paths.size();
-                            Timber.d("loadLocationPaths: %s", paths.toArray());
-                            mLocations.postValue(Resource.success(paths));
-                        }
+                        Timber.d("loadLocationPaths: %s", Arrays.toString(paths.toArray()));
+                        mLocations.postValue(Resource.success(paths));
                     }
                 });
         return mLocations;

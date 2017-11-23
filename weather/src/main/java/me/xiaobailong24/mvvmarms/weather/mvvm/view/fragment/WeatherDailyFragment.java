@@ -63,20 +63,17 @@ public class WeatherDailyFragment extends BaseFragment<FragmentWeatherDailyBindi
     @Override
     public void initData(Bundle savedInstanceState) {
         //懒加载：onFragmentVisibleChange().
-        mWeatherViewModel.getLocation().observe(getActivity(), s -> {
+        mWeatherViewModel.getLocation().observe(this, s -> {
             //位置变化时，需要重新加载
             mFirst = true;
-            if (mVisible) {
-                onFragmentVisibleChange(true);
-            }
+            onFragmentVisibleChange(mVisible && savedInstanceState == null);
         });
-        mViewModel.getWeatherDaily()
-                .observe(WeatherDailyFragment.this, dailies -> {
-                    mBinding.refresh.setRefreshing(false);
-                    mAdapter.replaceData(dailies);
-                    //加载完成
-                    mFirst = false;
-                });
+        mViewModel.getWeatherDaily().observe(this, dailies -> {
+            mBinding.refresh.setRefreshing(false);
+            mAdapter.replaceData(dailies);
+            //加载完成
+            mFirst = false;
+        });
     }
 
     @SuppressWarnings("all")
@@ -103,6 +100,7 @@ public class WeatherDailyFragment extends BaseFragment<FragmentWeatherDailyBindi
 
     @Override
     public void onDestroy() {
+        mWeatherViewModel.getLocation().removeObservers(this);
         super.onDestroy();
         this.mAdapter = null;
         this.mWeatherViewModel = null;

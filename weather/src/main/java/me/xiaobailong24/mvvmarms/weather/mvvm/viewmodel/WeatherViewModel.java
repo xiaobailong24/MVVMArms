@@ -27,6 +27,7 @@ public class WeatherViewModel extends BaseViewModel<WeatherModel> {
 
     private final MediatorLiveData<List<String>> mLocationPaths = new MediatorLiveData<>();
     private MutableLiveData<Resource<List<String>>> mLocationsResource;
+    private boolean mFirst = true;
 
     /**
      * 可以与 Fragment 共享此数据
@@ -57,7 +58,11 @@ public class WeatherViewModel extends BaseViewModel<WeatherModel> {
                     if (location.contains(comma)) {
                         location = location.substring(0, location.indexOf(comma));
                     }
-                    mLocation.postValue(location);
+                    if (mFirst) {
+                        //只有第一次时获取历史地址
+                        mFirst = false;
+                        mLocation.postValue(location);
+                    }
                 } else if (newResource.status == Status.ERROR) {
                     // TODO: 2017/11/15
                 }

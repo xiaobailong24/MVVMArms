@@ -32,7 +32,7 @@ public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel>
     private MediatorLiveData<List<WeatherDailyResponse.DailyResult.Daily>> mDailies
             = new MediatorLiveData<>();
     private MutableLiveData<Resource<WeatherDailyResponse>> mDailyResponse;
-    private String mLocationName;
+    private String mLocationName = "";
 
     @Inject
     public WeatherDailyViewModel(Application application, WeatherDailyModel weatherDailyModel) {
@@ -69,7 +69,7 @@ public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel>
             });
         });
     }
-    
+
     public LiveData<List<WeatherDailyResponse.DailyResult.Daily>> getWeatherDaily() {
         return mDailies;
     }
@@ -77,7 +77,6 @@ public class WeatherDailyViewModel extends BaseViewModel<WeatherDailyModel>
     @Override
     public void retry() {
         if (mLocationName != null) {
-            mDailies.removeSource(mDailyResponse);
             loadWeatherDaily(mLocationName);
         }
     }

@@ -33,7 +33,7 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
         implements IRetry {
     private final MediatorLiveData<List<TextContent>> mContents = new MediatorLiveData<>();
     private MutableLiveData<Resource<WeatherNowResponse>> mNowResponse;
-    private String mLocationName;
+    private String mLocationName = "";
 
     @Inject
     public WeatherNowViewModel(Application application, WeatherNowModel model) {
@@ -83,7 +83,6 @@ public class WeatherNowViewModel extends BaseViewModel<WeatherNowModel>
     @Override
     public void retry() {
         if (mLocationName != null) {
-            mContents.removeSource(mNowResponse);
             loadWeatherNow(mLocationName);
         }
     }
