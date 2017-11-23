@@ -24,6 +24,6 @@ public abstract class DbTest {
 
     @After
     public void closeDb() {
-        db.close();
+//        db.close();
     }
 }
